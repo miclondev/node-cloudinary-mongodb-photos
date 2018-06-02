@@ -1,3 +1,4 @@
 module.exports = {
-    MONGOURI : ''
+    MONGOURI : process.env.MONGOURI,
+    SESSIONSECRET : process.env.SESSIONSECRET
 }
