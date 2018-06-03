@@ -1,4 +1,4 @@
 require('./category')
 require('./user')
-require('./images')
+require('./photos')
 require('./album')
