@@ -1,6 +1,23 @@
 <% include ./partials/header %>
-<% include ./partials/navbar %>
+    <% include ./partials/navbar %>
 
-<h1>this is landing</h1>
+        <div class="landingHeader">
+            <h3> Great stories start here.</h3>
+            <p>Discover over 209 million royalty-free images, stock video clips, and music tracks.</p>
 
-<% include ./partials/footer %>
+            <div class="landingSearch">
+                <form action="/search" method="GET">
+                    <input type="search" placeholder="seach stock images, footage">
+                    <select id="exampleFormControlSelect1">
+                        <option>Images</option>
+                        <option>Footage</option>
+                    </select>
+                    <button>
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
+            </div>
+
+        </div>
+
+        <% include ./partials/footer %>
