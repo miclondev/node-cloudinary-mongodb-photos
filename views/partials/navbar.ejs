@@ -30,13 +30,20 @@
         </ul>
 
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="/login">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="btn btn-outline-info" href="/register">Sign up</a>
-            </li>
+            <% if(!currentUser){ %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login" data-toggle="modal" data-target="#responsive-modal" >Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-outline-success" href="/register">Sign up</a>
+                </li>
+                <% } else { %>
+                    <% include ./profile %>
+                        <% } %>
         </ul>
 
     </div>
+    <% include ./loginmodal %>
 </nav>
+
+
