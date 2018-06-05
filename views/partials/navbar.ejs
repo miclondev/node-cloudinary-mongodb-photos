@@ -1,49 +1,50 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<header class="topbar">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04"
-        aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
 
+        <div class="collapse navbar-collapse" id="navbarsExample04">
 
-    <div class="collapse navbar-collapse" id="navbarsExample04">
-
-        <ul class="navbar-nav">
-            <li>
-                <a href="/">
-                    <img src="/assets/headerlogo.png" alt="logo ad gallery small" width="43px">
-                </a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">photos</a>
-                <div class="dropdown-menu" aria-labelledby="dropdown04">
-                    <a class="dropdown-item" href="/photos/p/1">All Photos</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">All Categories</a>
-                </div>
-            </li>
-
-            <li class="nav-item ">
-                <a class="nav-link" href="/footage">Footage</a>
-
-            </li>
-        </ul>
-
-        <ul class="navbar-nav ml-auto">
-            <% if(!currentUser){ %>
-                <li class="nav-item">
-                    <a class="nav-link" href="/login" data-toggle="modal" data-target="#responsive-modal" >Login</a>
+            <ul class="navbar-nav">
+                <li>
+                    <a href="/">
+                        <img src="/assets/headerlogo.png" alt="logo ad gallery small" width="43px">
+                    </a>
                 </li>
-                <li class="nav-item">
-                    <a class="btn btn-outline-success" href="/register">Sign up</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">photos</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown04">
+                        <a class="dropdown-item" href="/photos/p/1">All Photos</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">All Categories</a>
+                    </div>
                 </li>
-                <% } else { %>
-                    <% include ./profile %>
-                        <% } %>
-        </ul>
 
-    </div>
-    <% include ./loginmodal %>
-</nav>
+                <li class="nav-item ">
+                    <a class="nav-link" href="/footage">Footage</a>
 
+                </li>
+            </ul>
 
+            <ul class="navbar-nav ml-auto">
+                <% if(!currentUser){ %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login" data-toggle="modal" data-target="#responsive-modal">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-success" href="/register">Sign up</a>
+                    </li>
+                    <% } else { %>
+                        <% include ./profile %>
+                            <% } %>
+            </ul>
+            
+        </div>
+       
+    </nav>
+</header>
+
+<% include ./loginmodal %>

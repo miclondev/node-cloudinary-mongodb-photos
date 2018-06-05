@@ -11,21 +11,22 @@ const userSchema = new Schema({
     country: String,
     city: String,
     seller: {
-        confirmed : { type: Boolean, default: false}
+        confirmed: { type: Boolean, default: false }
     },
     confirmed: { type: Boolean, default: false },
     passport: String,
     content: {
         images: [
-            { type: mongoose.Schema.Types.ObjectId,  ref: "images" }
+            { type: mongoose.Schema.Types.ObjectId, ref: "images" }
         ]
     },
     follow: [
-        {   type: mongoose.Schema.Types.ObjectId,  ref: "users"  }
+        { type: mongoose.Schema.Types.ObjectId, ref: "users" }
     ],
-    settings:{
-        language: { type: String, default: 'En'}
-    }
+    settings: {
+        language: { type: String, default: 'En' }
+    },
+    isAdmin: { type: Boolean, default: false }
 });
 
 userSchema.plugin(passportLocalMongoose);
