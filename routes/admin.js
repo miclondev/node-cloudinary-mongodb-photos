@@ -12,12 +12,12 @@ router.post('/create_category', (req, res) => {
     res.redirect('back')
 })
 
-router.get('/create_categories',isLoggedIn, isAdmin, (req,res) => {
-    res.render('/admin/categories')
+router.get('/category', isLoggedIn, isAdmin, (req,res) => {
+    res.render('admin/category')
 })
 
-router.get('/admin', (req,res) => {
-    res.render('/admin/index')
+router.get('/', (req,res) => {
+    res.render('admin/index')
 })
 
 module.exports = router
