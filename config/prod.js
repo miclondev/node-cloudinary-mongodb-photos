@@ -1,4 +1,7 @@
 module.exports = {
     MONGOURI : process.env.MONGOURI,
-    SESSIONSECRET : process.env.SESSIONSECRET
+    SESSIONSECRET : process.env.SESSIONSECRET,
+    CLOUDINARYKEY: process.env.CLOUDINARYKEY,
+    CLOUDINARYSECRET:  process.env.CLOUDINARYSECRET,
+    CLOUDINARYNAME:  process.env.CLOUDINARYNAME
 }

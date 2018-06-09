@@ -1,12 +1,18 @@
 
 createSlugWithDate = (title) => {
-    newTitle = title.toLowerCase().split(' ').join('-')
+    newTitle = title.replace(/[^a-zA-Z0-9 ]/g, "")
+    .toLowerCase()
+    .split(' ')
+    .join('-')
     withDate = `${newTitle}-${Date.now()}`
     return withDate
 }
 
 createSlug = (title) => {
-    newTitle = title.toLowerCase().split(' ').join('-')
+    newTitle = title.replace(/[^a-zA-Z0-9 ]/g, "")
+        .toLowerCase()
+        .split(' ')
+        .join('-')
     return newTitle
 }
 

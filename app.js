@@ -6,6 +6,7 @@ const express = require('express'),
         mongoose = require('mongoose'),
         passport = require("passport"),
         LocalStrategy = require("passport-local"),
+        cors = require('cors'),
         methodOverride = require("method-override"),
         session = require('express-session'),
         MongoStore = require('connect-mongo')(session),
@@ -28,9 +29,11 @@ mongoose.connection
         .once('open', () => console.log('Connected to MongoLab'))
         .on('error', error => console.log('Error connecting to mongolab', error))
 
+app.use('*', cors())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.set("view engine", "ejs");
+
 
 app.use(sassMiddleware({
         src: __dirname + '/sass',

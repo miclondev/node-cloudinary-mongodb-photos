@@ -3,16 +3,24 @@ const router = express.Router()
 const passport = require('passport')
 const mongoose = require('mongoose')
 const User = mongoose.model('user')
-const Info = require('../data/info')
+const Info = require('../data/info') 
+const Category = mongoose.model('category')
 //create a function to get render pages
 renderPages = (route, page, title) => {
-    router.get(route, (req, res) => { 
+    router.get(route, (req, res) => {
         res.render(page, { title: title })
     })
 }
 //pages rendered
 const { pageTitles } = Info
-renderPages("/", "landing", pageTitles.home) //homepage
+
+router.get('/', (req, res) => {
+    Category.find({}, (err, found) => {
+        if (err) { return res.send(err) }
+        res.render('landing', { categories: found })
+    })
+})
+
 renderPages("/register", "register", pageTitles.register) //registration page
 renderPages("/login", "login", pageTitles.login) //login
 

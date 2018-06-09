@@ -3,20 +3,60 @@ const router = express.Router()
 const mongoose = require('mongoose')
 const Category = mongoose.model('category')
 const { isLoggedIn, isAdmin } = require('../middleware')
+const { upload, cloudinary } = require('../funcs/uploadCategoryImage')
+const Icons = require('../data/faIcons.json')
 
-router.post('/create_category', (req, res) => {
-    const newCat = { name: req.body.name }
-    Category.create(newCat, (err, created) => {
-        err ? console.log(err) : console.log(created)
+router.use(isLoggedIn)
+router.use(isAdmin)
+
+router.post('/category', upload, (req, res) => {
+    if (req.file) {
+        cloudinary.v2.uploader.upload(req.file.path,
+            { public_id: req.file.filename, folder: '/categories' },
+            (err, result) => {
+                if (err) {
+                    console.log(err)
+                    res.send(err)
+                }
+                //create a new category
+                const newCategory = new Category(req.body.category)
+                //set image url and name
+                newCategory.image = { name: `${result.original_filename}.${result.format}`, url: result.secure_url }
+                newCategory.save((err, Cat) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        console.log(Cat)
+                        res.redirect('back')
+                    }
+                })
+            })
+    } else {
+        Category.create(req.body.category, (err, Cat) => {
+            if (err) {
+                console.log(err)
+            } else {
+                res.redirect('back')
+            }
+        })
+    }
+})
+
+
+router.get('/category', (req, res) => {
+    Category.find({}, (err, Cats) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.render('admin/category', {
+                Icons,
+                Cats
+            })
+        }
     })
-    res.redirect('back')
 })
 
-router.get('/category', isLoggedIn, isAdmin, (req,res) => {
-    res.render('admin/category')
-})
-
-router.get('/', (req,res) => {
+router.get('/', (req, res) => {
     res.render('admin/index')
 })
 

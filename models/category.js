@@ -3,21 +3,26 @@ const { Schema } = mongoose
 const { createSlug } = require('../funcs/friendlyUrl')
 
 const categorySchema = new Schema({
-    name:{type: String, unique: true },
-    slug: {type:String, unique:true },
+    name: { type: String, unique: true },
+    slug: { type: String, unique: true },
     description: String,
-    icon: String,
-    image: String,
+    icon: { type: String, default: "settings" },
+    image: {
+        name: String,
+        url: String
+    },
     subCategories: [{
         id: { type: String, default: mongoose.Types.ObjectId() },
-        name: {type: String},
-        description: {type: String},
-        icon: {type: String, default: "settings"}
+        name: { type: String },
+        description: { type: String },
+        icon: { type: String, default: "settings" }
     }],
-    itemCount: {type: Number, default: 0}
+    itemCount: { type: Number, default: 0 },
+    created_at: { type: Date, default: Date.now },
+    featured: { type: Boolean, default: false }
 })
 
-categorySchema.pre('save', function(next){
+categorySchema.pre('save', function (next) {
     this.slug = createSlug(this.name)
     next()
 })

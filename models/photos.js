@@ -7,7 +7,7 @@ const photosSchema = new Schema({
     slug: { type: String, unique: true },
     shortDesc: String,
     description: String,
-    link: String,
+    image: String,
     category: { type: mongoose.Schema.Types.ObjectId, ref: "category" },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
     created_on: { type: Date, default: Date.now }
