@@ -20,121 +20,69 @@
                         </div>
 
                     </div>
+                    <div class="row" style="display: flex;justify-content: center;">
+                        <a href="#" data-toggle="modal" data-target="#add-category" class="btn btn-lg btn rounded btn-primary" style="color:white;">Add Category</a>
+                    </div>
+<div class="col-md-5 align-self-center">
+                            <h3 class="text-themecolor">All Categories</h3>
+                        </div>
 
 
 
-
-
-
-                    <a href="#" data-toggle="modal" data-target="#add-category" class="btn btn-lg btn rounded btn-primary" style="color:white;">Add Category</a>
-                    <img src="https://res.cloudinary.com/adgallerytz/image/upload/v1528492560/categories/image-1528492559156.jpg" alt="">
+<div class="container">
 
                     <div class="row">
-                        <div class="col-12 m-t-30">
-                            all categories
-                            <div class="card-columns">
 
-                                <% Cats.forEach((category) => { %>
-                                <div class="card p-4">
-                                    <img class="card-img-top img-responsive" src="<%= category.image.url %>" alt="Card image cap">
+                       
+
+                        <% Cats.forEach((category) => { %>
+                            <div class="col-sm-1 col-md-4 col-lg-4 col-xl-3">
+                                <div class="card">
+                                    <img class="card-img-top img-responsive" src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_250/c_crop,h_150,w_250/v1528538326/categories/<%= category.image.name %>"
+                                        alt="Card image cap">
                                     <div class="card-body">
-                                        <h4 class="card-title"><%= category.name %></h4>
-                                        <p class="card-text"> <%= category.description %></p>
+                                        <h4 class="card-title">
+                                            <%= category.name %>
+                                        </h4>
+
                                         <p class="card-text">
-                                            <small class="text-muted">Count <%= category.itemCount %></small>
+                                            <small class="text-muted"> Gallery Count
+                                                <%= category.itemCount %>
+                                            </small>
                                         </p>
-                                    </div>
-                                </div>
-                                <% }) %>
 
-                                    
-
+                                        <div class="card-text">
+                                            <a class="btn btn-xs btn-rounded btn-outline-success" href="/admin/category/<%= category._id %>"> More Info </a>
+                                            <a class="btn btn-xs btn-rounded btn-outline-warning" href="/admin/category/<%= category._id %>/edit"> Edit </a>
+                                            <a class="btn btn-xs btn-rounded btn-outline-danger" href="/admin/category/<%= category._id %>/edit"> Delete </a>
+                                            
+                                        </div>
                                        
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div id="add-category" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;"
-                        aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Enter Details</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                </div>
-                                <div class="modal-body">
-
-
-                                    <form action="/admin/category" method="POST" enctype="multipart/form-data">
-
-                                        <div class="form-group">
-                                            <label for="name"> category title </label>
-                                            <input type="text" name="category[name]" class="form-control">
-
-
-                                            <div class="form-group">
-                                                <label for="icon"> icon </label>
-                                                <input type="text" name="category[icon]" class="form-control">
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Category description</label>
-                                                <textarea class="form-control" rows="5" name="category[description]"></textarea>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label>Featured</label>
-                                                <input type="checkbox" id="md_checkbox_24" class="filled-in chk-col-deep-purple" checked="">
-                                            </div>
-
-
-
-                                            <div class="form-group">
-                                                <label> Category Image </label>
-                                                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
-                                                    <div class="form-control" data-trigger="fileinput">
-                                                        <i class="fa fa-file fileinput-exists"></i>
-                                                        <span class="fileinput-filename"></span>
-                                                    </div>
-                                                    <span class="input-group-addon btn btn-secondary btn-file">
-                                                        <span class="fileinput-new">Select file</span>
-                                                        <span class="fileinput-exists">Change</span>
-                                                        <input type="hidden">
-                                                        <input type="file" name="image">
-                                                    </span>
-                                                    <a href="#" class="input-group-addon btn btn-secondary fileinput-exists" data-dismiss="fileinput">Remove</a>
-                                                </div>
-                                            </div>
-                                            <button type="submit" class="btn btn-block btn-primary waves-effect waves-light">Add Category</button>
-                                    </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
-
-
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-
+                            <% }) %>
 
 
 
                     </div>
+ </div>
+
+                    <% include ./partials/categories/addCategory %>
+
                 </div>
+        </div>
 
 
 
-                <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-                    crossorigin="anonymous"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-                    crossorigin="anonymous"></script>
-                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
-                    crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous"></script>
 
-                <script src="/js/jasny-bootstrap.js"></script>
-                </body>
+        <script src="/js/jasny-bootstrap.js"></script>
+        </body>
 
-                </html>
+        </html>

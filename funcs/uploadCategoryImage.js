@@ -5,7 +5,7 @@ const { CLOUDINARYKEY,CLOUDINARYSECRET,CLOUDINARYNAME } = require('../config/key
 //set storage engine
 const storage = multer.diskStorage({
     filename: function(req, file, cb){
-        cb(null, file.fieldname + '-' + Date.now());
+        cb(null, 'category-' + Date.now());
     }
 });
 

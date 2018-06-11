@@ -14,6 +14,7 @@ router.post('/category', upload, (req, res) => {
         cloudinary.v2.uploader.upload(req.file.path,
             { public_id: req.file.filename, folder: '/categories' },
             (err, result) => {
+                console.log(result)
                 if (err) {
                     console.log(err)
                     res.send(err)
@@ -21,7 +22,13 @@ router.post('/category', upload, (req, res) => {
                 //create a new category
                 const newCategory = new Category(req.body.category)
                 //set image url and name
-                newCategory.image = { name: `${result.original_filename}.${result.format}`, url: result.secure_url }
+                newCategory.image = {
+                    name: `${result.original_filename}.${result.format}`,
+                    url: result.url,
+                    secure_url: result.secure_url,
+                    public_id: result.public_id
+                }
+                
                 newCategory.save((err, Cat) => {
                     if (err) {
                         console.log(err)

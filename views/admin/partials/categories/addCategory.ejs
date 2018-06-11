@@ -1,0 +1,63 @@
+
+                    <div id="add-category" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Enter Details</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body">
+
+
+                                <form action="/admin/category" method="POST" enctype="multipart/form-data">
+
+                                    <div class="form-group">
+                                        <label for="name"> category title </label>
+                                        <input type="text" name="category[name]" class="form-control">
+
+
+                                        <div class="form-group">
+                                            <label for="icon"> icon </label>
+                                            <input type="text" name="category[icon]" class="form-control">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Category description</label>
+                                            <textarea class="form-control" rows="5" name="category[description]"></textarea>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Featured</label>
+                                            <input type="checkbox" id="md_checkbox_24" class="filled-in chk-col-deep-purple" checked="">
+                                        </div>
+
+
+
+                                        <div class="form-group">
+                                            <label> Category Image </label>
+                                            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                                <div class="form-control" data-trigger="fileinput">
+                                                    <i class="fa fa-file fileinput-exists"></i>
+                                                    <span class="fileinput-filename"></span>
+                                                </div>
+                                                <span class="input-group-addon btn btn-secondary btn-file">
+                                                    <span class="fileinput-new">Select file</span>
+                                                    <span class="fileinput-exists">Change</span>
+                                                    <input type="hidden">
+                                                    <input type="file" name="image">
+                                                </span>
+                                                <a href="#" class="input-group-addon btn btn-secondary fileinput-exists" data-dismiss="fileinput">Remove</a>
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-block btn-primary waves-effect waves-light">Add Category</button>
+                                </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Close</button>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
