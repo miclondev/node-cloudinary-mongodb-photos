@@ -4,6 +4,7 @@ const express = require('express'),
         path = require('path'),
         bodyParser = require('body-parser'),
         mongoose = require('mongoose'),
+        flash = require('connect-flash'),
         passport = require("passport"),
         LocalStrategy = require("passport-local"),
         cors = require('cors'),
@@ -20,6 +21,7 @@ const models = require('./models'),
 const indexRoutes = require('./routes/index')
 const photoRoutes = require('./routes/photos')
 const adminRoutes = require('./routes/admin')
+const userRoutes = require('./routes/user')
 
 //configuration keys
 const Keys = require('./config/keys')
@@ -56,6 +58,8 @@ app.use(session({
         })
 }));
 
+
+app.use(flash())
 //passport settings
 app.use(passport.initialize());
 app.use(passport.session());
@@ -65,6 +69,8 @@ passport.deserializeUser(User.deserializeUser());
 //get access to current user
 app.use((req, res, next) => {
         res.locals.currentUser = req.user
+        res.locals.error = req.flash("error")
+        res.locals.success = req.flash("success")
         next();
 });
 
@@ -72,6 +78,8 @@ app.use((req, res, next) => {
 app.use("/", indexRoutes)
 app.use("/photos", photoRoutes)
 app.use("/admin", adminRoutes)
+app.use("/user", userRoutes)
+
 //Application initiate
 const PORT = process.env.PORT || 7800
 

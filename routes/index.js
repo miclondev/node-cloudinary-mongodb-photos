@@ -5,12 +5,9 @@ const mongoose = require('mongoose')
 const User = mongoose.model('user')
 const Info = require('../data/info') 
 const Category = mongoose.model('category')
+const { doneLogged } = require('../middleware')
 //create a function to get render pages
-renderPages = (route, page, title) => {
-    router.get(route, (req, res) => {
-        res.render(page, { title: title })
-    })
-}
+
 //pages rendered
 const { pageTitles } = Info
 
@@ -21,22 +18,28 @@ router.get('/', (req, res) => {
     })
 })
 
-renderPages("/register", "register", pageTitles.register) //registration page
-renderPages("/login", "login", pageTitles.login) //login
+//register route
+router.get("/register", doneLogged, (req, res) => {
+    res.render("register")
+})
 
+//login route
+router.get("/login", doneLogged, (req, res) => {
+    res.render("login")
+})
+
+//registration post route
 router.post("/register", (req, res) => {
     const { username, email, password } = req.body
 
     const newUser = new User({ username, email })
-
     User.register(newUser, password, (err, user) => {
         if (err) {
             console.log(err)
             return res.send('error registering user')
         }
-        passport.authenticate("local")(req, res, () => {
-            let backURL = req.header('Referer') || '/';
-            res.redirect(backURL)
+        passport.authenticate("local")(req, res, () => { 
+            res.redirect('/')
         })
     })
 })

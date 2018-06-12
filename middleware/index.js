@@ -8,7 +8,22 @@ middlewareObj.isLoggedIn = (req, res, next) => {
 }
 
 middlewareObj.isAdmin = (req, res, next) => {
-    if(req.user.isAdmin){
+    if (req.user.isAdmin) {
+        return next()
+    }
+    res.redirect('/')
+}
+
+
+middlewareObj.doneLogged = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        res.redirect("/")
+    }
+    return next()
+}
+
+middlewareObj.canUpload = (req, res, next) => {
+    if (req.isAuthenticated() && (req.user.isAdmin || req.user.canUpload)) {
         return next()
     }
     res.redirect('/')

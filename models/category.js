@@ -17,7 +17,10 @@ const categorySchema = new Schema({
         description: { type: String },
         icon: { type: String, default: "settings" }
     }],
-    itemCount: { type: Number, default: 0 },
+    count: {
+        photos: { type: Number, default: 0 },
+        videos: { type: Number, default: 0 }
+    },
     created_at: { type: Date, default: Date.now },
     featured: { type: Boolean, default: false }
 })

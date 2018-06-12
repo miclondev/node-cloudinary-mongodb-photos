@@ -1,7 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
-const Photo = mongoose.model('photos')
+const Photo = mongoose.model('photo')
+const Category = mongoose.model('category')
 const { isLoggedIn } = require('../middleware')
 
 //get recent photos
@@ -22,6 +23,31 @@ router.get('/p/:page', (req, res) => {
         })
 })
 
+//get all categories
+router.get('/categories', (req, res) => {
+    Category.find({}, (err, found) => {
+        if (err) {
+            return res.send(err)
+        }
+        res.render('photos/category', { categories: found })
+    })
+})
+
+//get photos by category
+router.get('/category/:id', (req, res) => {
+    Photo.find({ category: req.params.id })
+        .skip(0)
+        .limit(12)
+        .sort({ created_on: -1 })
+        .exec((err, found) => {
+            if (err) {
+                return res.send(err)
+            }
+            console.log(found)
+            res.render('photos/index', { photos: found })
+        })
+})
+
 router.post('/', isLoggedIn, (req, res) => {
     const { title, shortDesc } = req.body;
     const newPhoto = { title, shortDesc, user: req.user._id }
@@ -35,6 +61,7 @@ router.post('/', isLoggedIn, (req, res) => {
     res.redirect('back')
 })
 
+//single photo route
 router.get('/:title', (req, res) => {
     console.log(req.params.title)
     Photo.find({ slug: req.params.title }, (err, found) => {

@@ -1,0 +1,35 @@
+<% include ../partials/header %>
+    <% include ../partials/navbar %>
+
+        <h1>Categories</h1>
+
+        <div class="container">
+            <div class="row">
+                <% categories.forEach((cat)=> { %>
+
+                    <div class="col-sm-1 col-md-4 col-lg-4 col-xl-3">
+                        <a href="/photos/category/<%= cat._id %>">
+                            <div class="card">
+                                <img class="card-img-top img-responsive" src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_250/c_crop,h_150,w_250/v1528538326/categories/<%= cat.image.name %>"
+                                    alt="Card image cap">
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <%= cat.name %>
+                                    </h4>
+
+                                    <p class="card-text">
+                                        <small class="text-muted"> Gallery Count
+                                            <%= cat.itemCount %>
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <%  })  %>
+            </div>
+
+        </div>
+
+        <% include ../partials/footer %>

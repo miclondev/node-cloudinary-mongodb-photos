@@ -33,8 +33,6 @@
 
                     <div class="row">
 
-                       
-
                         <% Cats.forEach((category) => { %>
                             <div class="col-sm-1 col-md-4 col-lg-4 col-xl-3">
                                 <div class="card">
@@ -47,7 +45,7 @@
 
                                         <p class="card-text">
                                             <small class="text-muted"> Gallery Count
-                                                <%= category.itemCount %>
+                                                <%= category.count.photos %>
                                             </small>
                                         </p>
 

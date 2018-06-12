@@ -18,4 +18,15 @@ photosSchema.pre('save', function (next) {
     next()
 })
 
-mongoose.model("photos", photosSchema);
+photosSchema.pre('save', function (next) {
+    const category = mongoose.model('category');
+    return category.findById(this.category)
+        .then(Cat => {
+            ++Cat.count.photos;
+            Cat.save()
+        })
+    next()
+})
+
+
+mongoose.model("photo", photosSchema);

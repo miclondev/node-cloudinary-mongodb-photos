@@ -10,9 +10,7 @@ const userSchema = new Schema({
     image: String,
     country: String,
     city: String,
-    seller: {
-        confirmed: { type: Boolean, default: false }
-    },
+    canUpload: { type: Boolean, default: false },
     confirmed: { type: Boolean, default: false },
     passport: String,
     content: {
