@@ -1,14 +1,27 @@
 <% include ../partials/header %>
     <% include ../partials/navbar %>
 
-        <h1>Add Photos</h1>
-
-
-        <p>you can uplouad 10 photos at a time</p>
-
-
-        <div class="container">
+        <div class="container" style="margin-top:100px;">
             <div class="row">
+                <div class="col-12">
+
+
+
+                    <div class="form-group">
+                        <label>Select Category</label>
+                        <select class="custom-select col-12" id="inlineFormCustomSelect">
+                            <option selected="">Choose...</option>
+                            <% categories.forEach((cat) => { %>
+
+                                <option value="<%= cat._id %>">
+                                    <%= cat.name %>
+                                </option>
+                                <% }) %>
+                        </select>
+                    </div>
+
+
+                </div>
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
@@ -23,9 +36,21 @@
                     </div>
                 </div>
             </div>
+
+
+            <div class="row">
+
+                <div class="card" style="width:100%;">
+                    <div class="card-body">
+                        <a href="#" class="btn btn-block btn-primary">Next</a>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
 
-
+        <script src="/socket.io/socket.io.js"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
@@ -36,6 +61,19 @@
         <script src="/assets/plugins/Magnific-Popup-master/dist/jquery.magnific-popup-init.js"></script>
         <script src="//widget.cloudinary.com/global/all.js" type="text/javascript"></script>
         <script src="/assets/plugins/dropzone-master/dist/dropzone.js"></script>
+
+        <script>
+
+
+            $(function () {
+                var socket = io();
+                $('form').submit(function () {
+                    socket.get('/user/recent_uploaded', data, (err, found) => { console.log(data, found) })
+                    return false
+                })
+            })
+
+        </script>
         </body>
 
         </html>

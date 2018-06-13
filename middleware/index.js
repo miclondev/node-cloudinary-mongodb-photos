@@ -23,7 +23,7 @@ middlewareObj.doneLogged = (req, res, next) => {
 }
 
 middlewareObj.canUpload = (req, res, next) => {
-    if (req.isAuthenticated() && (req.user.isAdmin || req.user.canUpload)) {
+    if (req.user.isAdmin || req.user.canUpload) {
         return next()
     }
     res.redirect('/')

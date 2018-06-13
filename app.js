@@ -1,6 +1,8 @@
 //initialize main app dependencies
 const express = require('express'),
         app = express(),
+        http = require('http').Server(app),
+        io = require('socket.io')(http),
         path = require('path'),
         bodyParser = require('body-parser'),
         mongoose = require('mongoose'),
@@ -12,6 +14,7 @@ const express = require('express'),
         session = require('express-session'),
         MongoStore = require('connect-mongo')(session),
         sassMiddleware = require('node-sass-middleware')
+
 
 //mongoose models
 const models = require('./models'),
@@ -74,6 +77,7 @@ app.use((req, res, next) => {
         next();
 });
 
+
 //using routes
 app.use("/", indexRoutes)
 app.use("/photos", photoRoutes)
@@ -81,8 +85,19 @@ app.use("/admin", adminRoutes)
 app.use("/user", userRoutes)
 
 //Application initiate
-const PORT = process.env.PORT || 7800
 
-app.listen(PORT, () => {
+const PORT = process.env.PORT || 7800
+// app.listen(PORT, () => {
+//         console.log(`we are running on ${PORT}`)
+// })
+
+io.on('connection', (socket) => {
+        console.log('a user is connected')
+        socket.on('disconnect', () => {
+                console.log('user disconnected')
+        })
+})
+
+http.listen(PORT, () => {
         console.log(`we are running on ${PORT}`)
 })
