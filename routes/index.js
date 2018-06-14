@@ -14,9 +14,14 @@ const { doneLogged } = require('../middleware')
 const { pageTitles } = Info
 
 router.get('/', async (req, res) => {
-    const photos = await Photo.find({}).limit(8).sort({ created_on: -1 })
-    const categories = await Category.find({}).limit(4)
-    res.render('landing', { photos, categories })
+    try {
+        const photos = await Photo.find({}).limit(8).sort({ created_on: -1 })
+        const categories = await Category.find({}).limit(4)
+        res.render('landing', { photos, categories })
+    } catch (err) {
+        console.log(err)
+        res.send(err)
+    }
 })
 
 //register route

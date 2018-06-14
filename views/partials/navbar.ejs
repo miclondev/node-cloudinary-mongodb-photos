@@ -27,6 +27,14 @@
                     <a class="nav-link" href="/footage">Footage</a>
 
                 </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="/studios">Studios</a>
+                </li>
+
+                <li class="nav-item ">
+                    <a class="nav-link" href="/studios">Collections</a>
+                </li>
             </ul>
 
             <ul class="navbar-nav ml-auto">
@@ -41,8 +49,14 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/user/photos/new">Add Media</a>
                         </li>
-                        <% include ./profile %>
+                        <% if(currentUser.isAdmin){ %>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/admin/category">Go to admin</a>
+                            </li>
                             <% } %>
+
+                                <% include ./profile %>
+                                    <% } %>
             </ul>
 
         </div>
