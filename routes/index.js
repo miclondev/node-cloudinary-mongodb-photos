@@ -3,19 +3,20 @@ const router = express.Router()
 const passport = require('passport')
 const mongoose = require('mongoose')
 const User = mongoose.model('user')
-const Info = require('../data/info') 
+const Info = require('../data/info')
 const Category = mongoose.model('category')
+const Photo = mongoose.model('photo')
 const { doneLogged } = require('../middleware')
+
 //create a function to get render pages
 
 //pages rendered
 const { pageTitles } = Info
 
-router.get('/', (req, res) => {
-    Category.find({}, (err, found) => {
-        if (err) { return res.send(err) }
-        res.render('landing', { categories: found })
-    })
+router.get('/', async (req, res) => {
+    const photos = await Photo.find({}).limit(8).sort({ created_on: -1 })
+    const categories = await Category.find({}).limit(4)
+    res.render('landing', { photos, categories })
 })
 
 //register route
@@ -38,7 +39,7 @@ router.post("/register", (req, res) => {
             console.log(err)
             return res.send('error registering user')
         }
-        passport.authenticate("local")(req, res, () => { 
+        passport.authenticate("local")(req, res, () => {
             res.redirect('/')
         })
     })

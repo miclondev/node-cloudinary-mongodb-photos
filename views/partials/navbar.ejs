@@ -38,12 +38,15 @@
                         <a class="btn btn-outline-success" href="/register">Sign up</a>
                     </li>
                     <% } else { %>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user/photos/new">Add Media</a>
+                        </li>
                         <% include ./profile %>
                             <% } %>
             </ul>
-            
+
         </div>
-       
+
     </nav>
 </header>
 

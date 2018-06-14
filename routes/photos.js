@@ -10,8 +10,6 @@ router.get('/p/:page', (req, res) => {
     const page = parseInt(req.params.page)
     let limit = 12
     const skip = (page * limit) - limit;
-    // page === 1 ? skip = 0 : skip = page * limit
-    console.log(skip)
     Photo.find({}).skip(skip).limit(limit).sort({ created_on: -1 })
         .exec((err, found) => {
             if (err) {
