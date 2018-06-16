@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const Category = mongoose.model('category')
+const User = mongoose.model('user')
 const { isLoggedIn, isAdmin } = require('../middleware')
 const { upload, cloudinary } = require('../funcs/uploadCategoryImage')
 const Icons = require('../data/faIcons.json')
@@ -28,7 +29,7 @@ router.post('/category', upload, (req, res) => {
                     secure_url: result.secure_url,
                     public_id: result.public_id
                 }
-                
+
                 newCategory.save((err, Cat) => {
                     if (err) {
                         console.log(err)
@@ -65,6 +66,17 @@ router.get('/category', (req, res) => {
 
 router.get('/', (req, res) => {
     res.render('admin/index')
+})
+
+//get users
+router.get('/users', (req, res) => {
+    User.find({}, (err, found) => {
+        if (err) {
+            console.log(err)
+            return res.send(err)
+        }
+        res.render('admin/users', { users: found })
+    })
 })
 
 module.exports = router
