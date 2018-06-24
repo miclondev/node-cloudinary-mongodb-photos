@@ -13,7 +13,7 @@ const { pageTitles } = Info
 
 router.get('/', async (req, res) => {
     try {
-        const photos = await Photo.find({}).limit(8).sort({ created_on: -1 })
+        const photos = await Photo.find({}).populate('user').limit(8).sort({ created_on: -1 })
         const categories = await Category.find({}).limit(4)
         res.render('landing', { photos, categories })
     } catch (err) {
@@ -58,6 +58,19 @@ router.post("/login", passport.authenticate("local", {
 router.post("/logout", (req, res) => {
     req.logout()
     res.redirect("/")
+})
+
+router.get("/search", async (req, res) => {
+    console.log(req.query)
+    const { type } = req.query;
+    if (type === 'image') {
+        const photos = await Photo.find({ $text: { $search: req.query.q } })
+        console.log(photos)
+        res.render('search', { photos })
+    } else {
+        res.render('search')
+    }
+
 })
 
 module.exports = router;

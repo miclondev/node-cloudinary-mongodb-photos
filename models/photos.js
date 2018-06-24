@@ -22,11 +22,14 @@ const photosSchema = new Schema({
         approved: { type: Boolean, default: false },
         submitted: { type: Boolean, default: false },
         review: { type: Boolean, default: false }
-    }
+    },
+    likes: { type: Number, default: 0 }
 })
 
+photosSchema.index({ title: 'text', description: 'text', slug: 'text' })
+
 photosSchema.pre('save', function (next) {
-    return this.slug = createSlugWithDate(this.title)
+    this.slug = createSlugWithDate(this.title)
     next()
 })
 
@@ -40,15 +43,15 @@ photosSchema.pre('save', function (next) {
     next()
 })
 
-photosSchema.pre('save', function (next) {
-    const User = mongoose.model('user')
-    return User.findById(this.user)
-        .then(found => {
-            ++found.content.imageCount
-            found.save()
-        })
-    next()
-})
+// photosSchema.pre('save', function (next) {
+//     const User = mongoose.model('user')
+//     return User.findById(this.user)
+//         .then(found => {
+//             ++found.content.imageCount
+//             found.save()
+//         })
+//     next()
+// })
 
 
 mongoose.model("photo", photosSchema);

@@ -7,10 +7,10 @@
 
             <div class="landingSearch d-none d-md-block">
                 <form action="/search" method="GET">
-                    <input type="search" placeholder="seach stock images, footage">
-                    <select id="exampleFormControlSelect1">
-                        <option>Images</option>
-                        <option>Footage</option>
+                    <input type="search" name="q" placeholder="seach stock images, footage">
+                    <select id="exampleFormControlSelect1" name="type">
+                        <option value="image">Images</option>
+                        <option value="footage">Footage</option>
                     </select>
                     <button>
                         <i class="fa fa-search"></i>
@@ -19,68 +19,73 @@
             </div>
 
         </div>
-        <div class="container">
-            <div class="homeBody">
 
-                <p> Ad gallery recommended categories</p>
-                <div class="homeCategories">
-
-                    <div class="row el-element-overlay">
-                        <div class="col-md-12">
-                            <h4 class="card-title">Featured Images</h4>
-                            <h6 class="card-subtitle m-b-20 text-muted">Chosen by AdGallery </h6>
-                        </div>
-
-                        <% photos.forEach(photo => { %>
+ 
 
 
-                            <div class="col-lg-3 col-md-6">
-                                <div class="card">
-                                    <div class="el-card-item">
-                                        <div class="el-card-avatar el-overlay-1">
-                                            <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop,h_255,w_255/v1528998321/photos/<%= photo.image.name %>"
-                                                alt="home">
-                                            <div class="el-overlay">
-                                                <ul class="el-info">
-                                                    <li>
-                                                        <a class="btn default btn-outline image-popup-vertical-fit" href="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_700/c_scale,l_logo1,w_400/v1528998321/photos/<%= photo.image.name %>">
-                                                            <i class="icon-magnifier"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="btn default btn-outline" href="javascript:void(0);">
-                                                            <i class="icon-link"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
+
+            <div class="container">
+                <div class="homeBody">
+
+                   
+                    <div class="homeCategories">
+
+                        <div class="row el-element-overlay">
+                            <div class="col-md-12">
+                                <h4 class="card-title">Featured Images</h4>
+                                <h6 class="card-subtitle m-b-20 text-muted">Chosen by AdGallery </h6>
+                            </div>
+
+                            <% photos.forEach(photo => { %>
+
+
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="card">
+                                        <div class="el-card-item">
+                                            <div class="el-card-avatar el-overlay-1">
+                                                <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop,h_255,w_255/v1528998321/photos/<%= photo.image.name %>"
+                                                    alt="home">
+                                                <div class="el-overlay">
+                                                    <ul class="el-info">
+                                                        <li>
+                                                            <a class="btn default btn-outline image-popup-vertical-fit" href="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_700/c_scale,l_logo1,w_400/v1528998321/photos/<%= photo.image.name %>">
+                                                                <i class="icon-magnifier"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="btn default btn-outline" href="javascript:void(0);">
+                                                                <i class="icon-link"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="el-card-content">
-                                            <a href="/photo/<%= photo.slug %>">
-                                                <h3 class="box-title">Photo Title</h3>
-                                            </a>
-                                            <small> by:
-                                                <a href="/studio">
-                                                    <strong>Danish Studios</strong>
+                                            <div class="el-card-content">
+                                                <a href="/photo/<%= photo.slug %>">
+                                                    <h3 class="box-title">
+                                                        <%= photo.title %>
+                                                    </h3>
                                                 </a>
-                                            </small>
-                                            <br> </div>
+                                                <small> by:
+                                                    <a href="/studio">
+                                                        <strong>
+                                                            <%= photo.user.username %>
+                                                        </strong>
+                                                    </a>
+                                                </small>
+                                                <br> </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <% }) %>
+                                <% }) %>
 
-                                <% console.log(photos) %>
+
+                        </div>
+
+
                     </div>
-
-
-
-
-
-
                 </div>
-            </div>
 
+    
         </div>
-
         <% include ./partials/footer %>

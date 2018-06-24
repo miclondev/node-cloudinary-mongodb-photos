@@ -51,35 +51,29 @@ router.get('/category/:id', (req, res) => {
         })
 })
 
-router.post('/', upload, (req, res) => {
-    console.log(req.file)
-    cloudinary.v2.uploader.upload(req.file.path,
-        { public_id: req.file.filename, folder: '/photos' },
-        (err, result) => {
-            if (err) {
-                return res.send(err)
+router.post('/', upload, async (req, res) => {
+    try {
+        const result = await cloudinary.v2.uploader.upload(req.file.path,
+            { public_id: req.file.filename, folder: '/photos' })
+        console.log('result', result)
+        const photoObj = {
+            title: 'temptitle' + Date.now(),
+            user: req.user._id,
+            image: {
+                name: `${result.original_filename}.${result.format}`,
+                url: result.url,
+                secure_url: result.secure_url,
+                public_id: result.public_id
             }
-            console.log(result)
-            const photoObj = {
-                title: 'temptitle' + Date.now(),
-                user: req.user._id,
-                image: {
-                    name: `${result.original_filename}.${result.format}`,
-                    url: result.url,
-                    secure_url: result.secure_url,
-                    public_id: result.public_id
-                }
-            }
-            Photo.create(photoObj, (err, created) => {
-                if (err) {
-                    console.log(err)
-                    return res.send(err)
-                }
-                console.log(created)
-                res.send('uploaded')
-            })
-        }
-    )
+        } 
+        const created = await (new Photo(photoObj)).save()
+        console.log('created', created)
+        
+        res.send('uploaded')
+    } catch (err) {
+        res.send(err)
+        console.log(err)
+    }
 })
 
 //single photo route
