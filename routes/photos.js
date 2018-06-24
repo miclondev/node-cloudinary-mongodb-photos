@@ -6,18 +6,23 @@ const Category = mongoose.model('category')
 const { isLoggedIn } = require('../middleware')
 const { upload, cloudinary } = require('../funcs/uploadMainImage')
 //get recent photos
-router.get('/p/:page', (req, res) => {
+router.get('/p/:page', async (req, res) => {
     const page = parseInt(req.params.page)
     let limit = 12
     const skip = (page * limit) - limit;
-    Photo.find({}).skip(skip).limit(limit).sort({ created_on: -1 })
-        .exec((err, found) => {
+    let filter = { 'status.approved': true }
+    const count = await Photo.count(filter)
+    console.log(count)
+    Photo.find(filter)
+        .skip(skip)
+        .limit(limit)
+        .sort({ created_on: -1 })
+        .exec((err, photos) => {
             if (err) {
                 console.log(err)
                 return res.send(err)
             }
-            console.log(found)
-            res.render('photos/index', { photos: found })
+            res.render('photos/index', { photos, count })
         })
 })
 
@@ -87,6 +92,18 @@ router.get('/:title', (req, res) => {
             console.log(found)
             res.render("photos/show", { photos: found })
         }
+    })
+})
+
+//delete image
+router.delete('/:id', (req, res) => {
+    console.log(req.params.id)
+    Photo.findByIdAndRemove(req.params.id, (err) => {
+        if (err) {
+            console.log(err)
+            return res.send(err)
+        }
+        res.redirect('back')
     })
 })
 

@@ -6107,11 +6107,12 @@ a.mytooltip {
 
 .contact-list td {
     vertical-align: middle;
-    padding: 25px 10px
+    padding: 25px 10px;
+    max-width: 200px;
 }
 
 .contact-list td img {
-    width: 30px
+    width: 100px
 }
 
 .list-style-none {
@@ -8122,13 +8123,7 @@ form p:last-child {
     margin-bottom: 0
 }
 
-[type=checkbox]:checked,
-[type=checkbox]:not(:checked) {
-    position: absolute;
-    left: -9999px;
-    opacity: 0
-}
-
+ 
 [type=checkbox] {}
 
 [type=checkbox]+label {

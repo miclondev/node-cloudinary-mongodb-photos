@@ -1,11 +1,17 @@
 const express = require('express')
 const router = express.Router()
+const moment = require('moment')
+//mongo
 const mongoose = require('mongoose')
 const Category = mongoose.model('category')
 const User = mongoose.model('user')
+const Photo = mongoose.model('photo')
+
+//middleware
 const { isLoggedIn, isAdmin } = require('../middleware')
+//upload image to cloud
 const { upload, cloudinary } = require('../funcs/uploadCategoryImage')
-const Icons = require('../data/faIcons.json')
+
 
 router.use(isLoggedIn)
 router.use(isAdmin)
@@ -57,7 +63,6 @@ router.get('/category', (req, res) => {
             console.log(err)
         } else {
             res.render('admin/category', {
-                Icons,
                 Cats
             })
         }
@@ -70,13 +75,95 @@ router.get('/', (req, res) => {
 
 //get users
 router.get('/users', (req, res) => {
-    User.find({}, (err, found) => {
+    User.find({}, (err, users) => {
         if (err) {
             console.log(err)
             return res.send(err)
         }
-        res.render('admin/users', { users: found })
+        res.render('admin/users', { users })
     })
+})
+
+//get photos
+router.get('/photos', async (req, res) => {
+    const count = await Photo.count({})
+    console.log(count)
+    Photo.find({})
+        .populate('user', 'username')
+        .limit(50)
+        .sort({ created_on: -1 })
+        .exec((err, photos) => {
+            if (err) {
+                console.log(err)
+                return res.send(err)
+            }
+            res.render('admin/photos', { photos, count })
+        })
+})
+
+router.put('/photos/approve/:id', (req, res) => {
+    const { id } = req.params
+    const item = {
+        status: {
+            approved: true
+        }
+    }
+
+    Photo.findByIdAndUpdate(id, item, (err, updated) => {
+        if (err) {
+            console.log(err)
+            return res.send(err)
+        }
+        console.log('update', updated)
+        res.redirect('back')
+    })
+})
+
+router.put('/photos/unapprove/:id', (req, res) => {
+    const { id } = req.params
+    const item = {
+        status: {
+            approved: false
+        }
+    }
+
+    Photo.findByIdAndUpdate(id, item, (err, updated) => {
+        if (err) {
+            console.log(err)
+            return res.send(err)
+        }
+        res.redirect('back')
+    })
+})
+
+router.post('/multi/approve', (req, res) => {
+    console.log(req.body)
+    const { ids } = req.body
+    ids.forEach(id => {
+        const item = { status: { approved: true } }
+        Photo.findByIdAndUpdate(id, item, (err, updated) => {
+            if (err) {
+                console.log(err)
+                return res.send(err)
+            }
+            console.log('updated')
+        })
+    })
+    res.send('successful')
+})
+
+router.post('/multi/delete', (req, res) => {
+    const { ids } = req.body
+    ids.forEach(id => {
+        Photo.findByIdAndRemove(id, (err) => {
+            if (err) {
+                return res.send(err)
+                console.log(err)
+            }
+            console.log('deleted')
+        })
+    })
+    res.send('successful')
 })
 
 module.exports = router

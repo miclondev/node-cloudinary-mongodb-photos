@@ -1,6 +1,6 @@
 <% include ../partials/header %>
     <% include ../partials/navbar %>
-    <div class="container">
+        <div class="container">
             <div class="row el-element-overlay">
                 <div class="col-md-12">
                     <h4 class="card-title">Gallery page</h4>
@@ -13,8 +13,8 @@
                         <div class="card">
                             <div class="el-card-item">
                                 <div class="el-card-avatar el-overlay-1">
-                                    <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_400/c_crop,g_face:auto,h_264,w_396/c_fit,e_make_transparent:10,g_center,l_logo1,w_200/v1528874042/photos/<%= photo.image.name %>"
-                                        alt="user">
+                                    <img style="min-height: 170px" src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_400/c_crop,g_face:auto,h_264,w_396/v1528874042/photos/<%= photo.image.name %>"
+                                        alt="adgallery">
                                     <div class="el-overlay">
                                         <ul class="el-info">
                                             <li>
@@ -36,13 +36,13 @@
                                             <%= photo.title %>
                                         </h3>
                                     </a>
-                                    <small>subtitle of project</small>
+
                                     <br> </div>
                             </div>
                         </div>
                     </div>
-            
-            <% }) %>
+
+                    <% }) %>
 
 
 
@@ -50,6 +50,6 @@
 
 
 
+            </div>
         </div>
-    </div>
         <% include ../partials/footer %>

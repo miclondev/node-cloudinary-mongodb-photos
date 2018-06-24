@@ -14,15 +14,19 @@ const userSchema = new Schema({
     confirmed: { type: Boolean, default: false },
     passport: String,
     content: {
-        images: [
-            { type: mongoose.Schema.Types.ObjectId, ref: "images" }
-        ]
+        imageCount: { type: Number, default: 0 }
     },
-    follow: [
-        { type: mongoose.Schema.Types.ObjectId, ref: "users" }
-    ],
+    following: { 
+        account: [ { type: mongoose.Schema.Types.ObjectId, ref: "users" } ],
+        count: { type: Number, defult: 0 }
+    },
+    followers: {
+        account: [ { type: mongoose.Schema.Types.ObjectId, ref: "users" } ],
+        count: { type: Number, defult: 0 }
+    },
     settings: {
-        language: { type: String, default: 'En' }
+        language: { type: String, default: 'En' },
+        country: String
     },
     isAdmin: { type: Boolean, default: false }
 });

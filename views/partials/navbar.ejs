@@ -6,10 +6,32 @@
         </button>
 
 
+        <a href="/" class="d-sm-block d-md-none">
+            <img src="/assets/headerlogo.png" alt="logo ad gallery small" width="43px">
+        </a>
+        <span class="d-sm-block d-md-none">
+            
+                <% if(!currentUser){ %>
+                    <ul class="mobile-menu-login">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login" data-toggle="modal" data-target="#responsive-modal">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-outline-success" href="/register">Sign up</a>
+                    </li>
+                </ul>
+                    <% } else { %>
+                        <ul class="mobile-menu-login">
+                        <% include ./profile %>
+                    </ul>
+                            <% } %>
+        
+        </span>
+
         <div class="collapse navbar-collapse" id="navbarsExample04">
 
             <ul class="navbar-nav">
-                <li>
+                <li class="d-none d-md-block">
                     <a href="/">
                         <img src="/assets/headerlogo.png" alt="logo ad gallery small" width="43px">
                     </a>
@@ -22,11 +44,10 @@
                         <a class="dropdown-item" href="/photos/categories">All Categories</a>
                     </div>
                 </li>
-
                 <li class="nav-item ">
                     <a class="nav-link" href="/footage">Footage</a>
-
                 </li>
+
 
                 <li class="nav-item ">
                     <a class="nav-link" href="/studios">Studios</a>
@@ -36,29 +57,29 @@
                     <a class="nav-link" href="/studios">Collections</a>
                 </li>
             </ul>
-
-            <ul class="navbar-nav ml-auto">
-                <% if(!currentUser){ %>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login" data-toggle="modal" data-target="#responsive-modal">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-outline-success" href="/register">Sign up</a>
-                    </li>
-                    <% } else { %>
+            
+                <ul class="navbar-nav ml-auto not-mobile">
+                    <% if(!currentUser){ %>
                         <li class="nav-item">
-                            <a class="nav-link" href="/user/photos/new">Add Media</a>
+                            <a class="nav-link" href="/login" data-toggle="modal" data-target="#responsive-modal">Login</a>
                         </li>
-                        <% if(currentUser.isAdmin){ %>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/admin/category">Go to admin</a>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-success" href="/register">Sign up</a>
+                        </li>
+                        <% } else { %>
+                            <li class="nav-item center-with-flex">
+                                <a class="nav-link" href="/user/photos/new">Add Media</a>
                             </li>
-                            <% } %>
+                            <% if(currentUser.isAdmin){ %>
+                                <li class="nav-item center-with-flex">
+                                    <a class="nav-link" href="/admin/category">Go to admin</a>
+                                </li>
+                                <% } %>
 
-                                <% include ./profile %>
-                                    <% } %>
-            </ul>
-
+                                    <% include ./profile %>
+                                        <% } %>
+                </ul>
+            
         </div>
 
     </nav>

@@ -1,30 +1,45 @@
 <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img src="/assets/profile.jpg" alt="user" class="profile-pic" width="30px"></a>
-        <div class="dropdown-menu dropdown-menu-right scale-up">
-            <ul class="dropdown-user">
-                <li>
-                    <div class="dw-user-box">
-                        <div class="u-img"><img src="/assets/profile.jpg" alt="user"></div>
-                        <div class="u-text">
-                            <h4>Steave Jobs</h4>
-                            <p class="text-muted">varun@gmail.com</p><a href="pages-profile.html" class="btn btn-rounded btn-info btn-sm">View Profile</a></div>
+    <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        <img src="/assets/profile.jpg" alt="user" class="profile-pic" width="30px">
+    </a>
+    <div class="dropdown-menu dropdown-menu-right scale-up">
+        <ul class="dropdown-user">
+            <li>
+                <div class="dw-user-box">
+                    <div class="u-img">
+                        <img src="/assets/profile.jpg" alt="user">
                     </div>
-                </li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
-                <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li>
-                <li><a href="#"><i class="ti-email"></i> Inbox</a></li>
-                <li role="separator" class="divider"></li>
-                <li><a href="#"><i class="ti-settings"></i> Account Setting</a></li>
-                <li role="separator" class="divider"></li>
-                <li>
+                    <div class="u-text">
+                        <h4>Steave Jobs</h4>
+                        <p class="text-muted">varun@gmail.com</p>
+                        <a href="/user/profile" class="btn btn-rounded btn-info btn-sm">View Profile</a>
+                    </div>
+                </div>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+                <a href="/user/profile">
+                    <i class="ti-user"></i> My Profile</a>
+            </li>
+            <!-- <li><a href="#"><i class="ti-wallet"></i> My Balance</a></li> -->
+            <li>
+                <a href="/user/inbox">
+                    <i class="ti-email"></i> Inbox</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+                <a href="/user/profile/settings">
+                    <i class="ti-settings"></i> Account Setting</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
                 <form action="/logout" method="post">
-                    <button class="btn btn-outline-danger" type="submit"  style="margin: 8px 8px;">
-                            <i class="fa fa-power-off"></i> Logout
+                    <button class="btn btn-outline-danger" type="submit" style="margin: 8px 8px;">
+                        <i class="fa fa-power-off"></i> Logout
                     </button>
-                    </form>
-                </li>
-            </ul>
-        </div>
-    </li>
+                </form>
+            </li>
+        </ul>
+    </div>
+</li>

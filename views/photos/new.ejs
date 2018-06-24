@@ -2,47 +2,46 @@
     <% include ../partials/navbar %>
 
         <div class="container" style="margin-top:100px;">
-            <div class="row">
-                <div class="col-12">
+            
+          
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="form-group">
+                            <label>Select Category</label>
+                            <select class="custom-select col-12" id="inlineFormCustomSelect">
+                                <option selected="">Choose...</option>
+                                <% categories.forEach((cat) => { %>
+                                    <option value="<%= cat._id %>">
+                                        <%= cat.name %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
 
 
-
-                    <div class="form-group">
-                        <label>Select Category</label>
-                        <select class="custom-select col-12" id="inlineFormCustomSelect">
-                            <option selected="">Choose...</option>
-                            <% categories.forEach((cat) => { %>
-
-                                <option value="<%= cat._id %>">
-                                    <%= cat.name %>
-                                </option>
-                                <% }) %>
-                        </select>
                     </div>
-
-
-                </div>
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Upload Images</h4>
-                            <h6 class="card-subtitle">Click or Drag here to upload </h6>
-                            <form action="/photos" class="dropzone">
-                                <div class="fallback">
-                                    <input name="file" type="file" multiple />
-                                </div>
-                            </form>
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Upload Images</h4>
+                                <h6 class="card-subtitle">Click or Drag here to upload </h6>
+                                <form action="/photos" class="dropzone">
+                                    <div class="fallback">
+                                        <input name="file" type="file" multiple />
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
+  
 
             <div class="row">
 
                 <div class="card" style="width:100%;">
                     <div class="card-body">
-                        <a href="#" class="btn btn-block btn-primary">Next</a>
+                        <a href="/user/photos/new/edit" class="btn btn-block btn-primary">Next</a>
                     </div>
 
                 </div>
@@ -65,13 +64,6 @@
         <script>
 
 
-            $(function () {
-                var socket = io();
-                $('form').submit(function () {
-                    socket.get('/user/recent_uploaded', data, (err, found) => { console.log(data, found) })
-                    return false
-                })
-            })
 
         </script>
         </body>

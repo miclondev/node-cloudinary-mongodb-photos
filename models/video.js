@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 const { createSlugWithDate } = require('../funcs/friendlyUrl')
 //const moment = require('moment')
 
-const photosSchema = new Schema({
+const videoSchema = new Schema({
     title: String,
     slug: { type: String, unique: true },
     description: String,
@@ -26,7 +26,7 @@ const photosSchema = new Schema({
 })
 
 photosSchema.pre('save', function (next) {
-    return this.slug = createSlugWithDate(this.title)
+    this.slug = createSlugWithDate(this.title)
     next()
 })
 
@@ -40,15 +40,5 @@ photosSchema.pre('save', function (next) {
     next()
 })
 
-photosSchema.pre('save', function (next) {
-    const User = mongoose.model('user')
-    return User.findById(this.user)
-        .then(found => {
-            ++found.content.imageCount
-            found.save()
-        })
-    next()
-})
 
-
-mongoose.model("photo", photosSchema);
+mongoose.model("video", videoSchema);

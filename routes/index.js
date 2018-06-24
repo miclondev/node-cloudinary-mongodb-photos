@@ -8,8 +8,6 @@ const Category = mongoose.model('category')
 const Photo = mongoose.model('photo')
 const { doneLogged } = require('../middleware')
 
-//create a function to get render pages
-
 //pages rendered
 const { pageTitles } = Info
 

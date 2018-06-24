@@ -1,0 +1,259 @@
+<% include ./partials/header %>
+    <% include ../partials/navbar %>
+        <div class="adminMain">
+
+            <% include ./partials/adminnav %>
+
+                <div class="adminBody">
+
+                    <div class="row page-titles">
+                        <div class="col-md-5 align-self-center">
+                            <h3 class="text-themecolor">Photos</h3>
+                        </div>
+                        <div class="col-md-7 align-self-center">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="javascript:void(0)">Admin</a>
+                                </li>
+                                <li class="breadcrumb-item active">Photos</li>
+                            </ol>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="container">
+
+                        <div class="row">
+
+
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Photos List</h4>
+
+                                        <div class="row">
+
+                                            <button id="togglemulti" type="button" class="btn btn-primary">
+                                                select
+                                            </button>
+                                            <div class="btn-group selectable" style="display: none;">
+                                                <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    What to do
+                                                </button>
+                                                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 36px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                    <form id="approve-form" action="/admin/photos/approve/" method="POST">
+                                                        <button class="dropdown-item delete-button">
+                                                            Approve
+                                                        </button>
+                                                    </form>
+                                                    <form id="unapprove-form" action="/admin/photos/unapprove/" method="POST">
+                                                        <button class="dropdown-item delete-button">
+                                                            UnApprove
+                                                        </button>
+                                                    </form>
+
+                                                    <form id="multi-delete-form" method="POST">
+                                                        <button class="dropdown-item delete-button">
+                                                            Delete
+                                                        </button>
+                                                    </form>
+
+
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+
+                                        <h6 class="card-subtitle"></h6>
+                                        <div class="table-responsive">
+
+                                            <table id="demo-foo-addrow" class="table m-t-30 table-hover contact-list footable-loaded footable" data-page-size="10">
+                                                <thead>
+                                                    <tr>
+
+
+                                                        <th class="footable-sortable">No
+                                                            <span class="footable-sort-indicator"></span>
+                                                        </th>
+
+                                                        <th class="footable-sortable selectable" style="display: none;">
+                                                            <span> select </span>
+                                                        </th>
+
+                                                        <th class="footable-sortable">Image
+                                                            <span class="footable-sort-indicator"></span>
+                                                        </th>
+                                                        <th class="footable-sortable">Title
+                                                            <span class="footable-sort-indicator"></span>
+                                                        </th>
+                                                        <th class="footable-sortable">Uploader
+                                                            <span class="footable-sort-indicator"></span>
+                                                        </th>
+                                                        <th class="footable-sortable">Status
+                                                            <span class="footable-sort-indicator"></span>
+                                                        </th>
+                                                        <th class="footable-sortable">Date Uploaded
+                                                            <span class="footable-sort-indicator"></span>
+                                                        </th>
+                                                        <th class="footable-sortable">Action
+                                                            <span class="footable-sort-indicator"></span>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% photos.forEach((photo, i ) => { %>
+
+                                                        <tr class="footable-even" style="">
+
+                                                            <td>
+                                                                <span class="footable-toggle"></span>
+                                                                <%= i + 1 %>
+                                                            </td>
+
+                                                            <td class="selectable" style="display: none;">
+                                                                <div class="demo-checkbox ">
+
+                                                                    <input type="checkbox" class="form-check-input photo-id" value="<%= photo.id%>">
+                                                                </div>
+
+                                                            </td>
+
+                                                            <td>
+                                                                <a href="/admin/photos">
+                                                                    <img src="http://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_150,w_150/v1529677171/photos/<%= photo.image.name %>"
+                                                                        alt="user" width="100px">
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <%= photo.title %>
+                                                            </td>
+                                                            <td>
+                                                                <a href="/">
+                                                                    <%= photo.user.username %>
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <% if(photo.status.approved){ %>
+                                                                    <span class="label label-info">Confirmed</span>
+                                                                    <% } else { %>
+                                                                        <span class="label label-warning">Pending</span>
+                                                                        <% } %>
+
+                                                                            <% if(photo.status.submitted){ %>
+                                                                                <span class="label label-success">Available</span>
+                                                                                <% } %>
+                                                                                    <% if(photo.status.review){ %>
+                                                                                        <span class="label label-danger">Under Review</span>
+                                                                                        <% } %>
+                                                            </td>
+
+                                                            <td>
+                                                                <%= photo.created_on.toDateString() %>
+                                                            </td>
+
+                                                            <td>
+                                                                <div class="btn-group">
+                                                                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        Action
+                                                                    </button>
+
+
+                                                                    <div class="dropdown-menu animated flipInX" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 36px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                        <% if(photo.status.approved){ %>
+                                                                            <form action="/admin/photos/unapprove/<%= photo._id %>?_method=PUT" method="POST">
+                                                                                <button class="dropdown-item delete-button">
+                                                                                    UnApprove
+                                                                                </button>
+                                                                            </form>
+                                                                            <% } else { %>
+                                                                                <form action="/admin/photos/approve/<%= photo._id %>?_method=PUT" method="POST">
+                                                                                    <button class="dropdown-item delete-button">
+                                                                                        Approve
+                                                                                    </button>
+                                                                                </form>
+                                                                                <% }%>
+
+                                                                                    <a class="dropdown-item" href="/photos/<%= photo.slug %>" target="_blank">View Photo</a>
+
+                                                                                    <div class="dropdown-divider"></div>
+                                                                                    <form action="/photos/<%= photo._id %>?_method=DELETE" method="POST">
+                                                                                        <button class="dropdown-item delete-button">
+                                                                                            Delete
+                                                                                        </button>
+                                                                                    </form>
+
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <%  })%>
+
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="2">
+                                               
+                                                            <a href="/photos/new" class="btn btn-block btn-primary">add new Photo</a>
+                                                        </td>
+
+                                                        <td colspan="7">
+                                                            <div class="text-right">
+                                                                <ul class="pagination">
+                                                                    <li class="footable-page-arrow disabled">
+                                                                        <a data-page="first" href="#first">«</a>
+                                                                    </li>
+                                                                    <li class="footable-page-arrow disabled">
+                                                                        <a data-page="prev" href="#prev">‹</a>
+                                                                    </li>
+                                                                    <li class="footable-page active">
+                                                                        <a data-page="0" href="#">1</a>
+                                                                    </li>
+                                                                    <li class="footable-page">
+                                                                        <a data-page="1" href="#">2</a>
+                                                                    </li>
+                                                                    <li class="footable-page-arrow">
+                                                                        <a data-page="next" href="#next">›</a>
+                                                                    </li>
+                                                                    <li class="footable-page-arrow">
+                                                                        <a data-page="last" href="#last">»</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Column -->
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+                </div>
+        </div>
+
+
+
+        <script src="/js/jquery-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous"></script>
+
+        <script src="/js/jasny-bootstrap.js"></script>
+        <script src="/js/custom.js"></script>
+        </body>
+
+        </html>

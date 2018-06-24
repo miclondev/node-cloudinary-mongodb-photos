@@ -1,0 +1,202 @@
+<% include ./partials/header %>
+    <% include ../partials/navbar %>
+        <div class="adminMain">
+
+            <% include ./partials/adminnav %>
+
+                <div class="adminBody">
+
+                    <div class="row page-titles">
+                        <div class="col-md-5 align-self-center">
+                            <h3 class="text-themecolor">Categories</h3>
+                        </div>
+                        <div class="col-md-7 align-self-center">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="javascript:void(0)">Admin</a>
+                                </li>
+                                <li class="breadcrumb-item active">Photos</li>
+                            </ol>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-5 align-self-center">
+                        <h3 class="text-themecolor">All Photos</h3>
+                    </div>
+
+
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">Contact Emplyee list</h4>
+                                        <h6 class="card-subtitle"></h6>
+                                        <div class="table-responsive">
+                                            <div id="add-contact" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                            <h4 class="modal-title" id="myModalLabel">Add New Contact</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <from class="form-horizontal form-material">
+                                                                <div class="form-group">
+                                                                    <div class="col-md-12 m-b-20">
+                                                                        <input type="text" class="form-control" placeholder="Type name"> </div>
+                                                                    <div class="col-md-12 m-b-20">
+                                                                        <input type="text" class="form-control" placeholder="Email"> </div>
+                                                                    <div class="col-md-12 m-b-20">
+                                                                        <input type="text" class="form-control" placeholder="Phone"> </div>
+                                                                    <div class="col-md-12 m-b-20">
+                                                                        <input type="text" class="form-control" placeholder="Designation"> </div>
+                                                                    <div class="col-md-12 m-b-20">
+                                                                        <input type="text" class="form-control" placeholder="Age"> </div>
+                                                                    <div class="col-md-12 m-b-20">
+                                                                        <input type="text" class="form-control" placeholder="Date of joining"> </div>
+                                                                    <div class="col-md-12 m-b-20">
+                                                                        <input type="text" class="form-control" placeholder="Salary"> </div>
+                                                                    <div class="col-md-12 m-b-20">
+                                                                        <div class="fileupload btn btn-danger btn-rounded waves-effect waves-light">
+                                                                            <span>
+                                                                                <i class="ion-upload m-r-5"></i>Upload Contact Image</span>
+                                                                            <input type="file" class="upload"> </div>
+                                                                    </div>
+                                                                </div>
+                                                            </from>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-info waves-effect" data-dismiss="modal">Save</button>
+                                                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /.modal-content -->
+                                                </div>
+                                                <!-- /.modal-dialog -->
+                                            </div>
+                                            <table id="demo-foo-addrow" class="table m-t-30 table-hover contact-list footable-loaded footable"
+                                                data-page-size="10">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="footable-sortable">No
+                                                            <span class="footable-sort-indicator"></span>
+                                                        </th>
+                                                        <th class="footable-sortable">Name
+                                                            <span class="footable-sort-indicator"></span>
+                                                        </th>
+                                                        <th class="footable-sortable">Email
+                                                            <span class="footable-sort-indicator"></span>
+                                                        </th>
+                                                        <th class="footable-sortable">Phone
+                                                            <span class="footable-sort-indicator"></span>
+                                                        </th>
+                                                        <th class="footable-sortable">Role
+                                                            <span class="footable-sort-indicator"></span>
+                                                        </th>
+                                                        <th class="footable-sortable">Age
+                                                            <span class="footable-sort-indicator"></span>
+                                                        </th>
+                                                        <th class="footable-sortable">Joining date
+                                                            <span class="footable-sort-indicator"></span>
+                                                        </th>
+                                                        <th class="footable-sortable">Salery
+                                                            <span class="footable-sort-indicator"></span>
+                                                        </th>
+                                                        <th class="footable-sortable">Action
+                                                            <span class="footable-sort-indicator"></span>
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="footable-even" style="">
+                                                        <td>
+                                                            <span class="footable-toggle"></span>1</td>
+                                                        <td>
+                                                            <a href="javascript:void(0)">
+                                                                <img src="../assets/images/users/4.jpg" alt="user" width="40"
+                                                                    class="img-circle"> Genelia Deshmukh</a>
+                                                        </td>
+                                                        <td>genelia@gmail.com</td>
+                                                        <td>+123 456 789</td>
+                                                        <td>
+                                                            <span class="label label-danger">Designer</span>
+                                                        </td>
+                                                        <td>23</td>
+                                                        <td>12-10-2014</td>
+                                                        <td>$1200</td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete">
+                                                                <i class="ti-close" aria-hidden="true"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                     
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#add-contact">Add New Contact</button>
+                                                        </td>
+
+                                                        <td colspan="7">
+                                                            <div class="text-right">
+                                                                <ul class="pagination">
+                                                                    <li class="footable-page-arrow disabled">
+                                                                        <a data-page="first" href="#first">«</a>
+                                                                    </li>
+                                                                    <li class="footable-page-arrow disabled">
+                                                                        <a data-page="prev" href="#prev">‹</a>
+                                                                    </li>
+                                                                    <li class="footable-page active">
+                                                                        <a data-page="0" href="#">1</a>
+                                                                    </li>
+                                                                    <li class="footable-page">
+                                                                        <a data-page="1" href="#">2</a>
+                                                                    </li>
+                                                                    <li class="footable-page-arrow">
+                                                                        <a data-page="next" href="#next">›</a>
+                                                                    </li>
+                                                                    <li class="footable-page-arrow">
+                                                                        <a data-page="last" href="#last">»</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Column -->
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+        </div>
+
+
+
+        </div>
+        </div>
+
+
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous"></script>
+
+        <script src="/js/jasny-bootstrap.js"></script>
+        </body>
+
+        </html>

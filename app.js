@@ -1,8 +1,8 @@
 //initialize main app dependencies
 const express = require('express'),
         app = express(),
-        http = require('http').Server(app),
-        io = require('socket.io')(http),
+        // http = require('http').Server(app),
+        // io = require('socket.io')(http),
         path = require('path'),
         bodyParser = require('body-parser'),
         mongoose = require('mongoose'),
@@ -86,18 +86,18 @@ app.use("/user", userRoutes)
 
 //Application initiate
 
-const PORT = process.env.PORT || 7800
-// app.listen(PORT, () => {
-//         console.log(`we are running on ${PORT}`)
-// })
-
-io.on('connection', (socket) => {
-        console.log('a user is connected')
-        socket.on('disconnect', () => {
-                console.log('user disconnected')
-        })
-})
-
-http.listen(PORT, () => {
+const PORT = process.env.PORT || 8000
+app.listen(PORT, () => {
         console.log(`we are running on ${PORT}`)
 })
+
+// io.on('connection', (socket) => {
+//         console.log('a user is connected')
+//         socket.on('disconnect', () => {
+//                 console.log('user disconnected')
+//         })
+// })
+
+// http.listen(PORT, () => {
+//         console.log(`we are running on ${PORT}`)
+// })
