@@ -10,26 +10,31 @@ router.get('/p/:page', async (req, res) => {
     const page = parseInt(req.params.page)
     //filter
     let filter
+    let currentCategory;
+
     if (req.query.category) {
         filter = {
             'status.approved': true,
             'category': req.query.category || null,
         }
+        currentCategory = await Category.findById(req.query.category)
+            .then(cat => cat.name)
     } else {
         filter = {
             'status.approved': true,
         }
     }
 
-    const currentPage = req.path;
+    console.log('cur',currentCategory)
     const count = await Photo.count(filter)
     const categories = await Category.find({})
+
+
     let limit = 24
 
     const numOfPages = Math.ceil(count / limit)
 
-    console.log(numOfPages)
-    console.log(page)
+
     const skip = (page * limit) - limit;
 
     Photo.find(filter)
@@ -46,9 +51,9 @@ router.get('/p/:page', async (req, res) => {
                 photos,
                 count,
                 categories,
-                currentPage,
                 numOfPages,
-                page
+                page,
+                currentCategory
             })
         })
 })
