@@ -1,0 +1,24 @@
+<nav id="gallery-sidebar">
+    <div class="gallery-sidebar-header">
+        <h3> Filter </h3>
+    </div>
+
+    <ul class="list-unstyled components">
+        <p>By Category</p>
+        <li>
+            <a href="/photos/p/1">
+                All
+            </a>
+        </li>
+        <% categories.forEach(cat => { %>
+            <% if(cat.name === "general") { return } %>
+                <li>
+                    <a href="/photos/p/1?category=<%= cat._id %>">
+                        <%= cat.name %>
+                    </a>
+                </li>
+
+                <% }) %>
+
+    </ul>
+</nav>

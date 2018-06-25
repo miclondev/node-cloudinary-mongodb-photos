@@ -8,11 +8,30 @@ const { upload, cloudinary } = require('../funcs/uploadMainImage')
 //get recent photos
 router.get('/p/:page', async (req, res) => {
     const page = parseInt(req.params.page)
-    let limit = 12
-    const skip = (page * limit) - limit;
-    let filter = { 'status.approved': true }
+    //filter
+    let filter
+    if (req.query.category) {
+        filter = {
+            'status.approved': true,
+            'category': req.query.category || null,
+        }
+    } else {
+        filter = {
+            'status.approved': true,
+        }
+    }
+
+    const currentPage = req.path;
     const count = await Photo.count(filter)
-    console.log(count)
+    const categories = await Category.find({})
+    let limit = 24
+
+    const numOfPages = Math.ceil(count / limit)
+
+    console.log(numOfPages)
+    console.log(page)
+    const skip = (page * limit) - limit;
+
     Photo.find(filter)
         .skip(skip)
         .limit(limit)
@@ -22,7 +41,15 @@ router.get('/p/:page', async (req, res) => {
                 console.log(err)
                 return res.send(err)
             }
-            res.render('photos/index', { photos, count })
+
+            res.render('photos/index', {
+                photos,
+                count,
+                categories,
+                currentPage,
+                numOfPages,
+                page
+            })
         })
 })
 
@@ -65,10 +92,10 @@ router.post('/', upload, async (req, res) => {
                 secure_url: result.secure_url,
                 public_id: result.public_id
             }
-        } 
+        }
         const created = await (new Photo(photoObj)).save()
         console.log('created', created)
-        
+
         res.send('uploaded')
     } catch (err) {
         res.send(err)

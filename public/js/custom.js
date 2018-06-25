@@ -1,4 +1,7 @@
 $(document).ready(function () {
+
+  
+
     let selected = []
 
     const selectable = $('.selectable')

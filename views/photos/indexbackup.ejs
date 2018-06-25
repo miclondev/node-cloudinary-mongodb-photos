@@ -1,0 +1,55 @@
+<% include ../partials/header %>
+    <% include ../partials/navbar %>
+        <div class="container">
+            <div class="row el-element-overlay">
+                <div class="col-md-12">
+                    <h4 class="card-title">Gallery page</h4>
+                    <h6 class="card-subtitle m-b-20 text-muted">you can make gallery like this</h6>
+                </div>
+                <% photos.forEach(photo => { %>
+
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card">
+                            <div class="el-card-item">
+                                <div class="el-card-avatar el-overlay-1">
+                                    <img style="min-height: 170px" src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_400/c_crop,g_face:auto,h_264,w_396/v1528874042/photos/<%= photo.image.name %>"
+                                        alt="adgallery">
+                                    <div class="el-overlay">
+                                        <ul class="el-info">
+                                            <li>
+                                                <a class="btn default btn-outline image-popup-vertical-fit" href="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_600/c_scale,l_logo1,w_300/v1528874042/photos/<%= photo.image.name %>">
+                                                    <i class="icon-magnifier"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="btn default btn-outline" href="/photos/<%= photo.slug %>">
+                                                    <i class="icon-link"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="el-card-content">
+                                    <a href="/photos/<%= photo.slug %>">
+                                        <h3 class="box-title">
+                                            <%= photo.title %>
+                                        </h3>
+                                    </a>
+
+                                    <br> </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <% }) %>
+
+
+
+
+
+
+
+            </div>
+        </div>
+        <% include ../partials/footer %>
