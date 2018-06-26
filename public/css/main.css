@@ -4519,13 +4519,12 @@ table.dataTable thead .sorting:after {
 }
 
 .el-element-overlay .el-card-item {
-    position: relative;
-    padding-bottom: 25px
+    position: relative; 
 }
 
-.el-element-overlay .el-card-item .el-card-avatar {
-    margin-bottom: 15px
-}
+/* .el-element-overlay .el-card-item .el-card-avatar {
+     margin-bottom: 15px 
+  } */
 
 .el-element-overlay .el-card-item .el-card-content {
     text-align: center

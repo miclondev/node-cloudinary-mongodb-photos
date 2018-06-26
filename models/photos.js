@@ -20,8 +20,8 @@ const photosSchema = new Schema({
     status: {
         named: { type: Boolean, default: false },
         approved: { type: Boolean, default: false },
-        submitted: { type: Boolean, default: false },
-        review: { type: Boolean, default: false }
+        submitted: { type: Boolean, default: false }, 
+        featured: { type: Boolean, default: false }
     },
     likes: { type: Number, default: 0 }
 })

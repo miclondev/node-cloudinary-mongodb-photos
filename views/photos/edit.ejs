@@ -1,59 +1,18 @@
 <% include ../partials/header %>
     <% include ../partials/navbar %>
         <div class="container">
+            <div class="gallery-edit">
+                <form method="POST" action="/user/photos/new/edit?_method=put">
+                    <% photos.forEach(photo => { %>
+                        <%  include ./edit-photo.ejs %>
+                            <% })%>
 
-            <form method="POST" action="/user/photos/new/edit?_method=put">
-                <% photos.forEach(photo => { %>
-                    <div class="photo-edit-card">
-                        <div class="row">
-                            <div class="col-3">
-                                <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop,h_200,w_300/v1529228345/photos/<%= photo.image.name %>"
-                                    alt="editable">
-                            </div>
-                            <div class="col-9">
-                                <div class="card-body">
-
-                                    <div class="form-group row">
-                                        <label for="example-text-input" class="col-md-2 col-form-label">Media Title</label>
-                                        <div class="col-md-10">
-                                            <input class="form-control" type="text" placeholder="enter title" id="example-text-input" name="<%= photo._id %>[title]">
-                                        </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button class="btn btn-block btn-primary"> Submit Photos </button>
                                     </div>
-
-                                    <div class="form-group row">
-                                        <label for="example-text-input" class="col-md-2 col-form-label">Category</label>
-                                        <div class="col-md-10">
-                                            <select class="custom-select col-12" id="inlineFormCustomSelect" name="<%= photo._id %>[category]">
-
-                                                <% categories.forEach(cat => { %>
-
-                                                    <option value="<%= cat._id %>">
-                                                        <%= cat.name %>
-                                                    </option>
-                                                    <% }) %>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <label for="example-text-input" class="col-md-2 col-form-label">Description</label>
-                                        <div class="col-md-10">
-                                            <textarea class="form-control" rows="5" name="<%= photo._id %>[description]" placeholder="description"></textarea>
-                                        </div>
-                                    </div>
-
-
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <% })%>
-
-                        <div class="row">
-                            <div class="col-12">
-                                <button class="btn btn-bloc btn-primary"> Submit Photos </button>
-                            </div>
-                        </div>
-            </form>
+                </form>
+            </div>
         </div>
-        <% include ../partials/footer %>
+<% include ../partials/footer %>

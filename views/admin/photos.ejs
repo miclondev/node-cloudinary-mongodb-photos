@@ -48,9 +48,24 @@
                                                             Approve
                                                         </button>
                                                     </form>
+
                                                     <form id="unapprove-form" action="/admin/photos/unapprove/" method="POST">
                                                         <button class="dropdown-item delete-button">
                                                             UnApprove
+                                                        </button>
+                                                    </form>
+
+                                                    <form id="multi-edit" action="/user/photos/edit" method="GET">
+                                                        <input type="hidden" value="" name="ids">
+                                                        <button class="dropdown-item delete-button">
+                                                            Edit
+                                                        </button>
+                                                    </form>
+
+                                                    <form id="multi-featured" action="" method="GET">
+
+                                                        <button class="dropdown-item delete-button">
+                                                            Make Featured
                                                         </button>
                                                     </form>
 
@@ -59,7 +74,6 @@
                                                             Delete
                                                         </button>
                                                     </form>
-
 
                                                 </div>
                                             </div>
@@ -197,7 +211,7 @@
                                                 <tfoot>
                                                     <tr>
                                                         <td colspan="2">
-                                               
+
                                                             <a href="/photos/new" class="btn btn-block btn-primary">add new Photo</a>
                                                         </td>
 

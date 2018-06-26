@@ -12,30 +12,30 @@
 
 
             <% for( let i = 0; i < numOfPages; i++){ %>
-                
-                                    <li class="<% if(page === (i+1)){%> active <% } %>" href="/photos/p/<%= i+1 %>">
-                                        <%  if(i >= 10){ %>
-                                            <a href="/photos/p/<%= i+1 %>">
-                                                <%= i+1 %>
-                                            </a>
-                                            <% }else{ %>
 
-                                                <a href="/photos/p/<%= i+1 %>">
-                                                    0
-                                                    <%= i+1 %>
-                                                </a>
-                                                <%  } %>
-                                    </li>
-                                    <% }  %>
+                <li class="<% if(page === (i+1)){%> active <% } %>" href="/photos/p/<%= i+1 %>">
+                    <%  if(i >= 10){ %>
+                        <a href="/photos/p/<%= i+1 %><%= queryParams %>">
+                            <%= i+1 %>
+                        </a>
+                        <% }else{ %>
+
+                            <a href="/photos/p/<%= i+1 %><%= queryParams %>">
+                                0
+                                <%= i+1 %>
+                            </a>
+                            <%  } %>
+                </li>
+                <% }  %>
 
 
-                                        <li>
-                                            <a href="#" aria-label="Next">
-                                                <span aria-hidden="true">
-                                                    <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                                                </span>
-                                            </a>
-                                        </li>
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">
+                                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                            </span>
+                        </a>
+                    </li>
         </ul>
     </nav>
 </div>

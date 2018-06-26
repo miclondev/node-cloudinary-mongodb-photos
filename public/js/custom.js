@@ -1,15 +1,15 @@
 $(document).ready(function () {
 
-  
+
 
     let selected = []
-
     const selectable = $('.selectable')
-
     const togglemulti = $('#togglemulti')
+
 
     togglemulti.click(function () {
         selectable.each(function () {
+
             if ($(this).is(':visible')) {
                 $(this).css({ 'display': "none" })
                 togglemulti.html('select')
@@ -24,14 +24,18 @@ $(document).ready(function () {
     const toggleSpan = $('#toggle-span')
 
     console.log(photoId.first().val())
+    const editvalues = $('#multi-edit input')
+
     photoId.on('change', function () {
         if (this.checked) {
             selected.push(this.value)
+            editvalues.val(selected)
             togglemulti.html(`<span>(${selected.length})</span> selected`)
             console.log(selected)
         } else {
             const val = selected.indexOf(this.value)
             selected.splice(val, 1)
+            editvalues.val(selected)
             togglemulti.html(`<span>(${selected.length})</span> selected`)
             console.log(selected)
         }
@@ -40,6 +44,9 @@ $(document).ready(function () {
     const approveForm = $('#approve-form')
     const unapproveForm = $('#unapprove-form')
     const deleteForm = $('#multi-delete-form')
+
+
+
 
     approveForm.submit(function (e) {
         e.preventDefault()
@@ -52,7 +59,7 @@ $(document).ready(function () {
         })
     })
 
-    deleteForm.submit(function(e){
+    deleteForm.submit(function (e) {
         e.preventDefault()
         $.post('/admin/multi/delete', { ids: selected }, function (data) {
             if (data === 'successful') {

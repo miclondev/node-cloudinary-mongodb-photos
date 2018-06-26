@@ -1,35 +1,40 @@
-<nav id="gallery-sidebar">
-    <div class="gallery-sidebar-header">
-        <h3> Filter </h3>
-    </div>
 
-    <ul class="list-unstyled components">
-        <p>Sort</p>
-        <li class="active">
-            <a href="?sort=latest"> Latest </a>
-        </li>
 
-        <li class="">
-            <a href="?sort=liked"> Most Likes </a>
-        </li>
-    </ul>
 
-    <ul class="list-unstyled components">
-        <p>By Category</p>
-        <li class="<% if(currentCategory === undefined) { %> active <% } %>">
-            <a href="/photos/p/1">
-                All
-            </a>
-        </li>
-        <% categories.forEach(cat => { %>
-            <% if(cat.name === "general") { return } %>
-                <li class="<% if(currentCategory === cat.name) { %> active <% } %>">
-                    <a href="/photos/p/1?category=<%= cat._id %>">
-                        <%= cat.name %>
-                    </a>
-                </li>
+    <nav id="gallery-sidebar">
 
-                <% }) %>
+        <div class="gallery-sidebar-header">
+            <h3> Filter </h3>
+        </div>
 
-    </ul>
-</nav>
+        <ul class="list-unstyled components">
+            <p>Sort</p>
+            <li class="active">
+                <a href="<%= currentUrl %>&sort=latest"> Latest </a>
+            </li>
+
+            <li class="">
+                <a href="<%= currentUrl %>&sort=liked"> Most Likes </a>
+            </li>
+        </ul>
+
+        <ul class="list-unstyled components">
+            <p>By Category</p>
+            <li class="<% if(currentCategory === undefined) { %> active <% } %>">
+                <a href="/photos/p/1?category=all">
+                    All
+                </a>
+            </li>
+            <% categories.forEach(cat => { %>
+                <% if(cat.name === "general") { return } %>
+                    <li class="<% if(currentCategory === cat.name) { %> active <% } %>">
+                        <a href="/photos/p/1?category=<%= cat._id %>">
+                            <%= cat.name %>
+                        </a>
+                    </li>
+
+                    <% }) %>
+
+        </ul>
+
+    </nav>

@@ -26,13 +26,13 @@
 
                 <div class="card" style="width:100%;">
 
-                        <div class="card-body">
-                                <h6 class="card-subtitle">Progress </h6>
-                                <div id="progressBarLoc" class="progress-bar bg-info progress-bar-striped" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100" style="width: 1%; height:15px;"
-                                    role="progressbar">
-                                    <span class="sr-only">0% Complete (success)</span>
-                                </div>
+                    <div class="card-body">
+                        <h6 class="card-subtitle">Progress </h6>
+                        <div id="progressBarLoc" class="progress-bar bg-info progress-bar-striped" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"
+                            style="width: 1%; height:15px;" role="progressbar">
+                            <span class="sr-only">0% Complete (success)</span>
                         </div>
+                    </div>
 
                     <div class="card-body">
                         <h6 class="card-subtitle">Events </h6>
@@ -41,21 +41,22 @@
                         </ul>
                     </div>
 
-                   
+
 
                 </div>
 
                 <div class="card" style="width:100%;">
-                    <div class="card-body" id="buttonLocation">
-                       
+                    <div class="card-body">
+                        <form action="/user/photos/edit" id="buttonLocation" method="GET">
+                           
+                        </form>
                     </div>
 
                 </div>
             </div>
 
         </div>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
+        <script src="/js/jquery-min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
             crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
@@ -74,34 +75,40 @@
                     const messages = $('#messages')
                     const progressBar = $('#progressBarLoc')
                     const buttonLocation = $('#buttonLocation')
+                    let uploadedId = []
 
                     this.on("addedfile", function (file) {
                         messages.append(`<li class="list-group-item">${file.name} has been added to upload queue </li>`)
-                        buttonLocation.html("<button disabled class='btn btn-block btn-warning'>  <i class='fa fa-spinner fa-spin'></i> uploading</button> ")
+                        buttonLocation.html("<button disabled class='btn btn-block btn-warning'>  <i class='fa fa-spinner fa-spin'></i> uploading</button>  ")
                     })
 
-                    this.on("success", function(file, response) {
+                    this.on("success", function (file, response) {
+                        //console.log(response.id)
+                        uploadedId.push(response.id)
+                        console.log(uploadedId)
                         messages.append(`<li class="list-group-item list-group-item-success"> ${file.name} successfully uploaded </li>`)
-                        buttonLocation.html("<a href='/user/photos/new/edit' class='btn btn-block btn-primary'>  Next </a> ")
-                    })
+                        buttonLocation.html(" <input type='hidden' name='ids' id='editableIds'><button type='submit' href='/user/photos/new/edit' class='btn btn-block btn-primary'>  Next </button> ")
+                        $('#editableIds').val(uploadedId)
+                   })
 
                     this.on("error", function (file, err) {
                         messages.append(`<li class="list-group-item list-group-item-danger"> ${file.name} - ${err} </li>`)
-                        buttonLocation.html("<a href='/user/photos/new/edit' class='btn btn-block btn-primary'>  Next </a> ")
+                        buttonLocation.html("<a href='/' class='btn btn-block btn-primary'>  Next </a> ")
                     })
 
                     this.on("maxfilesexceeded", function () {
                         messages.append(`<li class="list-group-item list-group-item-danger"> you have reached maximum file uploads for the now, try again in a few minutes</li>`)
-                        buttonLocation.html("<a href='/user/photos/new/edit' class='btn btn-block btn-primary btn-loading'>  Next </a> ")
+                        buttonLocation.html("<a href='/' class='btn btn-block btn-primary'>  Next </a> ")
                     })
 
                     this.on("totaluploadprogress", function (uploadProgress, totalBytes, totalBytesSent) {
-                        progressBar.css({'width' : `${uploadProgress}%`, 'height': '15px'})
+                        progressBar.css({ 'width': `${uploadProgress}%`, 'height': '15px' })
                     })
 
 
                 }
             }
+
 
 
 

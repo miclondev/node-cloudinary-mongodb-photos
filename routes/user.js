@@ -52,14 +52,34 @@ router.put('/photos/new/edit', (req, res) => {
     res.redirect('back')
 })
 
+router.get('/photos/edit', async (req, res) => {
+    let mongooseIds = []
+    const ids = req.query.ids.split(',')
+   // console.log(ids)
+    ids.forEach(id => {
+        mongooseIds.push(mongoose.Types.ObjectId(id))
+    })
+   // console.log(mongooseIds)
+    const categories = await Category.find({})
+    Photo.find({ _id: { $in: mongooseIds }, user: req.user._id })
+        .populate('category')
+        .exec((err, photos) => {
+            if (err) {
+                return res.send(err)
+            }
+            console.log(photos)
+            res.render('photos/edit', { photos, categories })
+        })
+})
+
 router.get('/profile', (req, res) => {
     console.log(req.user._id)
     User.findById(req.user._id, (err, found) => {
-        if(err){
+        if (err) {
             console.log(err)
             return res.send(err)
         }
-        res.render('user/profile', { userInfo : found })
+        res.render('user/profile', { userInfo: found })
     })
 })
 

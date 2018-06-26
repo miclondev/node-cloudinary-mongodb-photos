@@ -8,34 +8,41 @@ const { upload, cloudinary } = require('../funcs/uploadMainImage')
 //get recent photos
 router.get('/p/:page', async (req, res) => {
     const page = parseInt(req.params.page)
-    //console.log(req.query)
+
+    const currentUrl = `/photos${req.path}?category=${req.query.category}`
+    let queryParams
+
+    if(req.query.sort){
+        queryParams = `?category=${req.query.category}&sort=${req.query.sort}`
+    }else{
+        queryParams = `?category=${req.query.category}`
+    }
+  
     //filter
     let filter
     let currentCategory
     let sort
 
-    if (req.query.category) {
+    if (req.query.category === 'all') {
+        filter = {
+            'status.approved': true,
+        }
+    } else {
         filter = {
             'status.approved': true,
             'category': req.query.category || null,
         }
         currentCategory = await Category.findById(req.query.category)
             .then(cat => cat.name)
-    } else {
-        filter = {
-            'status.approved': true,
-        }
     }
 
- 
+
     const count = await Photo.count(filter)
     const categories = await Category.find({})
-
 
     let limit = 24
 
     const numOfPages = Math.ceil(count / limit)
-
 
     const skip = (page * limit) - limit;
 
@@ -55,7 +62,9 @@ router.get('/p/:page', async (req, res) => {
                 categories,
                 numOfPages,
                 page,
-                currentCategory
+                currentUrl,
+                currentCategory,
+                queryParams
             })
         })
 })
@@ -102,8 +111,7 @@ router.post('/', upload, async (req, res) => {
         }
         const created = await (new Photo(photoObj)).save()
         console.log('created', created)
-
-        res.send('uploaded')
+        res.json({ "response": "uploaded", "id": created._id })
     } catch (err) {
         res.send(err)
         console.log(err)
@@ -113,15 +121,19 @@ router.post('/', upload, async (req, res) => {
 //single photo route
 router.get('/:title', (req, res) => {
     console.log(req.params.title)
-    Photo.find({ slug: req.params.title }, (err, found) => {
-        if (err) {
-            console.log(err)
-        } else {
-            console.log(found)
-            res.render("photos/show", { photos: found })
-        }
-    })
+    Photo.findOne({ slug: req.params.title })
+        .populate('user')
+        .exec((err, photo) => {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log(photo)
+                res.render("photos/show", { photo })
+            }
+        })
 })
+
+
 
 //delete image
 router.delete('/:id', (req, res) => {
