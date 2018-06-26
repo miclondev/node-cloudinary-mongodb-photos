@@ -7828,7 +7828,7 @@ a.mytooltip {
 
 @media (max-width:767px) {
     .topbar {
-        position: fixed;
+        position: relative;
         width: 100%
     }
     .topbar .top-navbar {

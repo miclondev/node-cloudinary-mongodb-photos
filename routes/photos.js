@@ -8,9 +8,11 @@ const { upload, cloudinary } = require('../funcs/uploadMainImage')
 //get recent photos
 router.get('/p/:page', async (req, res) => {
     const page = parseInt(req.params.page)
+    //console.log(req.query)
     //filter
     let filter
-    let currentCategory;
+    let currentCategory
+    let sort
 
     if (req.query.category) {
         filter = {
@@ -25,7 +27,7 @@ router.get('/p/:page', async (req, res) => {
         }
     }
 
-    console.log('cur',currentCategory)
+ 
     const count = await Photo.count(filter)
     const categories = await Category.find({})
 
