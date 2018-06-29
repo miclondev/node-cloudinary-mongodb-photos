@@ -1,6 +1,11 @@
 <% include ./partials/header %>
     <% include ./partials/navbar %>
+        <% photos.forEach(photo => { %>
+            <h1>
+                <%= photo.title %>
+            </h1>
+            <p> <%= photo.description %> </p>
+            <% }) %>
+          
 
-        <h1> Search </h1>
-
-        <% include ./partials/footer %>
+                <% include ./partials/footer %>
