@@ -1,0 +1,44 @@
+
+                <div id="add-collection" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" style="display: none;"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add new Collection</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <form method="POST" action="/collection">
+                            <div class="modal-body">
+
+                                <div class="form-group">
+                                    <label for="recipient-name" class="control-label">Collection Title</label>
+                                    <input name="collection[title]" type="text" class="form-control" id="recipient-name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="message-text" class="control-label">Description</label>
+                                    <textarea name="collection[description]" class="form-control" id="message-text"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="recipient-name" class="control-label">Category</label>
+                                    <select name="collection[category]" class="custom-select col-12" id="inlineFormCustomSelect">
+                                        <option selected="">Choose...</option>
+                                        <% categories.forEach(cat => { %>
+                                            <option value="<%= cat._id %>">
+                                                <%= cat.name %>
+                                            </option>
+                                            <% }) %>
+
+                                                <option value="2">Two</option>
+                                                <option value="3">Three</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="submit" class="btn btn-primary btn-block waves-effect waves-light">Save Collection</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>

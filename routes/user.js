@@ -97,4 +97,22 @@ router.put('/', (req, res) => {
     })
 })
 
+//response for jquery get adding to gallery
+router.get('/photos', (req, res) => {
+    console.log(req.query.skip)
+    const skipValue = parseInt(req.query.skip)
+
+    Photo.find({ user: req.user._id })
+        .sort({ created_on: -1 })
+        .populate('category', 'name')
+        .limit(9)
+        .skip(skipValue)
+        .exec((err, photos) => {
+            if (err) {
+                return res.send(err)
+            }
+            res.json(photos)
+        })
+})
+
 module.exports = router;

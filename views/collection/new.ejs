@@ -1,0 +1,153 @@
+<% include ../partials/header %>
+    <% include ../partials/navbar %>
+
+        <div class="container-fluid body-items">
+            <div class="row el-element-overlay gallery-100">
+
+                <div class="col-md-12 gallery-title">
+                    <div class="row">
+                        <button type="button" id="sidebarCollapse" class="btn btn-info" data-toggle="modal" data-target="#add-collection">
+                            <i class="fas fa-align-left"></i>
+                            <span>Add New Collection</span>
+                        </button>
+                    </div>
+                    <h4 class="card-title">My Colections</h4>
+                </div>
+
+
+
+                <div class="el-element-overlay collection-body">
+
+                    <% collections.forEach(col => { %>
+
+                        <div class="card collection-card">
+                            <div class="el-card-item">
+                                <div class="el-card-avatar el-overlay-1">
+                                    <a class="image-popup-vertical-fit" href="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop,h_150,w_300/v1530282904/photos/adgallerystart-1530282895064.jpg">
+                                        <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop,h_150,w_300/v1530282904/photos/adgallerystart-1530282895064.jpg"
+                                            alt="user"> </a>
+                                </div>
+                                <div class="el-card-avatar el-overlay-1" style="display:  flex;">
+                                    <a class="image-popup-vertical-fit" href="../assets/images/big/img5.jpg">
+                                        <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_125,w_185/v1530275208/photos/adgallerystart-1530275206077.jpg"
+                                            alt="user" width="50%">
+                                    </a>
+                                    <a class="image-popup-vertical-fit" href="../assets/images/big/img5.jpg">
+                                        <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_125,w_185/v1530275208/photos/adgallerystart-1530016704051.jpg"
+                                            alt="user" width="50%">
+                                    </a>
+                                </div>
+                                <div class="el-card-content">
+                                    <h4 class="collection-title">
+                                        <%= col.title %>
+                                    </h4>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+
+                            <div class="collection-actions">
+                                <a data-toggle="modal" data-target="#add-images-to-collection" href="#" class="btn btn-circle btn-lg btn-primary add-image-button"
+                                    data-toggle="tooltip" title="add to collection">
+                                    <input type="hidden" name="id" value="<%= col._id %>">
+                                    <input type="hidden" name="title" value="<%= col.title %>">
+                                    <i class="fa fa-plus">
+                                    </i>
+                                </a>
+
+                                <a href="#" class="btn btn-circle btn-lg btn-warning" data-toggle="tooltip" title="edit collection">
+                                    <i class="fa fa-minus"></i>
+                                </a>
+                                <a href="#" class="btn btn-circle btn-lg btn-danger" data-toggle="tooltip" title="delete collection">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+
+                        </div>
+
+                        <% }) %>
+                </div>
+
+                <% include ./partials/add-collection-model %>
+
+                    <div class="modal fade bs-example-modal-lg" id="add-images-to-collection" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                        style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="title-of-collection">add media to </h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <form action="/collection?_method=PUT" method="POST">
+                                    <div class="modal-body" style="margin-bottom: 50px">
+
+
+                                        <div class="card collection-image-card" id="images-container">
+                                            <div class="el-card-item">
+                                                <div class="el-card-avatar el-overlay-1">
+                                                    <a id="select-image">
+                                                        <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_300/c_crop,h_200,w_200/v1530026840/photos/adgallerystart-1530026838849.jpg"
+                                                            alt="user">
+                                                    </a>
+                                                </div>
+                                                <div class="el-card-content">
+                                                    <h3 class="box-title">Project title</h3>
+                                                    <small>subtitle of project</small>
+                                                    <br> </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary btn-block waves-effect text-left" data-dismiss="modal">add</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+
+
+            </div>
+        </div>
+
+
+        <footer class="footer">
+            © 2018 Ad Gallery
+        </footer>
+        <script src="/js/jquery-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous"></script>
+        <script src="/assets/plugins/Magnific-Popup-master/dist/jquery.magnific-popup.min.js"></script>
+        <script src="/assets/plugins/Magnific-Popup-master/dist/jquery.magnific-popup-init.js"></script>
+        <script>
+            $(document).ready(function () {
+                const collectionTitle = $('#title-of-collection')
+                const addButton = $('.add-image-button')
+                let selectedImages = []
+                let userImages
+                let skip = 0
+                console.log(userImages)
+
+                addButton.click(function () {
+                    const modalTitle = $(this).find("input[name='title']").val()
+                    const colId = $(this).find("input[name='id']").val()
+                    collectionTitle.html(`add media to ${modalTitle}`)
+                    $.get(`/user/photos?skip=${skip}`, function (data) {
+                        userImages = data
+                        //console.log('user images', userImages)
+                        data.forEach(image => {
+                            console.log(image)
+                            $('#images-container').append(`<div class='el-card-item'><div class='el-card-avatar el-overlay-1'><a id='select-image'><img src='https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_300/c_crop,h_200,w_200/v1530026840/photos/${image.image.name}' alt='user'></a ></div ><div class='el-card-content'> <h3 class='box-title'>${image.image.name}</h3> <small>subtitle of project</small> <br> </div></div>`)
+                       })
+                    })
+
+                })
+            });
+        </script>
+
+        </body>
+
+        </html>
