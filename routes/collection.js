@@ -18,7 +18,7 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', isLoggedIn, (req, res) => {
-    
+
     const { collection } = req.body
     collection.user = req.user._id
     // console.log(collection)
@@ -35,16 +35,32 @@ router.post('/', isLoggedIn, (req, res) => {
 router.get('/new', isLoggedIn, async (req, res) => {
     const categories = await Category.find({})
     Collection.find({ user: req.user._id })
-    .sort({ created_on: -1 })
-    .exec((err, collections) => {
-        if(err){
-            return res.send(err)
-        }
-        res.render('collection/new', { collections, categories })
-    })
-    
+        .sort({ created_on: -1 })
+        .populate('content.images')
+        .exec((err, collections) => {
+            if (err) {
+                return res.send(err)
+            }
+            console.log(collections)
+            res.render('collection/new', { collections, categories })
+        })
 })
 
+router.put('/', isLoggedIn, (req, res) => {
+    const images = req.body.images.split(',')
+    console.log(images)
+    Collection.findById(req.body.collection).exec((err, col) => {
+        console.log(col)
+        images.forEach(image => {
+            col.content.images.push(image)
+            col.contentCount++           
+        })
+        console.log(col)
+        col.save()
+        res.redirect('back')
+    })
+
+})
 
 
 module.exports = router

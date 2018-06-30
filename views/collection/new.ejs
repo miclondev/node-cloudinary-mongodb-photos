@@ -23,17 +23,19 @@
                         <div class="card collection-card">
                             <div class="el-card-item">
                                 <div class="el-card-avatar el-overlay-1">
-                                    <a class="image-popup-vertical-fit" href="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop,h_150,w_300/v1530282904/photos/adgallerystart-1530282895064.jpg">
-                                        <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop,h_150,w_300/v1530282904/photos/adgallerystart-1530282895064.jpg"
-                                            alt="user"> </a>
+                                    <a class="image-popup-vertical-fit">
+                                        <% console.log(col.content.images[0]) %>
+                                        <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop,h_150,w_300/v1530282904/photos/<% if(col.content.images.length > 0) { %><%= col.content.images[0].image.name %><%}%> ">
+                                        
+                                        </a>
                                 </div>
                                 <div class="el-card-avatar el-overlay-1" style="display:  flex;">
-                                    <a class="image-popup-vertical-fit" href="../assets/images/big/img5.jpg">
-                                        <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_125,w_185/v1530275208/photos/adgallerystart-1530275206077.jpg"
+                                    <a class="image-popup-vertical-fit">
+                                        <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_125,w_185/v1530275208/photos/<% if(col.content.images.length > 0) { %><%= col.content.images[1].image.name %><%}%>"
                                             alt="user" width="50%">
                                     </a>
-                                    <a class="image-popup-vertical-fit" href="../assets/images/big/img5.jpg">
-                                        <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_125,w_185/v1530275208/photos/adgallerystart-1530016704051.jpg"
+                                    <a class="image-popup-vertical-fit">
+                                        <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_125,w_185/v1530275208/photos/<% if(col.content.images.length > 0) { %><%= col.content.images[2].image.name %><%}%>"
                                             alt="user" width="50%">
                                     </a>
                                 </div>
@@ -100,7 +102,9 @@
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button id="submit-images" type="submit" class="btn btn-primary btn-block waves-effect text-left" data-dismiss="modal">
+                                        <input type="hidden" name="images" id="submit-images">
+                                        <input type="hidden" name="collection" id="submit-collection">
+                                        <button id="submit-button" type="submit" class="btn btn-primary btn-block waves-effect text-left">
                                             add
                                         </button>
                                     </div>
@@ -139,8 +143,10 @@
                 const imageContainer = $('#images-container')
                 const nextButton = $('#next-button')
                 const prevButton = $('#prev-button')
-                const submitButton = $('#submit-images')
-                
+                const submitButton = $('#submit-button')
+                const submitCollection = $('#submit-collection')
+                const submitImages = $('#submit-images')
+
                 function addImageCount(title) {
                     submitButton.html(`add ${selectedImages.length} images to ${title}`)
                 }
@@ -160,29 +166,34 @@
                         }
 
                         data.forEach(image => {
-                            imageContainer.append(`<div class='el-card-item collection-item'><div class='el-card-avatar el-overlay-1'><a class='select-image' data-id='${image._id}'><img src='https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_300/c_crop,h_200,w_200/v1530026840/photos/${image.image.name}' alt='user'></a ></div ><div class='el-card-content collection-image-content'> <h4 class='box-title'>${image.image.name}</h4> <small> category : <strong>${image.category.name} <strong></small> <br> </div></div>`)
+                            imageContainer.append(`<div class='el-card-item collection-item'><i style='display:none;' class='fa fa-check photo-check'></i><div class='el-card-avatar el-overlay-1'><a class='select-image' data-id='${image._id}'><img src='https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_300/c_crop,h_200,w_200/v1530026840/photos/${image.image.name}' alt='${image.title}'></a ></div ><div class='el-card-content collection-image-content'> <h4 class='box-title'>${image.image.name}</h4> <small> category : <strong>${image.category.name} <strong></small> <br> </div></div>`)
                         })
                         const images = $('.select-image')
 
                         images.click(function () {
                             console.log($(this).attr('data-id'))
                             $(this).parent().toggleClass('selected-image')
+                            const check = $(this).parent().prev()
+                             check.toggle()
+
                             const imageId = $(this).attr('data-id')
-                            console.log(selectedImages.includes(imageId))
+                            
                             if (selectedImages.includes(imageId)) {
                                 const index = selectedImages.indexOf(imageId)
                                 console.log(index)
                                 selectedImages.splice(index, 1)
+                                submitImages.val(selectedImages)
                             } else {
                                 selectedImages.push(imageId)
+                                submitImages.val(selectedImages)
                             }
                             addImageCount(currentCollection)
                             console.log(selectedImages)
                         })
 
-                        images.each(function(){
+                        images.each(function () {
                             const imageId = $(this).attr('data-id')
-                            if(selectedImages.includes(imageId)){
+                            if (selectedImages.includes(imageId)) {
                                 $(this).parent().addClass('selected-image')
                             }
                         })
@@ -190,10 +201,14 @@
                     })
                 }
 
+                //WHEN ADD BUTTON IS CLICKED
                 addButton.click(function () {
                     const modalTitle = $(this).find("input[name='title']").val()
                     currentCollection = modalTitle
+                    
                     const colId = $(this).find("input[name='id']").val()
+                    submitCollection.val(colId)
+
                     collectionTitle.html(`add media to ${modalTitle}`)
 
                     if (skip > 0) {
