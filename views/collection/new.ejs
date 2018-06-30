@@ -131,6 +131,7 @@
                 const collectionTitle = $('#title-of-collection')
                 const addButton = $('.add-image-button')
                 let selectedImages = []
+                let currentCollection
 
                 let skip = 0
 
@@ -139,7 +140,7 @@
                 const nextButton = $('#next-button')
                 const prevButton = $('#prev-button')
                 const submitButton = $('#submit-images')
-
+                
                 function addImageCount(title) {
                     submitButton.html(`add ${selectedImages.length} images to ${title}`)
                 }
@@ -151,7 +152,7 @@
                     imageContainer.html(' ')
                     $.get(`/user/photos?skip=${skip}`, function (data) {
                         Spinner.addClass('spinner-hide')
-                       //console.log('data length', data.length)
+                        //console.log('data length', data.length)
                         if (data.length < 9) {
                             nextButton.addClass('spinner-hide')
                         } else {
@@ -162,19 +163,36 @@
                             imageContainer.append(`<div class='el-card-item collection-item'><div class='el-card-avatar el-overlay-1'><a class='select-image' data-id='${image._id}'><img src='https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_300/c_crop,h_200,w_200/v1530026840/photos/${image.image.name}' alt='user'></a ></div ><div class='el-card-content collection-image-content'> <h4 class='box-title'>${image.image.name}</h4> <small> category : <strong>${image.category.name} <strong></small> <br> </div></div>`)
                         })
                         const images = $('.select-image')
-                        images.click(function () { 
+
+                        images.click(function () {
                             console.log($(this).attr('data-id'))
                             $(this).parent().toggleClass('selected-image')
-                            selectedImages.push($(this).attr('data-id'))
+                            const imageId = $(this).attr('data-id')
+                            console.log(selectedImages.includes(imageId))
+                            if (selectedImages.includes(imageId)) {
+                                const index = selectedImages.indexOf(imageId)
+                                console.log(index)
+                                selectedImages.splice(index, 1)
+                            } else {
+                                selectedImages.push(imageId)
+                            }
+                            addImageCount(currentCollection)
                             console.log(selectedImages)
                         })
+
+                        images.each(function(){
+                            const imageId = $(this).attr('data-id')
+                            if(selectedImages.includes(imageId)){
+                                $(this).parent().addClass('selected-image')
+                            }
+                        })
+
                     })
-
-
                 }
 
                 addButton.click(function () {
                     const modalTitle = $(this).find("input[name='title']").val()
+                    currentCollection = modalTitle
                     const colId = $(this).find("input[name='id']").val()
                     collectionTitle.html(`add media to ${modalTitle}`)
 
