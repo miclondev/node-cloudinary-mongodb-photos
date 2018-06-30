@@ -55,11 +55,11 @@ router.put('/photos/new/edit', (req, res) => {
 router.get('/photos/edit', async (req, res) => {
     let mongooseIds = []
     const ids = req.query.ids.split(',')
-   // console.log(ids)
+    // console.log(ids)
     ids.forEach(id => {
         mongooseIds.push(mongoose.Types.ObjectId(id))
     })
-   // console.log(mongooseIds)
+    // console.log(mongooseIds)
     const categories = await Category.find({})
     Photo.find({ _id: { $in: mongooseIds }, user: req.user._id })
         .populate('category')
@@ -72,14 +72,28 @@ router.get('/photos/edit', async (req, res) => {
         })
 })
 
-router.get('/profile', (req, res) => {
-    console.log(req.user._id)
-    User.findById(req.user._id, (err, found) => {
+router.get('/profile', async (req, res) => {
+
+    const photos = await Photo.find({ user: req.user._id }).limit(4).sort({ created_on: -1 })
+
+    User.findById(req.user._id, (err, user) => {
         if (err) {
             console.log(err)
             return res.send(err)
         }
-        res.render('user/profile', { userInfo: found })
+        res.render('user/profile', { user, photos })
+    })
+})
+
+router.put('/', (req, res) => {
+    console.log(req.body)
+
+    User.findByIdAndUpdate(req.user._id, req.body.user, (err, updated) => {
+        if (err) {
+            console.log(err)
+            return res.send(err)
+        }
+        res.redirect('back')
     })
 })
 

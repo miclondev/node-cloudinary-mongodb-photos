@@ -1,0 +1,53 @@
+<div class="tab-pane" id="settings" role="tabpanel">
+    <div class="card-body">
+
+        <form action="/user?_method=PUT" method="POST" class="form-horizontal form-material">
+            <div class="form-group">
+                <label class="col-md-12">Full Name</label>
+                <div class="col-md-12">
+                    <input name="user[fullname]" type="text" placeholder="enter full name" value="<%= user.fullname %>" class="form-control form-control-line">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="example-email" class="col-md-12">Email</label>
+                <div class="col-md-12">
+                    <input name="user[email]" type="email"  value="<%= user.email %>" placeholder="johnathan@admin.com" class="form-control form-control-line" name="example-email"
+                        id="example-email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-12">Password</label>
+                <div class="col-md-12">
+                    <input type="password" value="password" class="form-control form-control-line">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-12">Phone No</label>
+                <div class="col-md-12">
+                    <input name="user[phone]" value="<%= user.phone %>" type="text" placeholder="123 456 7890" class="form-control form-control-line">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-12">About</label>
+                <div class="col-md-12">
+                    <textarea name="user[about]" rows="5" class="form-control form-control-line">  <%= user.about %></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-12">Select Country</label>
+                <div class="col-sm-12">
+                    <select name="user[country]" class="form-control form-control-line">
+                        <option value="tanzania">Tanzania</option>
+                        <option value="kenya">Kenya</option>
+                        <option value="Uganda">Uganda</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <button type="submit" class="btn btn-success">Update Profile</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

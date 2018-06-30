@@ -25,6 +25,7 @@ const indexRoutes = require('./routes/index')
 const photoRoutes = require('./routes/photos')
 const adminRoutes = require('./routes/admin')
 const userRoutes = require('./routes/user')
+const collectionRoutes = require('./routes/collection')
 
 //configuration keys
 const Keys = require('./config/keys')
@@ -83,6 +84,7 @@ app.use("/", indexRoutes)
 app.use("/photos", photoRoutes)
 app.use("/admin", adminRoutes)
 app.use("/user", userRoutes)
+app.use("/collection", collectionRoutes)
 
 //Application initiate
 

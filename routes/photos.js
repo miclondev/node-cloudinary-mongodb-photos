@@ -9,19 +9,28 @@ const { upload, cloudinary } = require('../funcs/uploadMainImage')
 router.get('/p/:page', async (req, res) => {
     const page = parseInt(req.params.page)
 
-    const currentUrl = `/photos${req.path}?category=${req.query.category}`
-    let queryParams
+    let queryParams = '?'
 
-    if(req.query.sort){
-        queryParams = `?category=${req.query.category}&sort=${req.query.sort}`
-    }else{
-        queryParams = `?category=${req.query.category}`
-    }
-  
+    const queryValues = Object.values(req.query)
+    const queryKeys = Object.keys(req.query)
+
+    queryValues.forEach((value, i) => {
+        if (i === 0) {
+            queryParams = queryParams + `${queryKeys[i]}=` + value
+        } else {
+            queryParams = queryParams + `&${queryKeys[i]}=` + value
+        }
+    })
+
+    const currentUrl = `/photos${req.path}${queryParams}`
+    // console.log(queryParams)
+    // console.log(currentUrl)
+
     //filter
     let filter
     let currentCategory
     let sort
+    let userQuery
 
     if (req.query.category === 'all') {
         filter = {
@@ -35,6 +44,15 @@ router.get('/p/:page', async (req, res) => {
         currentCategory = await Category.findById(req.query.category)
             .then(cat => cat.name)
     }
+
+    if(req.query.user){
+        filter.user = req.query.user
+        userQuery = `&user=${req.query.user}`
+    }
+    
+    console.log(userQuery)
+
+    console.log(filter)
 
 
     const count = await Photo.count(filter)
@@ -64,7 +82,8 @@ router.get('/p/:page', async (req, res) => {
                 page,
                 currentUrl,
                 currentCategory,
-                queryParams
+                queryParams,
+                userQuery
             })
         })
 })

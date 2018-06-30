@@ -1,0 +1,73 @@
+<!--profile tab-->
+<div class="tab-pane active" id="profile" role="tabpanel">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-3 col-xs-6 b-r">
+                <strong>Full Name</strong>
+                <br>
+                <p class="text-muted">
+                    <%= user.fullname %>
+                </p>
+            </div>
+            <div class="col-md-3 col-xs-6 b-r">
+                <strong>Mobile</strong>
+                <br>
+                <p class="text-muted">
+                    <%= user.phone %>
+                </p>
+            </div>
+            <div class="col-md-3 col-xs-6 b-r">
+                <strong>Email</strong>
+                <br>
+                <p class="text-muted">
+                    <%= user.email %>
+                </p>
+            </div>
+            <div class="col-md-3 col-xs-6">
+                <strong>Location</strong>
+                <br>
+                <p class="text-muted">
+                    <%= user.country %>
+                </p>
+            </div>
+        </div>
+        <hr>
+
+        <p class="m-t-30">
+            <%= user.about %>
+        </p>
+
+        <h4 class="font-medium m-t-30">Media</h4>
+
+
+        <div class="sl-item">
+
+<% if(photos.length > 0){ %>
+
+            <div class="sl-right">
+                <div>
+                    <p>Recent Images</p>
+                    <div class="row">
+                        <% photos.forEach(photo => { %>
+                        <div class="col-lg-3 col-md-6 m-b-20">
+                            <a href="/photos/<%= photo.slug %>">
+                            <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_300/c_crop,g_face,h_115,w_170/photos/<%= photo.image.name %>" class="img-responsive radius">
+                        </a>
+                        </div>
+                   <% })%>
+                    </div>
+
+                    <div class="like-comm">
+                        <a href="/photos/p/1?category=all&user=<%= user._id %>" class="link m-r-10">
+                           View All Images by <%= user.username %>
+                        </a>
+                         
+                    </div>
+                </div>
+            </div>
+            <% } %>
+
+        </div>
+
+    </div>
+</div>

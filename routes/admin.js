@@ -1,6 +1,5 @@
 const express = require('express')
-const router = express.Router()
-const moment = require('moment')
+const router = express.Router() 
 //mongo
 const mongoose = require('mongoose')
 const Category = mongoose.model('category')

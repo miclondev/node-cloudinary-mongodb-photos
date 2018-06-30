@@ -48,6 +48,7 @@ router.post("/register", (req, res) => {
     })
 })
 
+//login
 router.post("/login", passport.authenticate("local", {
     failureRedirect: "/login"
 }), (req, res) => {
@@ -55,11 +56,14 @@ router.post("/login", passport.authenticate("local", {
     res.redirect(backURL)
 })
 
+//logout
 router.post("/logout", (req, res) => {
     req.logout()
     res.redirect("/")
 })
 
+
+//search items
 router.get("/search", async (req, res) => {
     console.log(req.query)
     const { type } = req.query;

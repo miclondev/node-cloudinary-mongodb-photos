@@ -21,14 +21,14 @@
         <ul class="list-unstyled components">
             <p>By Category</p>
             <li class="<% if(currentCategory === undefined) { %> active <% } %>">
-                <a href="/photos/p/1?category=all">
+                <a href="/photos/p/1?category=all<% if(userQuery){%><%= userQuery %><% } %>">
                     All
                 </a>
             </li>
             <% categories.forEach(cat => { %>
                 <% if(cat.name === "general") { return } %>
                     <li class="<% if(currentCategory === cat.name) { %> active <% } %>">
-                        <a href="/photos/p/1?category=<%= cat._id %>">
+                        <a href="/photos/p/1?category=<%= cat._id %><% if(userQuery){%><%= userQuery %><% } %>">
                             <%= cat.name %>
                         </a>
                     </li>

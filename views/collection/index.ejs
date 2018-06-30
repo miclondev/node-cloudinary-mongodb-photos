@@ -1,0 +1,11 @@
+<% include ../partials/header %>
+    <% include ../partials/navbar %>
+        <h1> Collections</h1>
+
+        <% collections.forEach(col => { %>
+            <p>
+                <%= col.title %>
+            </p>
+        <% }) %>
+        
+<% include ../partials/footer %>
