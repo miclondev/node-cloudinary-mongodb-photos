@@ -99,7 +99,7 @@ router.put('/', (req, res) => {
 
 //response for jquery get adding to gallery
 router.get('/photos', (req, res) => {
-    console.log(req.query.skip)
+    console.log('skip', req.query.skip)
     const skipValue = parseInt(req.query.skip)
 
     Photo.find({ user: req.user._id })
@@ -111,6 +111,7 @@ router.get('/photos', (req, res) => {
             if (err) {
                 return res.send(err)
             }
+            console.log('photos fetched')
             res.json(photos)
         })
 })

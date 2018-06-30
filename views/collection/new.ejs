@@ -80,25 +80,29 @@
                                 <form action="/collection?_method=PUT" method="POST">
                                     <div class="modal-body" style="margin-bottom: 50px">
 
+                                        <div id="collection-spinner" class="center-with-flex" style="">
+                                            <i class="fa fa-spin fa-spinner" style="font-size: 100px"></i>
+                                        </div>
 
                                         <div class="card collection-image-card" id="images-container">
-                                            <div class="el-card-item">
-                                                <div class="el-card-avatar el-overlay-1">
-                                                    <a id="select-image">
-                                                        <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_300/c_crop,h_200,w_200/v1530026840/photos/adgallerystart-1530026838849.jpg"
-                                                            alt="user">
-                                                    </a>
-                                                </div>
-                                                <div class="el-card-content">
-                                                    <h3 class="box-title">Project title</h3>
-                                                    <small>subtitle of project</small>
-                                                    <br> </div>
-                                            </div>
+
+                                        </div>
+
+                                        <div class="collection-add-nav">
+                                            <button id="prev-button" type="button" class="btn btn-secondary">
+                                                <i class="fa fa-angle-double-left"></i>Previous Photos
+
+                                            </button>
+                                            <button id="next-button" type="button" class="btn btn-secondary">Next Photos
+                                                <i class="fa fa-angle-double-right"></i>
+                                            </button>
                                         </div>
 
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary btn-block waves-effect text-left" data-dismiss="modal">add</button>
+                                        <button id="submit-images" type="submit" class="btn btn-primary btn-block waves-effect text-left" data-dismiss="modal">
+                                            add
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -127,24 +131,81 @@
                 const collectionTitle = $('#title-of-collection')
                 const addButton = $('.add-image-button')
                 let selectedImages = []
-                let userImages
+
                 let skip = 0
-                console.log(userImages)
+
+                const Spinner = $('#collection-spinner')
+                const imageContainer = $('#images-container')
+                const nextButton = $('#next-button')
+                const prevButton = $('#prev-button')
+                const submitButton = $('#submit-images')
+
+                function addImageCount(title) {
+                    submitButton.html(`add ${selectedImages.length} images to ${title}`)
+                }
+
+                function fetchImages() {
+                    if (skip === 0) {
+                        prevButton.addClass('spinner-hide')
+                    }
+                    imageContainer.html(' ')
+                    $.get(`/user/photos?skip=${skip}`, function (data) {
+                        Spinner.addClass('spinner-hide')
+                       //console.log('data length', data.length)
+                        if (data.length < 9) {
+                            nextButton.addClass('spinner-hide')
+                        } else {
+                            nextButton.removeClass('spinner-hide')
+                        }
+
+                        data.forEach(image => {
+                            imageContainer.append(`<div class='el-card-item collection-item'><div class='el-card-avatar el-overlay-1'><a class='select-image' data-id='${image._id}'><img src='https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_300/c_crop,h_200,w_200/v1530026840/photos/${image.image.name}' alt='user'></a ></div ><div class='el-card-content collection-image-content'> <h4 class='box-title'>${image.image.name}</h4> <small> category : <strong>${image.category.name} <strong></small> <br> </div></div>`)
+                        })
+                        const images = $('.select-image')
+                        images.click(function () { 
+                            console.log($(this).attr('data-id'))
+                            $(this).parent().toggleClass('selected-image')
+                            selectedImages.push($(this).attr('data-id'))
+                            console.log(selectedImages)
+                        })
+                    })
+
+
+                }
 
                 addButton.click(function () {
                     const modalTitle = $(this).find("input[name='title']").val()
                     const colId = $(this).find("input[name='id']").val()
                     collectionTitle.html(`add media to ${modalTitle}`)
-                    $.get(`/user/photos?skip=${skip}`, function (data) {
-                        userImages = data
-                        //console.log('user images', userImages)
-                        data.forEach(image => {
-                            console.log(image)
-                            $('#images-container').append(`<div class='el-card-item'><div class='el-card-avatar el-overlay-1'><a id='select-image'><img src='https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_300/c_crop,h_200,w_200/v1530026840/photos/${image.image.name}' alt='user'></a ></div ><div class='el-card-content'> <h3 class='box-title'>${image.image.name}</h3> <small>subtitle of project</small> <br> </div></div>`)
-                       })
-                    })
 
+                    if (skip > 0) {
+                        skip = 0
+                        Spinner.removeClass('spinner-hide')
+                        return fetchImages()
+                    }
+
+                    if (imageContainer.children().length > 0) {
+                        return
+                    }
+
+                    fetchImages()
                 })
+
+                nextButton.click(function () {
+                    Spinner.removeClass('spinner-hide')
+                    skip = skip + 10
+                    prevButton.removeClass('spinner-hide')
+                    fetchImages()
+                })
+
+                prevButton.click(function () {
+                    Spinner.removeClass('spinner-hide')
+                    skip = skip - 10
+                    fetchImages()
+                })
+
+
+
             });
         </script>
 
