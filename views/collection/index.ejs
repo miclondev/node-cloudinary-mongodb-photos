@@ -1,39 +1,57 @@
 <% include ../partials/header %>
     <% include ../partials/navbar %>
-        <h1> Collections</h1>
-
-        <% collections.forEach(col => { %>
-            <p>
-                <%= col.title %>
-            </p>
-            <% }) %>
-
-                <div class="card-columns el-element-overlay">
-                   
-                    <div class="card">
+        <div class="container-fluid body-items"">
+            <div class="el-element-overlay collection-body">
+                <% collections.forEach(col => { %>
+                    <div class="card collection-card">
                         <div class="el-card-item">
-                            <div class="el-card-avatar el-overlay-1">
-                                <a class="image-popup-vertical-fit" href="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_600/c_crop,h_150,w_330/v1530282904/photos/adgallerystart-1530282895064.jpg">
-                                    <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_600/c_crop,h_150,w_330/v1530282904/photos/adgallerystart-1530282895064.jpg"
-                                        alt="user"> </a>
-                            </div>
-                            <div class="el-card-avatar el-overlay-1" style="display:  flex;">
-                                <a class="image-popup-vertical-fit" href="../assets/images/big/img5.jpg">
-                                    <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_125,w_185/v1530275208/photos/adgallerystart-1530275206077.jpg"
-                                        alt="user" width="50%">
-                                </a>
-                                <a class="image-popup-vertical-fit" href="../assets/images/big/img5.jpg">
-                                    <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_125,w_185/v1530275208/photos/adgallerystart-1530016704051.jpg"
-                                        alt="user" width="50%">
-                                </a>
-                            </div>
-                            <div class="el-card-content">
-                                <h3 class="box-title">Dar es salaam photos</h3>
-                                <small>By title</small>
-                                <br> </div>
-                        </div>
-                    </div>
-                    
 
-                </div>
-                <% include ../partials/footer %>
+                            <div class="el-card-avatar el-overlay-1">
+                                <a href="/collection/<%= col._id %>" <% if(col.content.images.length===0 ){ %> data-toggle="modal" data-target="#add-images-to-collection"
+                                    <% }%>>
+                                        <% if(col.content.images.length > 0){ %>
+                                            <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop,h_150,w_300/v1530282904/photos/<%= col.content.images[0].image.name %>">
+                                            <% }else{ %>
+                                                <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_300/c_crop,h_150,w_300/v1530434542/addimage.jpg">
+                                                <% } %>
+                                </a>
+                            </div>
+
+                            <div class="el-card-avatar el-overlay-1" style="display:  flex;">
+                                <a href="/collection/<%= col._id %>" <% if(col.content.images.length < 1){ %> data-toggle="modal" data-target="#add-images-to-collection"
+                                    <% }%>>
+                                        <% if(col.content.images.length > 1){ %>
+                                            <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_125,w_185/v1530275208/photos/<%= col.content.images[1].image.name %>"
+                                                width="50%">
+                                            <% }else{ %>
+                                                <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_125,w_185/addimage.jpg" alt="">
+                                                <% } %>
+                                </a>
+
+                                <a href="/collection/<%= col._id %>">
+                                    <% if(col.content.images.length > 2){ %>
+                                        <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_125,w_185/v1530275208/photos/<%= col.content.images[2].image.name %>"
+                                            width="50%">
+                                        <% }else{ %>
+                                            <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_125,w_185/v1530434542/addimage.jpg">
+                                            <% } %>
+                                </a>
+
+                            </div>
+
+                            <div class="el-card-content">
+                                <h4 class="collection-title">
+                                    <%= col.title %>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="dropdown-divider"></div>
+
+
+
+                    </div>
+                    <% }) %>
+            </div>
+        </div>
+
+        <% include ../partials/footer %>

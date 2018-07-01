@@ -9,6 +9,7 @@ const { isLoggedIn } = require('../middleware')
 
 router.get('/', (req, res) => {
     Collection.find({})
+        .populate('content.images')
         .exec((err, collections) => {
             if (err) {
                 return res.send(err)
@@ -53,7 +54,7 @@ router.put('/', isLoggedIn, (req, res) => {
         console.log(col)
         images.forEach(image => {
             col.content.images.push(image)
-            col.contentCount++           
+            col.contentCount++
         })
         console.log(col)
         col.save()

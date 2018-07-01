@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const Category = mongoose.model('category')
 const User = mongoose.model('user')
 const Photo = mongoose.model('photo')
-
+const Collection = mongoose.model('collection')
 //middleware
 const { isLoggedIn, isAdmin } = require('../middleware')
 //upload image to cloud
@@ -164,5 +164,10 @@ router.post('/multi/delete', (req, res) => {
     })
     res.send('successful')
 })
+
+
+// router.put('/multi/collection/approve', (req,res) => {
+
+// })
 
 module.exports = router

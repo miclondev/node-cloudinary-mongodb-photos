@@ -22,23 +22,39 @@
 
                         <div class="card collection-card">
                             <div class="el-card-item">
+
                                 <div class="el-card-avatar el-overlay-1">
-                                    <a class="image-popup-vertical-fit">
-                                        <% console.log(col.content.images[0]) %>
-                                        <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop,h_150,w_300/v1530282904/photos/<% if(col.content.images.length > 0) { %><%= col.content.images[0].image.name %><%}%> ">
-                                        
-                                        </a>
+                                    <a href="/collection/<%= col._id %>" <% if(col.content.images.length === 0){ %> data-toggle="modal" data-target="#add-images-to-collection" <% }%>>
+                                        <% if(col.content.images.length > 0){ %>
+                                            <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop,h_150,w_300/v1530282904/photos/<%= col.content.images[0].image.name %>">
+                                            <% }else{ %>
+                                                <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_300/c_crop,h_150,w_300/v1530434542/addimage.jpg">
+                                                <% } %>
+                                    </a>
                                 </div>
+
                                 <div class="el-card-avatar el-overlay-1" style="display:  flex;">
-                                    <a class="image-popup-vertical-fit">
-                                        <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_125,w_185/v1530275208/photos/<% if(col.content.images.length > 0) { %><%= col.content.images[1].image.name %><%}%>"
-                                            alt="user" width="50%">
+                                    <a href="/collection/<%= col._id %>" <% if(col.content.images.length < 1){ %> data-toggle="modal" data-target="#add-images-to-collection" <% }%>>
+                                        <% if(col.content.images.length > 1){ %>
+                                            <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_125,w_185/v1530275208/photos/<%= col.content.images[1].image.name %>"
+                                                width="50%">
+                                            <% }else{ %>
+                                                <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_125,w_185/addimage.jpg"
+                                                    alt="">
+                                                <% } %>
                                     </a>
-                                    <a class="image-popup-vertical-fit">
-                                        <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_125,w_185/v1530275208/photos/<% if(col.content.images.length > 0) { %><%= col.content.images[2].image.name %><%}%>"
-                                            alt="user" width="50%">
+
+                                    <a href="/collection/<%= col._id %>">
+                                        <% if(col.content.images.length > 2){ %>
+                                            <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_125,w_185/v1530275208/photos/<%= col.content.images[2].image.name %>"
+                                                width="50%">
+                                            <% }else{ %>
+                                                <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,h_125,w_185/v1530434542/addimage.jpg">
+                                            <% } %>
                                     </a>
+
                                 </div>
+
                                 <div class="el-card-content">
                                     <h4 class="collection-title">
                                         <%= col.title %>
@@ -92,10 +108,12 @@
 
                                         <div class="collection-add-nav">
                                             <button id="prev-button" type="button" class="btn btn-secondary">
-                                                <i class="fa fa-angle-double-left"></i>Previous Photos
+                                                <i class="fa fa-angle-double-left"></i>
+                                                Previous Photos
 
                                             </button>
-                                            <button id="next-button" type="button" class="btn btn-secondary">Next Photos
+                                            <button id="next-button" type="button" class="btn btn-secondary">
+                                                Next Photos
                                                 <i class="fa fa-angle-double-right"></i>
                                             </button>
                                         </div>
@@ -174,10 +192,10 @@
                             console.log($(this).attr('data-id'))
                             $(this).parent().toggleClass('selected-image')
                             const check = $(this).parent().prev()
-                             check.toggle()
+                            check.toggle()
 
                             const imageId = $(this).attr('data-id')
-                            
+
                             if (selectedImages.includes(imageId)) {
                                 const index = selectedImages.indexOf(imageId)
                                 console.log(index)
@@ -205,7 +223,7 @@
                 addButton.click(function () {
                     const modalTitle = $(this).find("input[name='title']").val()
                     currentCollection = modalTitle
-                    
+
                     const colId = $(this).find("input[name='id']").val()
                     submitCollection.val(colId)
 
@@ -220,10 +238,10 @@
                     if (imageContainer.children().length > 0) {
                         return
                     }
-
                     fetchImages()
                 })
 
+                //nextbutton function
                 nextButton.click(function () {
                     Spinner.removeClass('spinner-hide')
                     skip = skip + 10
@@ -231,6 +249,7 @@
                     fetchImages()
                 })
 
+                //previous button function
                 prevButton.click(function () {
                     Spinner.removeClass('spinner-hide')
                     skip = skip - 10
