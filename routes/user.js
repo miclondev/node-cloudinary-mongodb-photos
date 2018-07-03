@@ -117,28 +117,46 @@ router.get('/photos', (req, res) => {
         })
 })
 
-router.put('/profile-image', upload, async (req, res) => {
-    //console.log(req.file)
-    const result = await cloudinary.v2.uploader.upload(req.file.path,
-        { public_id: req.file.filename, folder: '/user' })
-    console.log('result', result)
+router.put('/profile-image', upload, (req, res) => {
 
-    const photoUpdate = {
-        image: {
+    User.findById(req.user._id).then(async (user) => {
+        if (user.image.name) {
+            await cloudinary.v2.uploader.destroy(user.image.public_id, (err, deleted) => {
+                console.log(deleted)
+            })
+        }
+        const result = await cloudinary.v2.uploader.upload(req.file.path,
+            { public_id: req.file.filename, folder: '/user' })
+        console.log('result', result)
+
+        user.image = {
             name: `${result.original_filename}.${result.format}`,
             url: result.url,
             secure_url: result.secure_url,
             public_id: result.public_id
         }
-    }
-
-    User.findByIdAndUpdate(req.user._id, photoUpdate, (err, updated) => {
-        if (err) {
-            return res.send(err)
-        }
-        console.log('updated', updated)
+        console.log(user)
+        user.save()
         res.redirect('back')
     })
+    // const photoUpdate = {
+    //     image: {
+    //         name: `${result.original_filename}.${result.format}`,
+    //         url: result.url,
+    //         secure_url: result.secure_url,
+    //         public_id: result.public_id
+    //     }
+    // }
+
+    //console.log(req.file)
+
+    // User.findByIdAndUpdate(req.user._id, photoUpdate, (err, updated) => {
+    //     if (err) {
+    //         return res.send(err)
+    //     }
+    //     console.log('updated', updated)
+    //     res.redirect('back')
+    // })
 })
 
 module.exports = router;
