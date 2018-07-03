@@ -68,8 +68,14 @@ router.get('/category', (req, res) => {
     })
 })
 
+//admin index
 router.get('/', (req, res) => {
     res.render('admin/index')
+})
+
+//admin home settings
+router.get('/home', async (req, res) => {
+    res.render('admin/home')
 })
 
 //get users

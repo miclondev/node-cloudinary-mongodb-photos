@@ -36,50 +36,76 @@
                     <div class="col-lg-4 col-xlg-3 col-md-5">
                         <div class="card">
                             <div class="card-body">
-                                <center class="m-t-30">
-                                    <img src="../assets/images/users/5.jpg" class="img-circle" width="150">
-                                    <h4 class="card-title m-t-10">Hanna Gover</h4>
-                                    <h6 class="card-subtitle">Accoubts Manager Amix corp</h6>
-                                    <div class="row text-center justify-content-md-center">
-                                        <div class="col-4">
-                                            <a href="javascript:void(0)" class="link">
-                                                <i class="icon-people"></i>
-                                                <font class="font-medium">254</font>
-                                            </a>
-                                        </div>
-                                        <div class="col-4">
-                                            <a href="javascript:void(0)" class="link">
-                                                <i class="icon-picture"></i>
-                                                <font class="font-medium">54</font>
-                                            </a>
-                                        </div>
+                                <center class="m-t-30 profile-info">
+
+                                    <form action="/user/profile-image?_method=PUT" method="POST" id="update-form" enctype="multipart/form-data">
+                                        <input type="file" name="image" id="image-selector" style="width: 0px;height: 0px;overflow: hidden;">
+                                    </form>
+
+                                    <div class="profile-image" id="upload-div" style="display: none;">
+                                        <i class="fa fa-upload"></i>
+                                        <p>change image</p>
+
                                     </div>
+
+
+                                    <% if(user.image.name){ %>
+                                        <img id="profile-picture" src="http://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,g_faces:center,h_150,w_150/user/<%= user.image.name %>"
+                                            class="img-circle" width="150">
+        
+                                        <% }else{ %>
+                                            <img id="profile-picture" src="http://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_150/c_crop,g_faces:center,h_150,w_150/user-icon-image-placeholder.jpg"
+                                                class="img-circle" width="150" height="150">
+                                                <span style=" position: absolute; float: right; right: 124px; color: black; top: 177px;">upload Image</span>
+                                            <% } %>
+
+
+
+                                                <h4 class="card-title m-t-10">
+                                                    <%= user.fullname %>
+                                                </h4>
+                                                <h6 class="card-subtitle">Photographer and videographer</h6>
+                                                <div class="row text-center justify-content-md-center">
+                                                    <div class="col-4">
+                                                        <a href="javascript:void(0)" class="link">
+                                                            <i class="icon-people"></i>
+                                                            <font class="font-medium">12</font>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <a href="javascript:void(0)" class="link">
+                                                            <i class="icon-picture"></i>
+                                                            <font class="font-medium">54</font>
+                                                        </a>
+                                                    </div>
+                                                </div>
                                 </center>
                             </div>
                             <div>
                                 <hr> </div>
                             <div class="card-body">
                                 <small class="text-muted">Email address </small>
-                                <h6>hannagover@gmail.com</h6>
+                                <h6>
+                                    <%= user.email %>
+                                </h6>
                                 <small class="text-muted p-t-30 db">Phone</small>
-                                <h6>+91 654 784 547</h6>
+                                <h6>
+                                    <%= user.phone %>
+                                </h6>
                                 <small class="text-muted p-t-30 db">Address</small>
                                 <h6>71 Pilgrim Avenue Chevy Chase, MD 20815</h6>
-                                <div class="map-box">
-                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d470029.1604841957!2d72.29955005258641!3d23.019996818380896!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sAhmedabad%2C+Gujarat!5e0!3m2!1sen!2sin!4v1493204785508"
-                                        width="100%" height="150" frameborder="0" style="border:0" allowfullscreen=""></iframe>
-                                </div>
+
                                 <small class="text-muted p-t-30 db">Social Profile</small>
                                 <br>
-                                <button class="btn btn-circle btn-secondary">
+                                <a class="btn btn-circle btn-secondary">
                                     <i class="fa fa-facebook"></i>
-                                </button>
-                                <button class="btn btn-circle btn-secondary">
+                                </a>
+                                <a class="btn btn-circle btn-secondary">
                                     <i class="fa fa-twitter"></i>
-                                </button>
-                                <button class="btn btn-circle btn-secondary">
+                                </a>
+                                <a class="btn btn-circle btn-secondary">
                                     <i class="fa fa-youtube"></i>
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -90,19 +116,21 @@
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs profile-tab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Profile</a>
+                                    <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Profile </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#settings" role="tab">Settings</a>
+                                    <a class="nav-link" data-toggle="tab" href="#gallery" role="tab">Gallery Settings</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#settings" role="tab">Account Settings</a>
                                 </li>
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
 
                                 <% include ./partials/profile %>
+                                    <% include ./partials/gallerysettings %>
                                         <% include ./partials/settings %>
-                                 
-
                             </div>
                         </div>
                     </div>
@@ -112,141 +140,7 @@
                 <!-- ============================================================== -->
                 <!-- End PAge Content -->
                 <!-- ============================================================== -->
-                <!-- ============================================================== -->
-                <!-- Right sidebar -->
-                <!-- ============================================================== -->
-                <!-- .right-sidebar -->
-                <div class="right-sidebar">
-                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;">
-                        <div class="slimscrollright" style="overflow: hidden; width: auto; height: 100%;">
-                            <div class="rpanel-title"> Service Panel
-                                <span>
-                                    <i class="ti-close right-side-toggle"></i>
-                                </span>
-                            </div>
-                            <div class="r-panel-body">
-                                <ul id="themecolors" class="m-t-20">
-                                    <li>
-                                        <b>With Light sidebar</b>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)" data-theme="default" class="default-theme">1</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)" data-theme="green" class="green-theme">2</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)" data-theme="red" class="red-theme">3</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)" data-theme="blue" class="blue-theme working">4</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)" data-theme="purple" class="purple-theme">5</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)" data-theme="megna" class="megna-theme">6</a>
-                                    </li>
-                                    <li class="d-block m-t-30">
-                                        <b>With Dark sidebar</b>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)" data-theme="default-dark" class="default-dark-theme">7</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)" data-theme="green-dark" class="green-dark-theme">8</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)" data-theme="red-dark" class="red-dark-theme">9</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)" data-theme="blue-dark" class="blue-dark-theme">10</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)" data-theme="purple-dark" class="purple-dark-theme">11</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)" data-theme="megna-dark" class="megna-dark-theme ">12</a>
-                                    </li>
-                                </ul>
-                                <ul class="m-t-20 chatonline">
-                                    <li>
-                                        <b>Chat option</b>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <img src="../assets/images/users/1.jpg" alt="user-img" class="img-circle">
-                                            <span>Varun Dhavan
-                                                <small class="text-success">online</small>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <img src="../assets/images/users/2.jpg" alt="user-img" class="img-circle">
-                                            <span>Genelia Deshmukh
-                                                <small class="text-warning">Away</small>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <img src="../assets/images/users/3.jpg" alt="user-img" class="img-circle">
-                                            <span>Ritesh Deshmukh
-                                                <small class="text-danger">Busy</small>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <img src="../assets/images/users/4.jpg" alt="user-img" class="img-circle">
-                                            <span>Arijit Sinh
-                                                <small class="text-muted">Offline</small>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <img src="../assets/images/users/5.jpg" alt="user-img" class="img-circle">
-                                            <span>Govinda Star
-                                                <small class="text-success">online</small>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <img src="../assets/images/users/6.jpg" alt="user-img" class="img-circle">
-                                            <span>John Abraham
-                                                <small class="text-success">online</small>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <img src="../assets/images/users/7.jpg" alt="user-img" class="img-circle">
-                                            <span>Hritik Roshan
-                                                <small class="text-success">online</small>
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0)">
-                                            <img src="../assets/images/users/8.jpg" alt="user-img" class="img-circle">
-                                            <span>Pwandeep rajan
-                                                <small class="text-success">online</small>
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="slimScrollBar" style="background: rgb(220, 220, 220); width: 5px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px;"></div>
-                        <div class="slimScrollRail" style="width: 5px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-                    </div>
-                </div>
-                <!-- ============================================================== -->
-                <!-- End Right sidebar -->
-                <!-- ============================================================== -->
+
             </div>
             <!-- ============================================================== -->
             <!-- End Container fluid  -->
@@ -260,4 +154,44 @@
             <!-- ============================================================== -->
         </div>
 
-        <% include ../partials/footer %>
+        <footer class="footer">
+            © 2018 Ad Gallery
+        </footer>
+        <script src="/js/jquery-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous"></script>
+        <script src="/assets/plugins/Magnific-Popup-master/dist/jquery.magnific-popup.min.js"></script>
+        <script src="/assets/plugins/Magnific-Popup-master/dist/jquery.magnific-popup-init.js"></script>
+        <script>
+
+
+
+            $(document).ready(function () {
+                const uploadDiv = $('#upload-div')
+                const picture = $('#profile-picture')
+
+                picture.mouseover(function () {
+                    uploadDiv.show();
+                })
+
+                uploadDiv.mouseleave(function () {
+                    uploadDiv.hide()
+                })
+
+                uploadDiv.click(function () {
+                    $('#image-selector').trigger('click')
+                })
+
+                $('#image-selector').change(function () {
+                    $('#update-form').submit()
+                })
+
+
+            });
+        </script>
+
+        </body>
+
+        </html>

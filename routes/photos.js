@@ -114,6 +114,7 @@ router.get('/category/:id', (req, res) => {
 })
 
 router.post('/', upload, async (req, res) => {
+    console.log(req.file)
     try {
         const result = await cloudinary.v2.uploader.upload(req.file.path,
             { public_id: req.file.filename, folder: '/photos' })

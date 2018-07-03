@@ -8,7 +8,18 @@ const userSchema = new Schema({
     username: String,
     about: String,
     phone: Number,
-    image: String,
+    image: {
+        name: String,
+        url: String,
+        secure_url: String,
+        public_id: String
+    },
+    social: {
+        instagram: String,
+        facebook: String,
+        website: String,
+        youtube: String
+    },
     country: String,
     city: String,
     canUpload: { type: Boolean, default: false },
@@ -17,12 +28,12 @@ const userSchema = new Schema({
     content: {
         imageCount: { type: Number, default: 0 }
     },
-    following: { 
-        account: [ { type: mongoose.Schema.Types.ObjectId, ref: "users" } ],
+    following: {
+        account: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
         count: { type: Number, defult: 0 }
     },
     followers: {
-        account: [ { type: mongoose.Schema.Types.ObjectId, ref: "users" } ],
+        account: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
         count: { type: Number, defult: 0 }
     },
     settings: {
