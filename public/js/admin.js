@@ -44,6 +44,20 @@ $(document).ready(function () {
     const featuredForm = $('#multi-featured')
     const unfeatureForm = $('#multi-unfeatured')
 
+
+    function handleSubmit(form, link){
+        form.submit(function (e) {
+            e.preventDefault()
+            $.post(link, { ids: selected }, function (data) {
+                if (data === 'successful') {
+                    location.reload()
+                } else {
+                    alert('could not update')
+                }
+            })
+        })
+    }
+
     approveForm.submit(function (e) {
         e.preventDefault()
         $.post('/admin/multi/approve', { ids: selected }, function (data) {
@@ -66,16 +80,18 @@ $(document).ready(function () {
         })
     })
 
-    unfeatureForm.submit(function (e) {
-        e.preventDefault()
-        $.post('/admin/multi/featured', { ids: selected }, function (data) {
-            if (data === 'successful') {
-                location.reload()
-            } else {
-                alert('could not update')
-            }
-        })
-    })
+    handleSubmit(unfeatureForm,'/admin/multi/unfeatured')
+
+    // unfeatureForm.submit(function (e) {
+    //     e.preventDefault()
+    //     $.post('/admin/multi/unfeatured', { ids: selected }, function (data) {
+    //         if (data === 'successful') {
+    //             location.reload()
+    //         } else {
+    //             alert('could not update')
+    //         }
+    //     })
+    // })
 
     deleteForm.submit(function (e) {
         e.preventDefault()

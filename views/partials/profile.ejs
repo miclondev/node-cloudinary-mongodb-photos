@@ -1,18 +1,17 @@
 <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true"
         aria-expanded="false">
-        <img src="/assets/profile.jpg" alt="user" class="profile-pic" width="30px">
+        <img src="http://res.cloudinary.com/adgallerytz/image/upload/c_scale,q_150,w_100/c_crop,g_face,h_80,w_80/v1530718781/user/<%= currentUser.image.name %>" alt="user" class="profile-pic" width="30px">
     </a>
     <div class="dropdown-menu dropdown-menu-right scale-up">
         <ul class="dropdown-user">
             <li>
                 <div class="dw-user-box">
                     <div class="u-img">
-                        <img src="/assets/profile.jpg" alt="user">
+                        <img src="http://res.cloudinary.com/adgallerytz/image/upload/c_scale,q_150,w_100/c_crop,g_face,h_80,w_80/v1530718781/user/<%= currentUser.image.name %>" alt="user">
                     </div>
                     <div class="u-text">
-                        <h4>Steave Jobs</h4>
-                        <p class="text-muted">varun@gmail.com</p>
+                        <h4><%= currentUser.fullname %></h4> 
                         <a href="/user/profile" class="btn btn-rounded btn-info btn-sm">View Profile</a>
                     </div>
                 </div>

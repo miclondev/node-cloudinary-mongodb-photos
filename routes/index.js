@@ -1,23 +1,27 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')
+
+//mongoose
 const mongoose = require('mongoose')
 const User = mongoose.model('user')
 const Info = require('../data/info')
 const Category = mongoose.model('category')
 const Photo = mongoose.model('photo')
-const { doneLogged } = require('../middleware')
+const Setting = mongoose.model('setting')
 
+const { doneLogged } = require('../middleware')
+const { SETTINGSID } = require('../config/keys')
 //pages rendered
 const { pageTitles } = Info
 
 router.get('/', async (req, res) => {
     try {
-        const photos = await Photo.find({}).populate('user').limit(8).sort({ created_on: -1 })
+        const setting = await Setting.findById(SETTINGSID).populate('homeImage')
+        const photos = await Photo.find({ 'status.featured' : true }).populate('user').limit(8).sort({ created_on: -1 })
         const categories = await Category.find({}).limit(4)
-        res.render('landing', { photos, categories })
+        res.render('landing', { photos, categories, setting })
     } catch (err) {
-        console.log(err)
         res.send(err)
     }
 })

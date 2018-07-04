@@ -62,10 +62,15 @@
                                                         </button>
                                                     </form>
 
-                                                    <form id="multi-featured" action="" method="GET">
-
+                                                    <form id="multi-featured" action="/admin/photos/featured" method="GET">
                                                         <button class="dropdown-item delete-button">
                                                             Make Featured
+                                                        </button>
+                                                    </form>
+
+                                                    <form id="multi-unfeatured" action="/admin/photos/featured" method="GET">
+                                                        <button class="dropdown-item delete-button">
+                                                           UnFeature
                                                         </button>
                                                     </form>
 
@@ -155,14 +160,20 @@
                                                                     <span class="label label-info">Confirmed</span>
                                                                     <% } else { %>
                                                                         <span class="label label-warning">Pending</span>
-                                                                        <% } %>
+                                                                     <% } %>
+
+                                                                        <% if(photo.status.featured){ %>
+                                                                            <span class="label label-success">Featured</span>
+                                                                        <% }  %>
+
 
                                                                             <% if(photo.status.submitted){ %>
                                                                                 <span class="label label-success">Available</span>
                                                                                 <% } %>
+
                                                                                     <% if(photo.status.review){ %>
                                                                                         <span class="label label-danger">Under Review</span>
-                                                                                        <% } %>
+                                                                             <% } %>
                                                             </td>
 
                                                             <td>
@@ -175,10 +186,9 @@
                                                                         Action
                                                                     </button>
 
-
                                                                     <div class="dropdown-menu animated flipInX" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 36px, 0px); top: 0px; left: 0px; will-change: transform;">
                                                                         <% if(photo.status.approved){ %>
-                                                                            <form action="/admin/photos/unapprove/<%= photo._id %>?_method=PUT" method="POST">
+                                                                            <form action="/admin/photos/approve/<%= photo._id %>?_method=PUT" method="POST">
                                                                                 <button class="dropdown-item delete-button">
                                                                                     UnApprove
                                                                                 </button>
@@ -189,6 +199,20 @@
                                                                                         Approve
                                                                                     </button>
                                                                                 </form>
+                                                                            <% }%>
+
+                                                                            <% if(photo.status.featured){ %>
+                                                                                <form action="/admin/photos/featured/<%= photo._id %>?_method=PUT" method="POST">
+                                                                                    <button class="dropdown-item delete-button">
+                                                                                        UnFeature
+                                                                                    </button>
+                                                                                </form>
+                                                                                <% } else { %>
+                                                                                    <form action="/admin/photos/featured/<%= photo._id %>?_method=PUT" method="POST">
+                                                                                        <button class="dropdown-item delete-button">
+                                                                                            Make Featured
+                                                                                        </button>
+                                                                                    </form>
                                                                                 <% }%>
 
                                                                                     <a class="dropdown-item" href="/photos/<%= photo.slug %>" target="_blank">View Photo</a>
@@ -258,16 +282,4 @@
                 </div>
         </div>
 
-
-
-        <script src="/js/jquery-min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-            crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
-            crossorigin="anonymous"></script>
-
-        <script src="/js/jasny-bootstrap.js"></script>
-        <script src="/js/custom.js"></script>
-        </body>
-
-        </html>
+        <% include ./partials/footer %>

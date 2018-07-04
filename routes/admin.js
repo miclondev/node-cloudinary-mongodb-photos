@@ -118,50 +118,94 @@ router.get('/photos', async (req, res) => {
 
 router.put('/photos/approve/:id', (req, res) => {
     const { id } = req.params
-    const item = {
-        status: {
-            approved: true
-        }
-    }
-
-    Photo.findByIdAndUpdate(id, item, (err, updated) => {
-        if (err) {
-            console.log(err)
-            return res.send(err)
-        }
-        console.log('update', updated)
-        res.redirect('back')
+    Photo.findById(id).then((found) => {
+        found.status.approved = !found.status.approved
+        found.save((err, saved) => {
+            if (err) { 
+                return res.send(err)
+            }
+            console.log('update', saved)
+            res.redirect('back')
+        })
     })
 })
 
-router.put('/photos/unapprove/:id', (req, res) => {
+router.put('/photos/featured/:id', (req, res) => {
     const { id } = req.params
-    const item = {
-        status: {
-            approved: false
-        }
-    }
-
-    Photo.findByIdAndUpdate(id, item, (err, updated) => {
-        if (err) {
-            console.log(err)
-            return res.send(err)
-        }
-        res.redirect('back')
+    Photo.findById(id).then((found) => {
+        found.status.featured = !found.status.featured
+        found.save((err, saved) => {
+            if (err) { 
+                return res.send(err)
+            }
+            console.log('update', saved)
+            res.redirect('back')
+        })
     })
 })
+
+
+// router.put('/photos/unapprove/:id', (req, res) => {
+//     const { id } = req.params
+
+//     Photo.findByIdAndUpdate(id, item, (err, updated) => {
+//         if (err) {
+//             console.log(err)
+//             return res.send(err)
+//         }
+//         res.redirect('back')
+//     })
+// })
 
 router.post('/multi/approve', (req, res) => {
     console.log(req.body)
     const { ids } = req.body
     ids.forEach(id => {
-        const item = { status: { approved: true } }
-        Photo.findByIdAndUpdate(id, item, (err, updated) => {
-            if (err) {
-                console.log(err)
-                return res.send(err)
-            }
-            console.log('updated')
+        Photo.findById(id).then((found) => {
+            found.status.approved = true
+            found.save((err, saved) => {
+                if (err) {
+                    console.log(err)
+                    return res.send(err)
+                }
+                console.log('updated')
+            })
+        })
+    })
+    res.send('successful')
+})
+
+router.post('/multi/featured', (req, res) => {
+    console.log(req.body)
+    const { ids } = req.body
+    ids.forEach(id => {
+        Photo.findById(id).then((found) => {
+            found.status.featured = true
+            found.save((err, saved) => {
+                if (err) {
+                    console.log(err)
+                    return res.send(err)
+                }
+                console.log('updated')
+            })
+        })
+    })
+    res.send('successful')
+})
+
+router.post('/multi/unfeatured', (req, res) => {
+    console.log(req.body)
+    const { ids } = req.body
+    ids.forEach(id => {
+        Photo.findById(id).then((found) => {
+            found.status.featured = false
+            found.save((err, saved) => {
+                if (err) {
+                    console.log(err)
+                    return res.send(err)
+                }
+                console.log('updated')
+            })
         })
     })
     res.send('successful')

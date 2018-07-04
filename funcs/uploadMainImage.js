@@ -19,7 +19,7 @@ const imageFilter = function (req, file, cb) {
 const upload = multer({
     storage,
     fileFilter: imageFilter
-}).single('image')
+}).single('file')
 
 cloudinary.config({
     cloud_name: CLOUDINARYNAME,

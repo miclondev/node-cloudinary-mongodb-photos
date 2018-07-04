@@ -1,12 +1,11 @@
 <% include ./partials/header %>
     <% include ./partials/navbar %>
 
-        <div class="landingHeader" style="background-position: top;background-image: url('http://res.cloudinary.com/adgallerytz/image/upload/c_scale,e_auto_contrast,q_52,w_1500/v1530026830/photos/adgallerystart-1530026827753.png')">
+        <div class="landingHeader" style="background-position: <%= setting.image.position %>;background-image: url('http://res.cloudinary.com/adgallerytz/image/upload/c_scale,e_auto_contrast,q_52,w_1500/v1530026830/photos/<%= setting.homeImage.image.name %>')">
                
-            <h3> Great stories start here.</h3>
-            <p>Discover over 209 million royalty-free images, stock video clips, and music tracks.</p>
+            <h3> <%= setting.homeTitle %></h3>
+            <p><%= setting.homeSubtitle %></p>
 
-    
             <div class="landingSearch d-none d-md-block">
                 <form action="/search" method="GET">
                     <input type="search" name="q" placeholder="seach stock images, footage">
@@ -63,11 +62,11 @@
                                             </div>
                                         </div>
                                         <div class="el-card-content">
-                                            <a href="/photo/<%= photo.slug %>">
-                                                <h3 class="box-title">
-                                                    <%= photo.title %>
-                                                </h3>
-                                            </a>
+                                            <!-- <a href="/photo/<%= photo.slug %>">
+                                                <h4 class="box-title">
+                                                    <%= photo.title.slice(0, 20) %>...
+                                                </h4>
+                                            </a> -->
                                             <small> by:
                                                 <a href="/studio">
                                                     <strong>

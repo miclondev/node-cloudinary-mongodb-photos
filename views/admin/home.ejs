@@ -20,11 +20,11 @@
                                             <div data-toggle="modal" class="home-image-change" data-target="#select-featured" style="display: none"> change Image </div>
                                             <!-- <img  src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop/v1530609743/photos/<%= setting.homeImage.image.name %>" alt="user"> -->
                                             </a>
-                                            <div style="height: 100%; width: 100%;background-position: '<%= setting.image.position %>' ;background-image: url('https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop/v1530609743/photos/<%= setting.homeImage.image.name %>') "></div>
+                                            <div style="height: 100%; width: 100%;background-position:<%= setting.image.position %>;background-image: url('https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop/v1530609743/photos/<%= setting.homeImage.image.name %>') "></div>
                                         </div>
                                         <div class="el-card-content">
                                             <h3 class="box-title">Home Main Image</h3>
-                                            <small>Click To change Home Image</small>
+                                            <small>Click on Image to change it</small>
                                             <br> </div>
                                     </div>
                                 </div>
@@ -34,7 +34,7 @@
                                     <h4>Image Settings</h4>
                                     <form action="/admin/home?_method=PUT" method="POST">
                                         <div class="form-group">
-                                            <label>Position</label>
+                                            <label>Position : <%= setting.image.position %> </label>
                                             <select name="image[position]" class="custom-select col-12" id="inlineFormCustomSelect">
                                                 <option value="top">Top</option>
                                                 <option value="bottom">Bottom</option>
