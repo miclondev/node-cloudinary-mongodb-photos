@@ -117,8 +117,10 @@ router.get('/photos', (req, res) => {
         })
 })
 
-router.put('/profile-image', upload, (req, res) => {
 
+//upload profile image
+router.put('/profile-image', upload, (req, res) => {
+try{
     User.findById(req.user._id).then(async (user) => {
         if (user.image.name) {
             await cloudinary.v2.uploader.destroy(user.image.public_id, (err, deleted) => {
@@ -139,24 +141,9 @@ router.put('/profile-image', upload, (req, res) => {
         user.save()
         res.redirect('back')
     })
-    // const photoUpdate = {
-    //     image: {
-    //         name: `${result.original_filename}.${result.format}`,
-    //         url: result.url,
-    //         secure_url: result.secure_url,
-    //         public_id: result.public_id
-    //     }
-    // }
-
-    //console.log(req.file)
-
-    // User.findByIdAndUpdate(req.user._id, photoUpdate, (err, updated) => {
-    //     if (err) {
-    //         return res.send(err)
-    //     }
-    //     console.log('updated', updated)
-    //     res.redirect('back')
-    // })
+}catch(e){
+    res.send(e)
+}
 })
 
 module.exports = router;

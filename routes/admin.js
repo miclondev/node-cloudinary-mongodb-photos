@@ -1,12 +1,14 @@
 const express = require('express')
-const router = express.Router() 
+const router = express.Router()
 //mongo
 const mongoose = require('mongoose')
 const Category = mongoose.model('category')
 const User = mongoose.model('user')
 const Photo = mongoose.model('photo')
 const Collection = mongoose.model('collection')
+const Setting = mongoose.model('setting')
 //middleware
+
 const { isLoggedIn, isAdmin } = require('../middleware')
 //upload image to cloud
 const { upload, cloudinary } = require('../funcs/uploadCategoryImage')
@@ -75,7 +77,15 @@ router.get('/', (req, res) => {
 
 //admin home settings
 router.get('/home', async (req, res) => {
-    res.render('admin/home')
+    Setting.findById('5b3c6a6b8d4ece12788f4290')
+        .populate('homeImage')
+        .exec((err, setting) => {
+            if (err) {
+                return res.send(err)
+            }
+            console.log(setting)
+            res.render('admin/home', { setting })
+        })
 })
 
 //get users
@@ -172,8 +182,46 @@ router.post('/multi/delete', (req, res) => {
 })
 
 
-// router.put('/multi/collection/approve', (req,res) => {
+router.put('/home', (req, res) => {
+    console.log(req.body)
+    Setting.findByIdAndUpdate('5b3c6a6b8d4ece12788f4290', req.body, (err, updated) => {
+        if (err) {
+            return res.send(err)
+        }
+        res.redirect('back')
+    })
+})
 
-// })
+router.put('/set-featured-image', (req, res) => {
+    console.log(req.body.imageId)
+    Setting.findByIdAndUpdate('5b3c6a6b8d4ece12788f4290',
+        { homeImage: req.body.imageId },
+        (err, updated) => {
+            if (err) {
+                return res.send(err)
+            }
+            res.redirect('back')
+        })
+})
+
+router.get('/photos/fetch', (req, res) => {
+    console.log('skip', req.query.skip)
+    const skipValue = parseInt(req.query.skip)
+
+    Photo.find({})
+        .sort({ created_on: -1 })
+        .populate('user', 'username')
+        .limit(9)
+        .skip(skipValue)
+        .exec((err, photos) => {
+            if (err) {
+                return res.send(err)
+            }
+            console.log('photos fetched')
+            res.json(photos)
+        })
+})
+
+
 
 module.exports = router

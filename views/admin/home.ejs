@@ -1,16 +1,186 @@
 <% include ./partials/header %>
     <% include ../partials/navbar %>
 
-    <h1>HOme settings</h1>
+        <div class="adminMain">
 
-    <script src="/js/jquery-min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
-        crossorigin="anonymous"></script>
+            <% include ./partials/adminnav %>
 
-    <script src="/js/jasny-bootstrap.js"></script>
-    <script src="/js/custom.js"></script>
-    </body>
+                <div class="adminBody">
 
-    </html>
+
+                    <div class="container-fluid">
+
+
+
+                        <div class="row m-t-40 m-b-40">
+                            <div class="card-columns el-element-overlay">
+                                <div class="card">
+                                    <div class="el-card-item">
+                                        <div class="el-card-avatar el-overlay-1" style="overflow: hidden; height: 150px; width: 400px;" id="home-image">
+                                            <div data-toggle="modal" class="home-image-change" data-target="#select-featured" style="display: none"> change Image </div>
+                                            <!-- <img  src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop/v1530609743/photos/<%= setting.homeImage.image.name %>" alt="user"> -->
+                                            </a>
+                                            <div style="height: 100%; width: 100%;background-position: '<%= setting.image.position %>' ;background-image: url('https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop/v1530609743/photos/<%= setting.homeImage.image.name %>') "></div>
+                                        </div>
+                                        <div class="el-card-content">
+                                            <h3 class="box-title">Home Main Image</h3>
+                                            <small>Click To change Home Image</small>
+                                            <br> </div>
+                                    </div>
+                                </div>
+
+                                <div class="card p-t-20 p-b-20 p-l-10 p-r-10">
+
+                                    <h4>Image Settings</h4>
+                                    <form action="/admin/home?_method=PUT" method="POST">
+                                        <div class="form-group">
+                                            <label>Position</label>
+                                            <select name="image[position]" class="custom-select col-12" id="inlineFormCustomSelect">
+                                                <option value="top">Top</option>
+                                                <option value="bottom">Bottom</option>
+                                                <option value="center">Center</option>
+                                            </select>
+                                        </div>
+
+
+                                        <button type="submit" class="btn btn-block btn-primary"> Update </button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="container m-t-40 m-b-40">
+                                        <h4>Home Titles</h4>
+                                        <form action="/admin/home?_method=PUT" method="POST">
+                                            <div class="form-group row">
+                                                <label for="example-text-input" class="col-md-2 col-form-label">Title</label>
+                                                <div class="col-md-10">
+                                                    <input name="homeTitle" class="form-control" type="text" value="<%= setting.homeTitle %>" id="example-text-input">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label for="example-search-input" class="col-md-2 col-form-label">subtitles</label>
+                                                <div class="col-md-10">
+                                                    <input name="homeSubtitle" class="form-control" type="search" value="<%= setting.homeSubtitle %>" id="example-search-input">
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-primary btn-block">
+                                                update
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card container">
+
+                                    <h4>Featured Images</h4>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card container">
+                                    <h4>Featured Collections</h4>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card container">
+                                    <h4>Featured Users</h4>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div id="select-featured" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+                    style="display: none;" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myLargeModalLabel">Select Featured Image</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" method="POST" id="submit-selection">
+                                    <div class="modal-body" style="margin-bottom: 50px">
+
+                                        <div id="collection-spinner" class="center-with-flex" style="">
+                                            <i class="fa fa-spin fa-spinner" style="font-size: 100px"></i>
+                                        </div>
+
+                                        <div class="card collection-image-card" id="images-container">
+
+                                        </div>
+
+                                        <div class="collection-add-nav">
+                                            <button id="prev-button" type="button" class="btn btn-secondary">
+                                                <i class="fa fa-angle-double-left"></i>
+                                                Previous Photos
+
+                                            </button>
+                                            <button id="next-button" type="button" class="btn btn-secondary">
+                                                Next Photos
+                                                <i class="fa fa-angle-double-right"></i>
+                                            </button>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <input type="hidden" name="images" id="submit-images">
+                                        <input type="hidden" name="collection" id="submit-collection">
+                                        <input type="hidden" name="imageId" id="imagId">
+                                        <button id="submit-button" type="submit" class="btn btn-primary btn-block waves-effect text-left">
+                                            Set Freatured Image
+                                        </button>
+                                    </div>
+
+                                </form>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger waves-effect text-left" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+
+
+
+
+
+        </div>
+        <script src="/js/jquery-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous"></script>
+
+        <script src="/js/jasny-bootstrap.js"></script>
+        <script src="/js/custom.js"></script>
+        </body>
+
+        </html>

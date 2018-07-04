@@ -20,14 +20,16 @@ const userSchema = new Schema({
         website: String,
         youtube: String
     },
+    gallery:{
+        display: String,
+        title: String
+    },
     country: String,
     city: String,
     canUpload: { type: Boolean, default: false },
     confirmed: { type: Boolean, default: false },
     passport: String,
-    content: {
-        imageCount: { type: Number, default: 0 }
-    },
+    content: { imageCount: { type: Number, default: 0 } },
     following: {
         account: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
         count: { type: Number, defult: 0 }
