@@ -42,7 +42,8 @@ const userSchema = new Schema({
         language: { type: String, default: 'En' },
         country: String
     },
-    isAdmin: { type: Boolean, default: false }
+    isAdmin: { type: Boolean, default: false },
+    joined_on: { type: Date, default: Date.now}
 });
 
 userSchema.plugin(passportLocalMongoose);

@@ -17,6 +17,8 @@ const { upload, cloudinary } = require('../funcs/uploadCategoryImage')
 router.use(isLoggedIn)
 router.use(isAdmin)
 
+
+//upload category
 router.post('/category', upload, (req, res) => {
     if (req.file) {
         cloudinary.v2.uploader.upload(req.file.path,
@@ -57,7 +59,7 @@ router.post('/category', upload, (req, res) => {
     }
 })
 
-
+//category route
 router.get('/category', (req, res) => {
     Category.find({}, (err, Cats) => {
         if (err) {
@@ -90,7 +92,8 @@ router.get('/home', async (req, res) => {
 
 //get users
 router.get('/users', (req, res) => {
-    User.find({}, (err, users) => {
+    User.find({})
+    .exec((err, users) => {
         if (err) {
             console.log(err)
             return res.send(err)
