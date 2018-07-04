@@ -20,7 +20,7 @@
                                             <div data-toggle="modal" class="home-image-change" data-target="#select-featured" style="display: none"> change Image </div>
                                             <!-- <img  src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop/v1530609743/photos/<%= setting.homeImage.image.name %>" alt="user"> -->
                                             </a>
-                                            <div style="height: 100%; width: 100%;background-position:top;background-image: url('https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop/v1530609743/photos/<%= setting.homeImage.image.name %>') "></div>
+                                            <div class="<%= setting.image.position %>" style="height: 100%; width: 100%;background-image: url('https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop/v1530609743/photos/<%= setting.homeImage.image.name %>') "></div>
                                         </div>
                                         <div class="el-card-content">
                                             <h3 class="box-title">Home Main Image</h3>
@@ -36,9 +36,9 @@
                                         <div class="form-group">
                                             <label>Position : <%= setting.image.position %> </label>
                                             <select name="image[position]" class="custom-select col-12" id="inlineFormCustomSelect">
-                                                <option value="top">Top</option>
-                                                <option value="bottom">Bottom</option>
-                                                <option value="center">Center</option>
+                                                <option value="featured-top">Top</option>
+                                                <option value="featured-bottom">Bottom</option>
+                                                <option value="featured-center">Center</option>
                                             </select>
                                         </div>
 

@@ -1,7 +1,7 @@
 <% include ./partials/header %>
     <% include ./partials/navbar %>
 
-        <div class="landingHeader" style="background-position: top;background-image: url('http://res.cloudinary.com/adgallerytz/image/upload/c_scale,e_auto_contrast,q_52,w_1500/v1530026830/photos/<%= setting.homeImage.image.name %>')">
+        <div class="landingHeader <%= setting.image.position %>" style="background-image: url('http://res.cloudinary.com/adgallerytz/image/upload/c_scale,e_auto_contrast,q_52,w_1500/v1530026830/photos/<%= setting.homeImage.image.name %>')">
                
             <h3> <%= setting.homeTitle %></h3>
             <p><%= setting.homeSubtitle %></p>
