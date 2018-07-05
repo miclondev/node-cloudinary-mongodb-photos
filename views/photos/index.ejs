@@ -5,7 +5,7 @@
             <!-- <% include ./photos-sidebar %> -->
 
             <div id="gallery-content">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light m-t-40">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light m-t-60">
                     <div class="container-fluid body-items">
 
                         <div class="row el-element-overlay gallery-100">
@@ -73,14 +73,20 @@
                                                                     <% } else { %>
                                                                         <a class="btn default btn-outline like-photo" data-id="<%= photo._id %>">
                                                                             <i class="fa fa-heart"></i>
-                                                                            <% } %>
                                                                         </a>
+                                                                        <% } %>
                                                             </li>
 
                                                             <li>
-                                                                <a class="btn default btn-outline cart-button" data-id="<%= photo._id %>">
-                                                                    <i class="fa fa fa-shopping-basket"></i>
-                                                                </a>
+                                                                <% if(currentUser.cart.photos.indexOf(photo._id) > -1) { %>
+                                                                    <a class="btn default btn-outline">
+                                                                        <i class="fa fa-check "> </i>
+                                                                    </a>
+                                                                    <% } else { %>
+                                                                        <a class="btn default btn-outline cart-button" data-id="<%= photo._id %>">
+                                                                            <i class="fa fa fa-shopping-basket"></i>
+                                                                        </a>
+                                                                        <% } %>
                                                             </li>
 
                                                             <% } %>
