@@ -74,16 +74,18 @@ router.get('/photos/edit', async (req, res) => {
 })
 
 router.get('/profile', async (req, res) => {
-
-    const photos = await Photo.find({ user: req.user._id }).limit(4).sort({ created_on: -1 })
-
-    User.findById(req.user._id, (err, user) => {
-        if (err) {
-            console.log(err)
-            return res.send(err)
-        }
-        res.render('user/profile', { user, photos })
-    })
+    try {
+        const photos = await Photo.find({ user: req.user._id }).limit(4).sort({ created_on: -1 })
+        await User.findById(req.user._id, (err, user) => {
+            if (err) {
+                console.log(err)
+                return res.send(err)
+            }
+            res.render('user/profile', { user,photos })
+        })
+    } catch (error) {
+        res.send(error)
+    }
 })
 
 router.put('/', (req, res) => {

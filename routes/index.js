@@ -80,7 +80,7 @@ router.get("/search", async (req, res) => {
     }
 })
 
-router.get('/user/:id', async (req, res) => {
+router.get('/user-profile/:id', async (req, res) => {
     const photos = await Photo.find({ user: req.params.id })
         .limit(4).sort({ created_on: -1 })
     const photoCount = await Photo.count({ user: req.params.id })
@@ -93,7 +93,7 @@ router.get('/user/:id', async (req, res) => {
     })
 })
 
-router.get('/profiles', (req, res) => {
+router.get('/user-profiles', (req, res) => {
     User.find({ 'confirmed' : true })
     .sort({ joined_on : -1})
     .exec((err, users) => {
