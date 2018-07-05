@@ -68,12 +68,13 @@ router.get('/p/:page', async (req, res) => {
         .skip(skip)
         .limit(limit)
         .sort({ created_on: -1 })
+        .populate({path: 'user', select: 'username image.name'})
         .exec((err, photos) => {
             if (err) {
                 console.log(err)
                 return res.send(err)
             }
-
+            //console.log(photos)
             res.render('photos/index', {
                 photos,
                 count,

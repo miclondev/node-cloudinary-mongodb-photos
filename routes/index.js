@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')
-
+const rewrite = require('express-urlrewrite')
 //mongoose
 const mongoose = require('mongoose')
 const User = mongoose.model('user')
@@ -18,7 +18,7 @@ const { pageTitles } = Info
 router.get('/', async (req, res) => {
     try {
         const setting = await Setting.findById(SETTINGSID).populate('homeImage')
-        const photos = await Photo.find({ 'status.featured' : true }).populate('user').limit(8).sort({ created_on: -1 })
+        const photos = await Photo.find({ 'status.featured': true }).populate('user').limit(8).sort({ created_on: -1 })
         const categories = await Category.find({}).limit(4)
         res.render('landing', { photos, categories, setting })
     } catch (err) {
@@ -78,7 +78,31 @@ router.get("/search", async (req, res) => {
     } else {
         res.render('search')
     }
+})
 
+router.get('/user/:id', async (req, res) => {
+    const photos = await Photo.find({ user: req.params.id })
+        .limit(4).sort({ created_on: -1 })
+    const photoCount = await Photo.count({ user: req.params.id })
+    User.findById(req.params.id, (err, user) => {
+        if (err) {
+            console.log(err)
+            return res.send(err)
+        }
+        res.render('public/profile', { user, photos, photoCount })
+    })
+})
+
+router.get('/profiles', (req, res) => {
+    User.find({ 'confirmed' : true })
+    .sort({ joined_on : -1})
+    .exec((err, users) => {
+        if(err){
+            console.log(err)
+            return res.send(err)
+        }
+        res.render('public/users', {users})
+    })
 })
 
 module.exports = router;

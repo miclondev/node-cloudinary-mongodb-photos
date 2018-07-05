@@ -50,7 +50,7 @@
 
 
                 <li class="nav-item ">
-                    <a class="nav-link" href="/studios">Studios</a>
+                    <a class="nav-link" href="/profiles">profiles</a>
                 </li>
 
                 <li class="nav-item ">
@@ -66,22 +66,38 @@
                     <li class="nav-item">
                         <a class="btn btn-outline-success" href="/register">Sign up</a>
                     </li>
-                    <% } else { %>
-                        <!-- <li class="nav-item center-with-flex">
-                            <a class="nav-link" href="/user/photos/new">Add Media</a>
-                        </li> -->
+                    <% } else { %> 
 
-
-                        <li class="nav-item dropdown center-with-flex">
-                            <a class="nav-link dropdown-toggle" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Add new </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown04">
-                                <a class="dropdown-item" href="/user/photos/new">Photos</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/user/footage/new">Footage</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="/collection/new">Collection</a>
-                            </div>
+                        <li class="nav-item center-with-flex user-icons">
+                            <a href="/user/cart">
+                                <i class="fa fa fa-shopping-basket"></i>
+                            </a>
+                            <p id="user-like-count">
+                                <%= currentUser.cart.photos.length %>
+                            </p>
                         </li>
+
+                        <li class="nav-item center-with-flex user-like">
+                            <a href="/user/liked">
+                                <i class="fa fa-heart"></i>
+                            </a>
+                            <p id="user-like-count">
+                                <%= currentUser.like.photos.length %>
+                            </p>
+                        </li>
+
+                        <li class="nav-item dropdown center-with-flex user-icons">
+                                <a class="nav-link dropdown-toggle" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-plus-square"></i>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown04">
+                                    <a class="dropdown-item" href="/user/photos/new">Photos</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="/user/footage/new">Footage</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="/collection/new">Collection</a>
+                                </div>
+                            </li>
 
                         <% if(currentUser.isAdmin){ %>
                             <li class="nav-item center-with-flex">
@@ -91,6 +107,8 @@
 
                                 <% include ./profile %>
                                     <% } %>
+
+
             </ul>
 
         </div>

@@ -32,11 +32,15 @@ const userSchema = new Schema({
     content: { imageCount: { type: Number, default: 0 } },
     following: {
         account: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
-        count: { type: Number, defult: 0 }
     },
     followers: {
         account: [{ type: mongoose.Schema.Types.ObjectId, ref: "users" }],
-        count: { type: Number, defult: 0 }
+    },
+    like: {
+        photos: [{ type: mongoose.Schema.Types.ObjectId, ref: "photo" }],
+    },
+    cart: {
+        photos: [{ type: mongoose.Schema.Types.ObjectId, ref: "photo" }],
     },
     settings: {
         language: { type: String, default: 'En' },

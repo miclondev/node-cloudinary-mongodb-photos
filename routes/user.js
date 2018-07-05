@@ -120,30 +120,62 @@ router.get('/photos', (req, res) => {
 
 //upload profile image
 router.put('/profile-image', upload, (req, res) => {
-try{
-    User.findById(req.user._id).then(async (user) => {
-        if (user.image.name) {
-            await cloudinary.v2.uploader.destroy(user.image.public_id, (err, deleted) => {
-                console.log(deleted)
-            })
-        }
-        const result = await cloudinary.v2.uploader.upload(req.file.path,
-            { public_id: req.file.filename, folder: '/user' })
-        console.log('result', result)
+    try {
+        User.findById(req.user._id).then(async (user) => {
+            if (user.image.name) {
+                await cloudinary.v2.uploader.destroy(user.image.public_id, (err, deleted) => {
+                    console.log(deleted)
+                })
+            }
+            const result = await cloudinary.v2.uploader.upload(req.file.path,
+                { public_id: req.file.filename, folder: '/user' })
+            console.log('result', result)
 
-        user.image = {
-            name: `${result.original_filename}.${result.format}`,
-            url: result.url,
-            secure_url: result.secure_url,
-            public_id: result.public_id
-        }
-        console.log(user)
-        user.save()
+            user.image = {
+                name: `${result.original_filename}.${result.format}`,
+                url: result.url,
+                secure_url: result.secure_url,
+                public_id: result.public_id
+            }
+            console.log(user)
+            user.save()
+            res.redirect('back')
+        })
+    } catch (e) {
+        res.send(e)
+    }
+})
+
+
+router.put('/follow/:id', async (req, res) => {
+    try {
+        await User.findById(req.params.id).then(follow => {
+            follow.followers.account.push(req.user._id)
+            follow.save()
+        })
+
+        await User.findById(req.user._id).then(user => {
+            user.following.account.push(req.params.id)
+            user.save()
+        })
+
         res.redirect('back')
+    } catch (e) {
+        res.send(e)
+    }
+})
+
+router.post('/like', async (req, res) => {
+    const { photoId } = req.body
+    await Photo.findById(photoId).then(photo => {
+        photo.likes++
+        photo.save()
     })
-}catch(e){
-    res.send(e)
-}
+    await User.findById(req.user._id).then(user => {
+        user.like.photos.push(photoId)
+        user.save()
+    })
+    res.send('liked')
 })
 
 module.exports = router;

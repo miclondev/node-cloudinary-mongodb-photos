@@ -93,6 +93,7 @@ router.get('/home', async (req, res) => {
 //get users
 router.get('/users', (req, res) => {
     User.find({})
+    .sort({ joined_on: -1})
     .exec((err, users) => {
         if (err) {
             console.log(err)

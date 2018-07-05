@@ -8,22 +8,20 @@
 
                     <div class="row page-titles">
                         <div class="col-md-5 align-self-center">
-                            <h3 class="text-themecolor">Categories</h3>
+                            <h3 class="text-themecolor">Users</h3>
                         </div>
                         <div class="col-md-7 align-self-center">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
                                     <a href="javascript:void(0)">Admin</a>
                                 </li>
-                                <li class="breadcrumb-item active">Photos</li>
+                                <li class="breadcrumb-item active">Users</li>
                             </ol>
                         </div>
 
                     </div>
 
-                    <div class="col-md-5 align-self-center">
-                        <h3 class="text-themecolor">All Photos</h3>
-                    </div>
+
 
 
 
@@ -32,7 +30,7 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h4 class="card-title">Contact Emplyee list</h4>
+                                        <h4 class="card-title">User List</h4>
                                         <h6 class="card-subtitle"></h6>
                                         <div class="table-responsive">
                                             <div id="add-contact" class="modal fade in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -77,8 +75,7 @@
                                                 </div>
                                                 <!-- /.modal-dialog -->
                                             </div>
-                                            <table id="demo-foo-addrow" class="table m-t-30 table-hover contact-list footable-loaded footable"
-                                                data-page-size="10">
+                                            <table id="demo-foo-addrow" class="table m-t-30 table-hover contact-list footable-loaded footable" data-page-size="10">
                                                 <thead>
                                                     <tr>
                                                         <th class="footable-sortable">No
@@ -87,22 +84,16 @@
                                                         <th class="footable-sortable">Name
                                                             <span class="footable-sort-indicator"></span>
                                                         </th>
+                                                        <th class="footable-sortable">UserName
+                                                            <span class="footable-sort-indicator"></span>
+                                                        </th>
                                                         <th class="footable-sortable">Email
                                                             <span class="footable-sort-indicator"></span>
                                                         </th>
-                                                        <th class="footable-sortable">Phone
-                                                            <span class="footable-sort-indicator"></span>
-                                                        </th>
-                                                        <th class="footable-sortable">Role
-                                                            <span class="footable-sort-indicator"></span>
-                                                        </th>
-                                                        <th class="footable-sortable">Age
+                                                        <th class="footable-sortable">status
                                                             <span class="footable-sort-indicator"></span>
                                                         </th>
                                                         <th class="footable-sortable">Joining date
-                                                            <span class="footable-sort-indicator"></span>
-                                                        </th>
-                                                        <th class="footable-sortable">Salery
                                                             <span class="footable-sort-indicator"></span>
                                                         </th>
                                                         <th class="footable-sortable">Action
@@ -111,35 +102,68 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr class="footable-even" style="">
-                                                        <td>
-                                                            <span class="footable-toggle"></span>1</td>
-                                                        <td>
-                                                            <a href="javascript:void(0)">
-                                                                <img src="../assets/images/users/4.jpg" alt="user" width="40"
-                                                                    class="img-circle"> Genelia Deshmukh</a>
-                                                        </td>
-                                                        <td>genelia@gmail.com</td>
-                                                        <td>+123 456 789</td>
-                                                        <td>
-                                                            <span class="label label-danger">Designer</span>
-                                                        </td>
-                                                        <td>23</td>
-                                                        <td>12-10-2014</td>
-                                                        <td>$1200</td>
-                                                        <td>
-                                                            <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete">
-                                                                <i class="ti-close" aria-hidden="true"></i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                     
+
+                                                    <% users.forEach((user, index) => { %>
+
+
+                                                        <tr class="footable-even" style="">
+                                                            <td>
+                                                                <span class="footable-toggle"></span>
+                                                                <%= index+1 %>
+                                                            </td>
+                                                            <td>
+                                                                <a href="javascript:void(0)">
+                                                                    <% if(user.image.name){ %>
+                                                                        <img src="http://res.cloudinary.com/adgallerytz/image/upload/c_scale,q_180,w_150/c_crop,g_face,h_100,w_100/user/<%= user.image.name %>"
+                                                                            alt="user" width="40" class="img-circle">
+                                                                        <%}else{%>
+                                                                            <img src="http://res.cloudinary.com/adgallerytz/image/upload/c_scale,q_100,w_100/c_crop,g_face,h_100,w_100/user-icon-image-placeholder.jpg"
+                                                                                alt="user" width="40" class="img-circle">
+                                                                            <%}%>
+
+                                                                                <p>
+                                                                                    <%= user.fullname %>
+                                                                                </p>
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <%= user.username %>
+                                                            </td>
+                                                            <td>
+                                                                <%= user.email %>
+                                                            </td>
+                                                            <td>
+                                                                <% if(user.canUpload){ %>
+                                                                    <span class="label label-success">Can Upload</span>
+                                                                    <% } else { %>
+                                                                        <span class="label label-warning">Can Not Upload</span>
+
+                                                                        <%}%>
+
+                                                                            <% if(user.confirmed){%>
+                                                                                <span class="label label-primary">Confirmed</span>
+                                                                                <% }  %>
+                                                                                
+                                                               
+                                                            </td>
+                                                            <td>
+                                                                <%= user.joined_on.toDateString() %>
+                                                            </td>
+                                                            <td>
+                                                                <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete">
+
+
+                                                                    <i class="ti-close" aria-hidden="true"></i>
+
+
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                        <% })%>
                                                 </tbody>
                                                 <tfoot>
                                                     <tr>
-                                                        <td colspan="2">
-                                                            <button type="button" class="btn btn-info btn-rounded" data-toggle="modal" data-target="#add-contact">Add New Contact</button>
-                                                        </td>
+
 
                                                         <td colspan="7">
                                                             <div class="text-right">
@@ -178,7 +202,7 @@
                         </div>
                     </div>
 
-                    
+
                 </div>
         </div>
 

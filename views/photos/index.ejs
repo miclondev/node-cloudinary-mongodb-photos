@@ -2,64 +2,101 @@
     <% include ../partials/navbar %>
         <div class="wrapper">
 
-            <% include ./photos-sidebar %>
+            <!-- <% include ./photos-sidebar %> -->
 
-                <div id="gallery-content">
-                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                        <div class="container-fluid body-items">
+            <div id="gallery-content">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid body-items">
 
-                            <div class="row el-element-overlay gallery-100">
-                                <div class="col-md-12 gallery-title">
-                                    <div class="row">
-                                        <button type="button" id="sidebarCollapse" class="btn btn-info">
-                                            <i class="fas fa-align-left"></i>
-                                            <span>Hide Filters</span>
-                                        </button>
+                        <div class="row el-element-overlay gallery-100">
+                            <div class="col-md-12 gallery-title">
+
+                                <div class="form-group row">
+                                    <label for="example-month-input" class="col-md-3 col-form-label">Category</label>
+                                    <div class="col-md-9">
+                                        <select class="custom-select col-12" id="inlineFormCustomSelect">
+                                            <option selected="">All</option>
+                                            <% categories.forEach(cat => { %>
+                                                <option value="1">
+                                                    <%= cat.name %>
+                                                </option>
+                                                <%  })%>
+                                        </select>
                                     </div>
-                                    <h4 class="card-title">Gallery page</h4>
                                 </div>
 
-                                <% photos.forEach(photo => { %>
+                                <div class="form-group row">
+                                    <label for="example-month-input" class="col-md-4 col-form-label">Sort By</label>
+                                    <div class="col-md-8">
+                                        <select class="custom-select col-12" id="inlineFormCustomSelect">
+                                            <option selected="">Reccomended</option>
+                                            <option>Latest</option>
+                                            <option>Most Liked</option>
+                                            <option>Most Viewed</option>
 
-                                    <div class="col-lg-3 col-md-6">
-                                        <div class="card">
-                                            <div class="el-card-item">
-                                                <div class="el-card-avatar el-overlay-1">
-                                                    <img style="min-height: 170px" src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_400/c_crop,g_face:auto,h_264,w_396/v1528874042/photos/<%= photo.image.name %>"
-                                                        alt="adgallery">
-                                                    <div class="el-overlay">
-
-                                                        <ul class="el-info">
-                                                            <li>
-                                                                <a class="btn default btn-outline image-popup-vertical-fit" href="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_600/c_scale,l_logo1,w_300/v1528874042/photos/<%= photo.image.name %>">
-                                                                    <i class="icon-magnifier"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a class="btn default btn-outline" href="/photos/<%= photo.slug %>">
-                                                                    <i class="icon-link"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                        
-                                                    </div>
-                                                </div>
-                                                
-                                            </div>
-                                        </div>
+                                        </select>
                                     </div>
-
-                                    <% }) %>
-
+                                </div>
+                                <div class="form-group row">
+                                    <i class="fa fa-search"></i>
+                                </div>
                             </div>
 
-                            <% include ./photos-paginator %>
+                            <% photos.forEach(photo => { %>
+
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="card">
+                                        <div class="el-card-item">
+                                            <div class="el-card-avatar el-overlay-1">
+                                                <img style="min-height: 170px" src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_400/c_crop,g_face:auto,h_264,w_396/v1528874042/photos/<%= photo.image.name %>"
+                                                    alt="adgallery">
+                                                <div class="el-overlay">
+                                                    <div class="photo-user">
+                                                        <p> By:
+                                                            <%= photo.user.username %>
+                                                        </p>
+                                                    </div>
+                                                    <ul class="el-info">
+                                                        <li>
+                                                            <a class="btn default btn-outline image-popup-vertical-fit" href="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_600/c_scale,l_logo1,w_300/v1528874042/photos/<%= photo.image.name %>">
+                                                                <i class="icon-magnifier"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <% if(currentUser && currentUser.like.photos.indexOf(photo._id) > -1) { %>
+                                                                <a class="btn default btn-outline">
+                                                                    <i class="fa fa-check "> </i>
+                                                                </a>
+                                                                <% } else { %>
+                                                                    <a class="btn default btn-outline like-photo" data-id="<%= photo._id %>">
+                                                                        <i class="fa fa-heart"></i>
+                                                                        <% } %>
+                                                                    </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="btn default btn-outline" href="/photos/<%= photo.slug %>">
+                                                                <i class="icon-link"></i>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <% }) %>
 
                         </div>
-                    </nav>
-                </div>
+
+                        <% include ./photos-paginator %>
+
+                    </div>
+                </nav>
+            </div>
         </div>
-
-
 
         <% include ../partials/footer %>

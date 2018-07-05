@@ -1,0 +1,50 @@
+<!--profile tab-->
+<div class="tab-pane active" id="profile" role="tabpanel">
+    <div class="card-body">
+
+        <p class="m-t-10 m-b-20">
+            <strong>About</strong>
+            <br>
+            <br>
+            <%= user.about %>
+        </p>
+        <div class="dropdown-divider"></div>
+
+        <h4 class="font-medium m-t-30">Media</h4>
+
+
+        <div class="sl-item">
+
+            <% if(photos.length > 0){ %>
+
+                <div class="sl-right">
+                    <div>
+                        <p>Recent Images</p>
+                        <div class="row">
+                            <% photos.forEach(photo => { %>
+                                <div class="col-lg-3 col-md-6 m-b-20">
+                                    <a href="/photos/<%= photo.slug %>">
+                                        <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_300/c_crop,g_face,h_115,w_170/photos/<%= photo.image.name %>"
+                                            class="img-responsive radius">
+                                    </a>
+                                </div>
+                                <% })%>
+                        </div>
+
+                        <div class="like-comm">
+                            <a href="/photos/p/1?category=all&user=<%= user._id %>" class="link btn brtn-primary">
+                                View All Images by
+                                <%= user.username %>
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+                <% } else { %>
+                    <p>
+                        <%= user.username %> Has not Uploaded Images Yey</p>
+                    <% }%>
+        </div>
+
+    </div>
+</div>

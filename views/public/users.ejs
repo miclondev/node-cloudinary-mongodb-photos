@@ -1,0 +1,10 @@
+<% include ../partials/header %>
+    <% include ../partials/navbar %>
+
+        <% users.forEach(user => { %>
+            <p>
+                <%= user.fullname %>
+            </p> 
+            <% }) %>
+
+            <% include ../partials/footer %>

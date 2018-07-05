@@ -1,0 +1,158 @@
+<% include ../partials/header %>
+    <% include ../partials/navbar %>
+
+        <div class="main-page" style="min-height: 186px;">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="row page-titles">
+                <div class="col-md-5 align-self-center">
+                    <h3 class="text-themecolor">Profile</h3>
+                </div>
+                <div class="col-md-7 align-self-center">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/">Home</a>
+                        </li>
+
+                        <li class="breadcrumb-item active">Profile</li>
+                    </ol>
+                </div>
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <!-- Row -->
+                <div class="row">
+                    <!-- Column -->
+                    <div class="col-lg-4 col-xlg-3 col-md-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <center class="m-t-30 profile-info">
+
+                                    <form action="/user/profile-image?_method=PUT" method="POST" id="update-form" enctype="multipart/form-data">
+                                        <input type="file" name="image" id="image-selector" style="width: 0px;height: 0px;overflow: hidden;">
+                                    </form>
+
+                                    <div class="profile-image" id="upload-div" style="display: none;">
+                                        <i class="fa fa-upload"></i>
+                                        <p>change image</p>
+
+                                    </div>
+
+
+                                    <% if(user.image.name){ %>
+                                        <img id="profile-picture" src="http://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_200/c_crop,g_faces:center,h_150,w_150/user/<%= user.image.name %>"
+                                            class="img-circle" width="150">
+
+                                        <% }else{ %>
+                                            <img id="profile-picture" src="http://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_150/c_crop,g_faces:center,h_150,w_150/user-icon-image-placeholder.jpg"
+                                                class="img-circle" width="150" height="150">
+                                            <span style=" position: absolute; float: right; right: 124px; color: black; top: 177px;">upload Image</span>
+                                            <% } %>
+
+
+
+                                                <h4 class="card-title m-t-10">
+                                                    <%= user.fullname %>
+                                                </h4>
+                                                <h6 class="card-subtitle">Photographer and videographer</h6>
+                                                <div class="row text-center justify-content-md-center">
+                                                    <div class="col-4">
+                                                        <a href="javascript:void(0)" class="link">
+                                                            <i class="icon-people"></i>
+                                                            <font class="font-medium"> <%= user.followers.account.length %></font>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <a href="javascript:void(0)" class="link">
+                                                            <i class="icon-picture"></i>
+                                                            <font class="font-medium">
+                                                                <%= photoCount %>
+                                                            </font>
+                                                        </a>
+                                                    </div>
+                                                </div> 
+                                                <% if(user.followers.account.indexOf(currentUser._id) > -1 ){ %>
+                                                    <div class="row text-center m-t-30 justify-content-md-center">
+                                                    <p class="btn btn-success">You Alredy Follow</p>
+                                                    </div>
+                                                    <% } else { %>
+                                                        <div class="row text-center m-t-30 justify-content-md-center">
+                                                            <form action="/user/follow/<%= user._id %>?_method=PUT" method="POST">
+                                                                <button type="submit" class="btn btn-rounded btn-block btn-info">Follow
+                                                                    <%= user.username %>
+                                                                </button>
+                                                            </form>
+                                                        </div>
+                                                        <% }%>
+                                </center>
+                            </div>
+                            <div>
+                                <hr> </div>
+                            <div class="card-body">
+
+                                <!-- <small class="text-muted p-t-30 db">Address</small>
+                                <h6>71 Pilgrim Avenue Chevy Chase, MD 20815</h6> -->
+
+                                <small class="text-muted p-t-30 db">Social Profile</small>
+                                <br>
+                                <a class="btn btn-circle btn-secondary">
+                                    <i class="fa fa-facebook"></i>
+                                </a>
+                                <a class="btn btn-circle btn-secondary">
+                                    <i class="fa fa-twitter"></i>
+                                </a>
+                                <a class="btn btn-circle btn-secondary">
+                                    <i class="fa fa-youtube"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column -->
+                    <!-- Column -->
+                    <div class="col-lg-8 col-xlg-9 col-md-7">
+                        <div class="card">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs profile-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active show" data-toggle="tab" href="#profile" role="tab">Profile </a>
+                                </li>
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <% include ./partials/media %>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <footer class="footer">
+            © 2018 Ad Gallery
+        </footer>
+        <script src="/js/jquery-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous"></script>
+        <script src="/assets/plugins/Magnific-Popup-master/dist/jquery.magnific-popup.min.js"></script>
+        <script src="/assets/plugins/Magnific-Popup-master/dist/jquery.magnific-popup-init.js"></script>
+
+        </body>
+
+        </html>

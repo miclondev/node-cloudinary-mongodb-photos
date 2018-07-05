@@ -4556,7 +4556,8 @@ table.dataTable thead .sorting:after {
     -webkit-transition: all .4s linear;
     transition: all .4s linear;
     width: 100%;
-    height: auto
+    height: auto;
+    min-height: 255px;
 }
 
 .el-element-overlay .el-card-item .el-overlay-1:hover img {
