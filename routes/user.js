@@ -178,4 +178,17 @@ router.post('/like', async (req, res) => {
     res.send('liked')
 })
 
+router.post('/add-to-cart', (req, res) => {
+    const { photoId } = req.body
+    User.findById(req.user._id).then(user => {
+        user.cart.photos.push(photoId)
+        user.save((err, save) => {
+            if (err) {
+                return res.send(err)
+            }
+            res.send('added')
+        })
+    })
+})
+
 module.exports = router;

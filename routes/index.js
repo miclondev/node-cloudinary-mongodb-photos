@@ -105,4 +105,12 @@ router.get('/profiles', (req, res) => {
     })
 })
 
+router.get('/cart', (req, res) => {
+    res.send('cart')    
+})
+
+router.get('/apply', (req, res) => {
+    res.send('apply')
+})
+
 module.exports = router;

@@ -1974,8 +1974,9 @@ form label {
 }
 
 .topbar {
-    position: relative;
-    z-index: 50
+    position: fixed;
+    width: 100%;
+    z-index: 50;
 }
 
 .topbar .top-navbar {
