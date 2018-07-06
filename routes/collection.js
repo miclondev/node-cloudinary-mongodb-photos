@@ -9,6 +9,7 @@ const { isLoggedIn } = require('../middleware')
 
 router.get('/', (req, res) => {
     Collection.find({})
+        .sort({ created_on: -1 })
         .populate('content.images')
         .exec((err, collections) => {
             if (err) {

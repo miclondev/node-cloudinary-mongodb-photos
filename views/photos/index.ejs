@@ -14,10 +14,10 @@
                                 <div class="form-group row">
                                     <label for="example-month-input" class="col-md-3 col-form-label">Category</label>
                                     <div class="col-md-9">
-                                        <select class="custom-select col-12" id="inlineFormCustomSelect">
+                                        <select class="custom-select col-12" id="select-category">
                                             <option selected="">All</option>
                                             <% categories.forEach(cat => { %>
-                                                <option value="1">
+                                                <option value="<%= cat._id %>">
                                                     <%= cat.name %>
                                                 </option>
                                                 <%  })%>
@@ -28,12 +28,11 @@
                                 <div class="form-group row">
                                     <label for="example-month-input" class="col-md-4 col-form-label">Sort By</label>
                                     <div class="col-md-8">
-                                        <select class="custom-select col-12" id="inlineFormCustomSelect">
-                                            <option selected="">Reccomended</option>
-                                            <option>Latest</option>
-                                            <option>Most Liked</option>
-                                            <option>Most Viewed</option>
-
+                                        <select name="select" id="select-sort" class="custom-select col-12" id="inlineFormCustomSelect">
+                                            <option selected="recommended">Recommended</option>
+                                            <option value="latest">Latest</option>
+                                            <option value="likes">Most Liked</option>
+                                            <option value="views">Most Viewed</option>
                                         </select>
                                     </div>
                                 </div>
@@ -41,7 +40,7 @@
                                     <i class="fa fa-search"></i>
                                 </div>
                             </div>
-
+<div id="photos-container">
                             <% photos.forEach(photo => { %>
 
                                 <div class="col-lg-3 col-md-6">
@@ -52,50 +51,47 @@
                                                     alt="adgallery">
                                                 <div class="el-overlay">
                                                     <div class="photo-user">
+                                                        <p><i class="fa fa-heart"> </i> <%= photo.likes %></p>
                                                         <p> By:
                                                             <%= photo.user.username %>
                                                         </p>
                                                     </div>
                                                     <ul class="el-info">
-                                                        <li>
+                                                        <!-- <li>
                                                             <a class="btn default btn-outline image-popup-vertical-fit" href="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_600/c_scale,l_logo1,w_300/v1528874042/photos/<%= photo.image.name %>">
                                                                 <i class="icon-magnifier"></i>
                                                             </a>
-                                                        </li>
+                                                        </li> -->
 
                                                         <% if(currentUser){ %>
 
-                                                            <li>
-                                                                <% if(currentUser.like.photos.indexOf(photo._id) > -1) { %>
-                                                                    <a class="btn default btn-outline">
-                                                                        <i class="fa fa-check "> </i>
-                                                                    </a>
-                                                                    <% } else { %>
-                                                                        <a class="btn default btn-outline like-photo" data-id="<%= photo._id %>">
-                                                                            <i class="fa fa-heart"></i>
-                                                                        </a>
-                                                                        <% } %>
-                                                            </li>
 
-                                                            <li>
-                                                                <% if(currentUser.cart.photos.indexOf(photo._id) > -1) { %>
-                                                                    <a class="btn default btn-outline">
-                                                                        <i class="fa fa-check "> </i>
-                                                                    </a>
-                                                                    <% } else { %>
-                                                                        <a class="btn default btn-outline cart-button" data-id="<%= photo._id %>">
-                                                                            <i class="fa fa fa-shopping-basket"></i>
-                                                                        </a>
-                                                                        <% } %>
-                                                            </li>
-
-                                                            <% } %>
-
+                                                            <% if(currentUser.like.photos.indexOf(photo._id) === -1) { %>
                                                                 <li>
-                                                                    <a class="btn default btn-outline" href="/photos/<%= photo.slug %>">
-                                                                        <i class="icon-link"></i>
+                                                                    <a class="btn default btn-outline like-photo" data-id="<%= photo._id %>">
+                                                                        <i class="fa fa-heart"></i>
                                                                     </a>
                                                                 </li>
+                                                                <% }  %>
+
+
+                                                                    <% if(!currentUser.cart.photos.indexOf(photo._id) === -1) { %>
+                                                                        <li>
+
+                                                                            <a class="btn default btn-outline cart-button" data-id="<%= photo._id %>">
+                                                                                <i class="fa fa fa-shopping-basket"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                        <% } %>
+
+
+                                                                            <% } %>
+
+                                                                                <li>
+                                                                                    <a class="btn default btn-outline" href="/photos/<%= photo.slug %>">
+                                                                                        <i class="icon-link"></i>
+                                                                                    </a>
+                                                                                </li>
 
                                                     </ul>
 
@@ -108,6 +104,7 @@
                                 </div>
 
                                 <% }) %>
+</div>
 
                         </div>
 

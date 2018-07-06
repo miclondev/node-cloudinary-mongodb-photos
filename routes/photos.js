@@ -5,6 +5,46 @@ const Photo = mongoose.model('photo')
 const Category = mongoose.model('category')
 const { isLoggedIn } = require('../middleware')
 const { upload, cloudinary } = require('../funcs/uploadMainImage')
+
+//json photos
+router.get('/json', async (req, res) => {
+    console.log(req.query)
+
+    let filter = {'status.approved': true}
+    let sort
+
+    if (req.query.sort === 'likes') {
+        sort = { likes: -1 }
+    }
+    else {
+        sort = { created_on: -1 }
+    }
+
+    if (req.query.category !== 'All') {
+        filter.category = req.query.category
+    }
+ 
+
+    Photo.find(filter)
+        .sort(sort)
+        .skip(parseInt(req.query.skip))
+        .limit(24)
+        .populate('user', 'username')
+        .exec((err, photos) => {
+            if (err) {
+                console.log(err)
+                return res.send(err)
+            } 
+            if(req.user){
+                //console.log(req.user)
+            res.json({images:photos, cart: req.user.cart.photos, like: req.user.like.photos})
+        }else{
+            res.json(photos)
+        }
+
+        })
+})
+
 //get recent photos
 router.get('/p/:page', async (req, res) => {
     const page = parseInt(req.params.page)
@@ -45,11 +85,11 @@ router.get('/p/:page', async (req, res) => {
             .then(cat => cat.name)
     }
 
-    if(req.query.user){
+    if (req.query.user) {
         filter.user = req.query.user
         userQuery = `&user=${req.query.user}`
     }
-    
+
     console.log(userQuery)
 
     console.log(filter)
@@ -68,7 +108,7 @@ router.get('/p/:page', async (req, res) => {
         .skip(skip)
         .limit(limit)
         .sort({ created_on: -1 })
-        .populate({path: 'user', select: 'username image.name'})
+        .populate({ path: 'user', select: 'username image.name' })
         .exec((err, photos) => {
             if (err) {
                 console.log(err)

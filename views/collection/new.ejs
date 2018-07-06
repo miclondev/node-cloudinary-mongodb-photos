@@ -2,21 +2,23 @@
     <% include ../partials/navbar %>
 
         <div class="container-fluid body-items">
-            <div class="row el-element-overlay gallery-100">
+            <div class="row el-element-overlay gallery-100 m-t-90">
 
-                <div class="col-md-12 gallery-title">
-                    <div class="row">
-                        <button type="button" id="sidebarCollapse" class="btn btn-info" data-toggle="modal" data-target="#add-collection">
-                            <i class="fas fa-align-left"></i>
-                            <span>Add New Collection</span>
-                        </button>
-                    </div>
-                    <h4 class="card-title">My Colections</h4>
-                </div>
+                
 
 
 
                 <div class="el-element-overlay collection-body">
+
+                        <div class="col-md-12 gallery-title">
+                                <div class="row">
+                                    <button type="button" id="sidebarCollapse" class="btn btn-info" data-toggle="modal" data-target="#add-collection">
+                                        <i class="fas fa-align-left"></i>
+                                        <span>Add New Collection</span>
+                                    </button>
+                                </div>
+                                <h4 class="card-title">My Colections</h4>
+                            </div>
 
                     <% collections.forEach(col => { %>
 

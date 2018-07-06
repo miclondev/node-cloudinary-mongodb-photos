@@ -170,8 +170,15 @@ router.put('/follow/:id', async (req, res) => {
 router.post('/like', async (req, res) => {
     const { photoId } = req.body
     await Photo.findById(photoId).then(photo => {
-        photo.likes++
-        photo.save()
+        console.log(photo)
+        photo.likes = photo.likes+1
+        console.log(photo.likes)
+
+        photo.save((err, save) => {
+            if(err){
+                console.log(err)
+            }
+        })
     })
     await User.findById(req.user._id).then(user => {
         user.like.photos.push(photoId)
