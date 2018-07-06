@@ -5,8 +5,8 @@ $('document').ready(function () {
     //create the function the enable it when page loads
     function enablePhotofuncs() {
         let likeButton = $('.like-photo')
-        const likeCount = $('#user-like-count')
-        const cartCount = $('#user-cart-count')
+        const likeCount = $('.user-like-count')
+        const cartCount = $('.user-cart-count')
         let cartButton = $('.cart-button')
 
         likeButton.click(function () {
@@ -16,7 +16,9 @@ $('document').ready(function () {
             $.post('/user/like', { photoId }, function (data) {
                 if (data === 'liked') {
                     console.log(data)
-                    likeCount.text(parseInt(likeCount.text()) + 1)
+                    likeCount.each(function () {
+                        $(this).text(parseInt($(this).text()) + 1)
+                    })
                     currentButton.html('<i class="fa fa-check"> </i>')
                     setTimeout(function () {
                         currentButton.hide()
@@ -32,7 +34,9 @@ $('document').ready(function () {
             $.post('/user/add-to-cart', { photoId }, function (data) {
                 if (data === 'added') {
                     console.log(data)
-                    cartCount.text(parseInt(cartCount.text()) + 1)
+                    cartCount.each(function () {
+                        $(this).text(parseInt($(this).text()) + 1)
+                    })
                     thisCartButton.html('<i class="fa fa-check"> </i>')
                     setTimeout(function () {
                         thisCartButton.hide()
@@ -106,6 +110,25 @@ $('document').ready(function () {
     }
     let loaded = 0
 
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
+    };
+    const loadCategory = getUrlParameter('category')
+    selectCat.val(loadCategory)
+    selectedCat = loadCategory
+    generatedUrl = `/photos/json?category=${selectedCat}&sort=${selectedSort}&skip=${0}`
+    loadImages()
 
     const loadMoreButton = $('#load-more-button')
     loadMoreButton.click(function () {
@@ -144,7 +167,7 @@ $('document').ready(function () {
                 likeButton.each(function () {
                     let button = $(this)
                     console.log(button.attr('data-id'), data.like.indexOf(button.attr('data-id')) > -1)
-                    if (data.like.length === 0) {
+                    if (data.like === undefined) {
                         $(this).hide()
                     } else {
                         if (data.like.indexOf(button.attr('data-id')) > -1) {
@@ -155,7 +178,7 @@ $('document').ready(function () {
 
                 cartButton.each(function () {
                     let button = $(this)
-                    if (data.like.length === 0) {
+                    if (data.cart === undefined) {
                         $(this).hide()
                     } else {
                         if (data.like.indexOf(button.attr('data-id')) > -1) {
@@ -200,6 +223,5 @@ $('document').ready(function () {
         loadImages()
     })
 
-    generatedUrl = `/photos/json?category=All&sort=latest&skip=${skip}`
-    loadImages()
+    
 })

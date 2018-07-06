@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 const { createSlugWithDate } = require('../funcs/friendlyUrl')
 //const moment = require('moment')
 
-const videoSchema = new Schema({
+const footageSchema = new Schema({
     title: String,
     slug: { type: String, unique: true },
     description: String,
@@ -20,25 +20,17 @@ const videoSchema = new Schema({
     status: {
         named: { type: Boolean, default: false },
         approved: { type: Boolean, default: false },
-        submitted: { type: Boolean, default: false },
-        review: { type: Boolean, default: false }
-    }
+        submitted: { type: Boolean, default: false }, 
+        featured: { type: Boolean, default: false }
+    },
+    likes: { type: Number, default: 0 }
 })
 
-photosSchema.pre('save', function (next) {
+footageSchema.index({ title: 'text', description: 'text', slug: 'text' })
+
+footageSchema.pre('save', function (next) {
     this.slug = createSlugWithDate(this.title)
     next()
 })
 
-photosSchema.pre('save', function (next) {
-    const category = mongoose.model('category');
-    return category.findById(this.category)
-        .then(Cat => {
-            ++Cat.count.photos;
-            Cat.save()
-        })
-    next()
-})
-
-
-mongoose.model("video", videoSchema);
+mongoose.model("footage", footageSchema);

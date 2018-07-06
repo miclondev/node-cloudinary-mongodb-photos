@@ -9,13 +9,13 @@
                     <div class="container-fluid body-items">
 
                         <div class="row el-element-overlay gallery-100">
-                            <div class="col-md-12 gallery-title">
 
+                            <div class="col-md-12 gallery-title">
                                 <div class="form-group row">
                                     <label for="example-month-input" class="col-md-3 col-form-label">Category</label>
                                     <div class="col-md-9">
                                         <select class="custom-select col-12" id="select-category">
-                                            <option selected="">All</option>
+                                            <option value="All">All</option>
                                             <% categories.forEach(cat => { %>
                                                 <option value="<%= cat._id %>">
                                                     <%= cat.name %>
@@ -37,74 +37,93 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <i class="fa fa-search"></i>
+                                    <i class="fa fa-filter" id="mobile-filter"></i>
                                 </div>
                             </div>
-<div id="photos-container">
-                            <% photos.forEach(photo => { %>
 
-                                <div class="col-lg-3 col-md-6">
-                                    <div class="card">
-                                        <div class="el-card-item">
-                                            <div class="el-card-avatar el-overlay-1">
-                                                <img style="min-height: 170px" src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_400/c_crop,g_face:auto,h_264,w_396/v1528874042/photos/<%= photo.image.name %>"
-                                                    alt="adgallery">
-                                                <div class="el-overlay">
-                                                    <div class="photo-user">
-                                                        <p><i class="fa fa-heart"> </i> <%= photo.likes %></p>
-                                                        <p> By:
-                                                            <%= photo.user.username %>
-                                                        </p>
-                                                    </div>
-                                                    <ul class="el-info">
-                                                        <!-- <li>
+                            <div class="gallery-mobile-filters">
+                                <div class="form-group">
+                                    <select class="form-control" name="" id="">
+                                        <option value="">All</option>
+                                        <% categories.forEach(cat => { %>
+                                            <option value="<%= cat._id %>">
+                                                <%= cat.name %>
+                                            </option>
+                                            <%  })%>
+                                    </select>
+                                </div>
+
+                                <i class="fa fa-search"></i>
+                            </div>
+
+                            <div id="photos-container">
+                                <% photos.forEach(photo => { %>
+
+                                    <div class="col-lg-3 col-md-6">
+                                        <div class="card">
+                                            <div class="el-card-item">
+                                                <div class="el-card-avatar el-overlay-1">
+                                                    <img style="min-height: 170px" src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_400/c_crop,g_face:auto,h_264,w_396/v1528874042/photos/<%= photo.image.name %>"
+                                                        alt="adgallery">
+                                                    <div class="el-overlay">
+                                                        <div class="photo-user">
+                                                            <p>
+                                                                <i class="fa fa-heart"> </i>
+                                                                <%= photo.likes %>
+                                                            </p>
+                                                            <p> By:
+                                                                <%= photo.user.username %>
+                                                            </p>
+                                                        </div>
+                                                        <ul class="el-info">
+                                                            <!-- <li>
                                                             <a class="btn default btn-outline image-popup-vertical-fit" href="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_600/c_scale,l_logo1,w_300/v1528874042/photos/<%= photo.image.name %>">
                                                                 <i class="icon-magnifier"></i>
                                                             </a>
                                                         </li> -->
 
-                                                        <% if(currentUser){ %>
+                                                            <% if(currentUser){ %>
 
 
-                                                            <% if(currentUser.like.photos.indexOf(photo._id) === -1) { %>
-                                                                <li>
-                                                                    <a class="btn default btn-outline like-photo" data-id="<%= photo._id %>">
-                                                                        <i class="fa fa-heart"></i>
-                                                                    </a>
-                                                                </li>
-                                                                <% }  %>
+                                                                <% if(currentUser.like.photos.indexOf(photo._id) === -1) { %>
+                                                                    <li>
+                                                                        <a class="btn default btn-outline like-photo" data-id="<%= photo._id %>">
+                                                                            <i class="fa fa-heart"></i>
+                                                                        </a>
+                                                                    </li>
+                                                                    <% }  %>
 
 
-                                                                    <% if(!currentUser.cart.photos.indexOf(photo._id) === -1) { %>
-                                                                        <li>
+                                                                        <% if(!currentUser.cart.photos.indexOf(photo._id) === -1) { %>
+                                                                            <li>
 
-                                                                            <a class="btn default btn-outline cart-button" data-id="<%= photo._id %>">
-                                                                                <i class="fa fa fa-shopping-basket"></i>
-                                                                            </a>
-                                                                        </li>
-                                                                        <% } %>
-
-
+                                                                                <a class="btn default btn-outline cart-button" data-id="<%= photo._id %>">
+                                                                                    <i class="fa fa fa-shopping-basket"></i>
+                                                                                </a>
+                                                                            </li>
                                                                             <% } %>
 
-                                                                                <li>
-                                                                                    <a class="btn default btn-outline" href="/photos/<%= photo.slug %>">
-                                                                                        <i class="icon-link"></i>
-                                                                                    </a>
-                                                                                </li>
 
-                                                    </ul>
+                                                                                <% } %>
+
+                                                                                    <li>
+                                                                                        <a class="btn default btn-outline" href="/photos/<%= photo.slug %>">
+                                                                                            <i class="icon-link"></i>
+                                                                                        </a>
+                                                                                    </li>
+
+                                                        </ul>
 
 
+                                                    </div>
                                                 </div>
-                                            </div>
 
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <% }) %>
-</div>
+                                    <% }) %>
+                            </div>
 
                         </div>
 

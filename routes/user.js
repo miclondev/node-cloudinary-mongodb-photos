@@ -15,12 +15,11 @@ const { isLoggedIn, canUpload } = require('../middleware')
 router.use(isLoggedIn)
 
 router.get('/photos/new', canUpload, (req, res) => {
-    Category.find({}, (err, found) => {
-        if (err) {
-            return res.send(err)
-        }
-        res.render('photos/new', { categories: found })
-    })
+    res.render('photos/new')
+})
+
+router.get('/footage/new', canUpload, (req, res) => {
+    res.render('footage/new')
 })
 
 router.get('/photos/new/edit', async (req, res) => {

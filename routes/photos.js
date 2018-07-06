@@ -38,7 +38,7 @@ router.get('/json', async (req, res) => {
             if (req.user) {
                 res.json({ images: photos, cart: req.user.cart.photos, like: req.user.like.photos })
             } else {
-                res.json({ images: photos, cart: [], like: [] })
+                res.json({ images: photos, cart: undefined, like: undefined })
             }
         })
 })

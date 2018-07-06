@@ -8,9 +8,9 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Upload Images</h4>
+                            <h4 class="card-title">Upload Videos</h4>
                             <h6 class="card-subtitle">Click or Drag here to upload </h6>
-                            <form action="/photos" class="dropzone" id="dropper">
+                            <form action="/footage" class="dropzone" id="dropper">
                                 <div class="fallback">
                                     <input name="file" type="file" multiple />
 
@@ -47,7 +47,7 @@
 
                 <div class="card" style="width:100%;">
                     <div class="card-body">
-                        <form action="/user/photos/edit" id="buttonLocation" method="GET">
+                        <form action="/user/footage/edit" id="buttonLocation" method="GET">
                            
                         </form>
                     </div>
@@ -71,7 +71,7 @@
 
             Dropzone.options.dropper = {
                 paramName: "file", // The name that will be used to transfer the file
-                maxFilesize: 10, // MB
+                maxFilesize: 250, // MB
                 init: function () {
                     const messages = $('#messages')
                     const progressBar = $('#progressBarLoc')

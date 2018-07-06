@@ -22,6 +22,23 @@
                 </ul>
                 <% } else { %>
                     <ul class="mobile-menu-login">
+                            <li class="nav-item center-with-flex user-icons">
+                                    <a href="/user/cart">
+                                        <i class="fa fa-shopping-basket"></i>
+                                    </a>
+                                    <p class="user-cart-count">
+                                        <%= currentUser.cart.photos.length %>
+                                    </p>
+                                </li>
+        
+                                <li class="nav-item center-with-flex user-like">
+                                    <a href="/user/liked">
+                                        <i class="fa fa-heart"></i>
+                                    </a>
+                                    <p class="user-like-count">
+                                        <%= currentUser.like.photos.length %>
+                                    </p>
+                                </li>
                         <% include ./profile %>
                     </ul>
                     <% } %>
@@ -39,7 +56,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">photos</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
-                        <a class="dropdown-item" href="/photos/p/1?category=all">All Photos</a>
+                        <a class="dropdown-item" href="/photos/p/1?category=All">All Photos</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="/photos/categories">All Categories</a>
                     </div>
@@ -72,7 +89,7 @@
                             <a href="/user/cart">
                                 <i class="fa fa-shopping-basket"></i>
                             </a>
-                            <p id="user-cart-count">
+                            <p class="user-cart-count">
                                 <%= currentUser.cart.photos.length %>
                             </p>
                         </li>
@@ -81,7 +98,7 @@
                             <a href="/user/liked">
                                 <i class="fa fa-heart"></i>
                             </a>
-                            <p id="user-like-count">
+                            <p class="user-like-count">
                                 <%= currentUser.like.photos.length %>
                             </p>
                         </li>
