@@ -10,7 +10,7 @@ const { upload, cloudinary } = require('../funcs/uploadMainImage')
 router.get('/json', async (req, res) => {
     console.log(req.query)
 
-    let filter = {'status.approved': true}
+    let filter = { 'status.approved': true }
     let sort
 
     if (req.query.sort === 'likes') {
@@ -23,7 +23,7 @@ router.get('/json', async (req, res) => {
     if (req.query.category !== 'All') {
         filter.category = req.query.category
     }
- 
+
 
     Photo.find(filter)
         .sort(sort)
@@ -34,14 +34,12 @@ router.get('/json', async (req, res) => {
             if (err) {
                 console.log(err)
                 return res.send(err)
-            } 
-            if(req.user){
-                //console.log(req.user)
-            res.json({images:photos, cart: req.user.cart.photos, like: req.user.like.photos})
-        }else{
-            res.json(photos)
-        }
-
+            }
+            if (req.user) {
+                res.json({ images: photos, cart: req.user.cart.photos, like: req.user.like.photos })
+            } else {
+                res.json({ images: photos, cart: [], like: [] })
+            }
         })
 })
 

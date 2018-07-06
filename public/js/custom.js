@@ -18,7 +18,7 @@ $('document').ready(function () {
                     console.log(data)
                     likeCount.text(parseInt(likeCount.text()) + 1)
                     currentButton.html('<i class="fa fa-check"> </i>')
-                    setTimeout(function(){
+                    setTimeout(function () {
                         currentButton.hide()
                     }, 1000)
                 }
@@ -34,7 +34,7 @@ $('document').ready(function () {
                     console.log(data)
                     cartCount.text(parseInt(cartCount.text()) + 1)
                     thisCartButton.html('<i class="fa fa-check"> </i>')
-                    setTimeout(function(){
+                    setTimeout(function () {
                         thisCartButton.hide()
                     }, 1000)
                 }
@@ -143,33 +143,39 @@ $('document').ready(function () {
 
                 likeButton.each(function () {
                     let button = $(this)
-                    console.log(button.attr('data-id'))
-                    if(data.like.indexOf(button.attr('data-id')) > -1){
+                    console.log(button.attr('data-id'), data.like.indexOf(button.attr('data-id')) > -1)
+                    if (data.like.length === 0) {
                         $(this).hide()
+                    } else {
+                        if (data.like.indexOf(button.attr('data-id')) > -1) {
+                            $(this).hide()
+                        }
                     }
                 })
 
                 cartButton.each(function () {
                     let button = $(this)
-                    console.log(button.attr('data-id'))
-                    if(data.like.indexOf(button.attr('data-id')) > -1){
+                    if (data.like.length === 0) {
                         $(this).hide()
+                    } else {
+                        if (data.like.indexOf(button.attr('data-id')) > -1) {
+                            $(this).hide()
+                        }
                     }
                 })
 
                 const imagesHover = $('.el-overlay')
                 let prevHover
 
-                imagesHover.hover(function(){
-                    if(prevHover === undefined){
+                imagesHover.hover(function () {
+                    if (prevHover === undefined) {
                         prevHover = $(this)
-                    }else{
+                    } else {
                         prevHover.removeClass('image-hover-overlay')
                         prevHover = $(this)
                     }
-                    $(this).addClass('image-hover-overlay')  
+                    $(this).addClass('image-hover-overlay')
                 })
-
             }
         })
     }
