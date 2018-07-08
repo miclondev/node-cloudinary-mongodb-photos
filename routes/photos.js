@@ -23,7 +23,7 @@ router.get('/json', async (req, res) => {
     if (req.query.category !== 'All') {
         filter.category = req.query.category
     }
-
+    console.log(req.query.category !== 'All')
 
     Photo.find(filter)
         .sort(sort)
@@ -44,90 +44,96 @@ router.get('/json', async (req, res) => {
 })
 
 //get recent photos
-router.get('/p/:page', async (req, res) => {
-    const page = parseInt(req.params.page)
+// router.get('/p/:page', async (req, res) => {
+//     const page = parseInt(req.params.page)
 
-    let queryParams = '?'
+//     let queryParams = '?'
 
-    const queryValues = Object.values(req.query)
-    const queryKeys = Object.keys(req.query)
+//     const queryValues = Object.values(req.query)
+//     const queryKeys = Object.keys(req.query)
 
-    queryValues.forEach((value, i) => {
-        if (i === 0) {
-            queryParams = queryParams + `${queryKeys[i]}=` + value
-        } else {
-            queryParams = queryParams + `&${queryKeys[i]}=` + value
-        }
-    })
+//     queryValues.forEach((value, i) => {
+//         if (i === 0) {
+//             queryParams = queryParams + `${queryKeys[i]}=` + value
+//         } else {
+//             queryParams = queryParams + `&${queryKeys[i]}=` + value
+//         }
+//     })
 
-    const currentUrl = `/photos${req.path}${queryParams}`
-    // console.log(queryParams)
-    // console.log(currentUrl)
+//     const currentUrl = `/photos${req.path}${queryParams}`
+//     // console.log(queryParams)
+//     // console.log(currentUrl)
 
-    //filter
-    let filter
-    let currentCategory
-    let sort
-    let userQuery
+//     //filter
+//     let filter
+//     let currentCategory
+//     let sort
+//     let userQuery
 
-    if (req.query.category === 'all') {
-        filter = {
-            'status.approved': true,
-        }
-    } else {
-        filter = {
-            'status.approved': true,
-            'category': req.query.category || null,
-        }
-        currentCategory = await Category.findById(req.query.category)
-            .then(cat => cat.name)
-    }
+//     if (req.query.category === 'all') {
+//         filter = {
+//             'status.approved': true,
+//         }
+//     } else {
+//         filter = {
+//             'status.approved': true,
+//             'category': req.query.category || null,
+//         }
+//         currentCategory = await Category.findById(req.query.category)
+//             .then(cat => cat.name)
+//     }
 
-    if (req.query.user) {
-        filter.user = req.query.user
-        userQuery = `&user=${req.query.user}`
-    }
+//     if (req.query.user) {
+//         filter.user = req.query.user
+//         userQuery = `&user=${req.query.user}`
+//     }
 
-    console.log(userQuery)
+//     console.log(userQuery)
 
-    console.log(filter)
+//     console.log(filter)
 
 
-    const count = await Photo.count(filter)
-    const categories = await Category.find({})
+//     const count = await Photo.count(filter)
+//     const categories = await Category.find({})
 
-    let limit = 24
+//     let limit = 24
 
-    const numOfPages = Math.ceil(count / limit)
+//     const numOfPages = Math.ceil(count / limit)
 
-    const skip = (page * limit) - limit;
+//     const skip = (page * limit) - limit;
 
-    Photo.find(filter)
-        .skip(skip)
-        .limit(limit)
-        .sort({ created_on: -1 })
-        .populate({ path: 'user', select: 'username image.name' })
-        .exec((err, photos) => {
-            if (err) {
-                console.log(err)
-                return res.send(err)
-            }
-            //console.log(photos)
-            res.render('photos/index', {
-                photos,
-                count,
-                categories,
-                numOfPages,
-                page,
-                currentUrl,
-                currentCategory,
-                queryParams,
-                userQuery
-            })
-        })
-})
+//     Photo.find(filter)
+//         .skip(skip)
+//         .limit(limit)
+//         .sort({ created_on: -1 })
+//         .populate({ path: 'user', select: 'username image.name' })
+//         .exec((err, photos) => {
+//             if (err) {
+//                 console.log(err)
+//                 return res.send(err)
+//             }
+//             //console.log(photos)
+//             res.render('photos/index', {
+//                 photos,
+//                 count,
+//                 categories,
+//                 numOfPages,
+//                 page,
+//                 currentUrl,
+//                 currentCategory,
+//                 queryParams,
+//                 userQuery
+//             })
+//         })
+// })
 
 //get all categories
+
+router.get('/browse', async (req, res) => {
+    const categories = await Category.find({})
+    res.render('photos/index', { categories })
+})
+
 router.get('/categories', (req, res) => {
     Category.find({}, (err, found) => {
         if (err) {

@@ -6,7 +6,6 @@ const Category = mongoose.model('category')
 const { isLoggedIn } = require('../middleware')
 const { upload, cloudinary } = require('../funcs/uploadFootage')
 
-
 router.post('/', upload, async (req, res) => {
     console.log(req.file)
     try {

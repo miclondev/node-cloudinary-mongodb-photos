@@ -2,6 +2,8 @@
     <% include ../partials/navbar %>
         <div class="wrapper">
 
+            <!-- <% include ./photos-sidebar %> -->
+
             <div id="gallery-content">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light m-t-60">
                     <div class="container-fluid body-items">
@@ -55,35 +57,17 @@
                             </div>
 
                             <div id="photos-container">
-                                <div style="min-height: 270px; display: flex; align-items: center; justify-content: center; width: 100%;">
-                                    <i class="fa fa-spin fa-spinner" style="font-size: 100px">
-                                    </i>
-                                </div>
+                                <i class="fa fa-spin fa-spinner" style="font-size: 50px"></i>
+
                             </div>
 
                         </div>
 
-                        <% include ./paginator %>
+                        <!-- <% include ./photos-paginator %> -->
 
                     </div>
                 </nav>
             </div>
         </div>
 
-
-
-        <footer class="footer">
-            © 2018 Ad Gallery
-        </footer>
-        <script src="/js/jquery-min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-            crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
-            crossorigin="anonymous"></script>
-        <script src="/assets/plugins/Magnific-Popup-master/dist/jquery.magnific-popup.min.js"></script>
-        <script src="/assets/plugins/Magnific-Popup-master/dist/jquery.magnific-popup-init.js"></script>
-        <script src="/js/loadingOverlay.min.js"></script>
-        <script src="/js/custom.js"></script>
-        <script src="/js/images.js"> </script>
-        </body>
-        </html>
+        <% include ../partials/footer %>

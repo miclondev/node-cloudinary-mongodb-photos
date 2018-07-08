@@ -19,9 +19,10 @@ router.get('/', async (req, res) => {
     try {
         const setting = await Setting.findById(SETTINGSID).populate('homeImage')
         const photos = await Photo.find({ 'status.featured': true }).populate('user').limit(8).sort({ created_on: -1 })
-        const categories = await Category.find({}).limit(4)
-        res.render('landing', { photos, categories, setting })
+        // const categories = await Category.find({}).limit(4)
+        res.render('landing', { photos, setting })
     } catch (err) {
+        console.log(err)
         res.send(err)
     }
 })
