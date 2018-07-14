@@ -20,8 +20,10 @@ $('document').ready(function () {
     <div class="card">
         <div class="el-card-item">
             <div class="el-card-avatar el-overlay-1 image-hover-overlay">
+            <a href="/photos/${image._id}">
                 <img style="min-height: 170px" src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_400/c_crop,g_face:auto,h_264,w_396/v1528874042/photos/${image.image.name}"
-                    alt="adgallery">
+                alt="adgallery">
+                </a> 
                 <div class="el-overlay">
                     <div class="photo-user">
                     <p><i class="fa fa-heart"> </i> ${image.likes}</p>
@@ -74,7 +76,7 @@ $('document').ready(function () {
             }
         }
     };
-    
+
     const loadCategory = getUrlParameter('category')
     selectCat.val(loadCategory)
     selectedCat = loadCategory
@@ -118,7 +120,8 @@ $('document').ready(function () {
 
                 likeButton.each(function () {
                     let button = $(this)
-                    console.log(button.attr('data-id'), data.like.indexOf(button.attr('data-id')) > -1)
+                    //console.log(data.like)
+                    // console.log(button.attr('data-id'), data.like.indexOf(button.attr('data-id')) > -1)
                     if (data.like === undefined) {
                         $(this).hide()
                     } else {
@@ -151,7 +154,7 @@ $('document').ready(function () {
                     }
                     $(this).addClass('image-hover-overlay')
                 })
-            } 
+            }
         })
     }
 
@@ -175,5 +178,18 @@ $('document').ready(function () {
         loadImages()
     })
 
-    
+    const mobileSearch = $('#mobile-search')
+    const mobileOptions = $('.mobile-options')
+
+    mobileSearch.click(function () { 
+        //mobileSearch.hide()
+        mobileOptions.hide()
+       $('#mobile-search-location').show()
+
+       $('.dismiss-button').click(function() {
+           mobileOptions.show()
+           $('#mobile-search-location').hide()
+       })
+    })
+
 })

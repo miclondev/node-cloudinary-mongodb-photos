@@ -40,18 +40,26 @@
                             </div>
 
                             <div class="gallery-mobile-filters">
-                                <div class="form-group">
-                                    <select class="form-control" name="" id="">
-                                        <option value="">All</option>
-                                        <% categories.forEach(cat => { %>
-                                            <option value="<%= cat._id %>">
-                                                <%= cat.name %>
-                                            </option>
-                                            <%  })%>
-                                    </select>
+
+                                <a class="mobile-options">
+                                    <i class="fa fa-bars"></i>
+                                    Filter
+                                </a>
+
+                                <a id="mobile-search" class="mobile-options">
+                                    Search
+                                    <i class="fa fa-search"></i>
+                                </a>
+                                <div id="mobile-search-location" style="display: none; width: 100%">
+                                  <div class="mobile-search-bar"> 
+                                        <i class="fa fa-times dismiss-button" ></i>
+                                    <input type="text" placeholder="search images here..">
+                                </div>
+                                <i class="fa fa-search"></i>
+                                    
                                 </div>
 
-                                <i class="fa fa-search"></i>
+
                             </div>
 
                             <div id="photos-container">
@@ -86,4 +94,5 @@
         <script src="/js/custom.js"></script>
         <script src="/js/photos.js"></script>
         </body>
+
         </html>
