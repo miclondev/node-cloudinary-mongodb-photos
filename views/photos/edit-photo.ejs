@@ -1,11 +1,11 @@
-<div class="photo-edit-card">
+<div class="photo-edit-card m-b-40">
     <div class="row">
         <div class="col-3">
             <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_crop,h_200,w_300/v1529228345/photos/<%= photo.image.name %>"
                 alt="editable">
         </div>
         <div class="col-9">
-            <div class="card-body">
+            <div class="card-body m-l-40">
 
                 <div class="form-group row">
                     <label for="example-text-input" class="col-md-2 col-form-label">Media Title</label>
@@ -36,7 +36,13 @@
                     </div>
                 </div>
 
-
+                <div class="form-group row">
+                    <label for="example-text-input" class="col-md-2 col-form-label">Tags</label>
+                    <div class="col-md-10">
+                        <input name="<%= photo._id %>[tags]" type="text" value="<%= photo.tags %>" data-role="tagsinput" placeholder="add tags.." style="display: none;">
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>

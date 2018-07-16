@@ -61,7 +61,7 @@ router.get('/photos/edit', async (req, res) => {
     })
     // console.log(mongooseIds)
     const categories = await Category.find({})
-    Photo.find({ _id: { $in: mongooseIds }, user: req.user._id })
+    Photo.find({ _id: { $in: mongooseIds } })
         .populate('category')
         .exec((err, photos) => {
             if (err) {

@@ -14,7 +14,7 @@ const photosSchema = new Schema({
         public_id: String
     },
     category: { type: mongoose.Schema.Types.ObjectId, ref: "category", default: '5b20b80c7b63f32838605b50' },
-    tags: [String],
+    tags: String,
     user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
     created_on: { type: Date, default: Date.now },
     status: {
@@ -26,7 +26,7 @@ const photosSchema = new Schema({
     likes: { type: Number, default: 0 }
 })
 
-photosSchema.index({ title: 'text', description: 'text', slug: 'text' })
+photosSchema.index({ title: 'text', description: 'text', tags: 'text' },{ sparse: true })
 
 photosSchema.pre('save', function (next) {
     this.slug = createSlugWithDate(this.title)

@@ -1,12 +1,12 @@
 <% include ../partials/header %>
     <% include ../partials/navbar %>
+    <div class="wrapper">
         <div class="container">
             <div class="gallery-edit">
                 <form method="POST" action="/user/photos/new/edit?_method=put">
                     <% photos.forEach(photo => { %>
                         <%  include ./edit-photo.ejs %>
                             <% })%>
-
                                 <div class="row">
                                     <div class="col-12">
                                         <button class="btn btn-block btn-primary"> Submit Photos </button>
@@ -15,4 +15,22 @@
                 </form>
             </div>
         </div>
-<% include ../partials/footer %>
+    </div>
+
+
+    <footer class="footer">
+            © 2018 Ad Gallery
+        </footer>
+        <script src="/js/jquery-min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous"></script>
+        <script src="/assets/plugins/Magnific-Popup-master/dist/jquery.magnific-popup.min.js"></script>
+        <script src="/assets/plugins/Magnific-Popup-master/dist/jquery.magnific-popup-init.js"></script>
+        <script src="/assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+        <script src="/js/loadingOverlay.min.js"></script>
+        <script src="/js/custom.js"></script>
+        </body>
+        
+        </html>
