@@ -1,7 +1,7 @@
 <% include ../partials/header %>
     <% include ../partials/navbar %>
         <div class="wrapper">
-            <div class="container-fluid">
+            <div class="container">
 
 
                 <div class="row single-image-container">
@@ -15,13 +15,79 @@
                                 <i class="fa fa-shopping-basket" data-id="<%= photo._id %>"></i>
                                 <i class="fa fa-plus" data-id="<%= photo._id %>"></i>
                             </div>
+
+                        </div>
+                        <div class="image-user-info">
+                            <a href="/user-profile/">
+                                <img src="http://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_400/c_thumb,h_50,r_100,w_50/v1530723364/user/<%= photo.user.image.name %>"
+                                    alt="">
+                                <span>
+                                    <span> By </span>
+                                    <% if(photo.user.fullname) { %>
+                                        <%= photo.user.fullname %>
+                                            <% }else{ %>
+                                                <%= photo.user.username %>
+                                                    <%}%>
+                                </span>
+                            </a>
                         </div>
 
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 photo-purchase">
+                        <div class="choose-size">
+                            <button class="btn btn-outline-info">S</button>
+                            <button class="btn btn-outline-info">M</button>
+                            <button class="btn btn-info">L</button>
+                            <a href="">
+                                <p>Size Guide</p>
+                            </a>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <button class="btn btn-success btn-block">
+                                    <i class="fa fa-shopping-basket"></i> Add To Cart</button>
+
+                            </div>
+
+                            <div class="col-sm-6">
+                                <button class="btn btn-danger btn-block">
+                                    <i class="fa fa-download"></i> Download Preview</button>
+
+                            </div>
+
+
+                        </div>
 
                     </div>
                 </div>
+                <div>
+                    <div>
+                    <p>
+                        Ad gallery Photo Id :
+                        <%= photo._id %>
+                    </p>
+                </div>
+                    <br/>
+                    <div>
+                        <p>
+                            <%= photo.description %>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div>
+                        <p>other images by
+                            <%= photo.user.username %>
+                        </p>
+                    </div>
+                    <div>
+                        <p>related</p>
+                    </div>
+                </div>
+
             </div>
         </div>
         <h1>Single Photo page</h1>

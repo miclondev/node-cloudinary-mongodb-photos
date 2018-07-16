@@ -100,6 +100,17 @@ $('document').ready(function () {
 
     //console.log(searchTerm)
 
+    //function to construct the url from queries
+    // function constructUrl(category = 'All', sort = 'likes', skip = 0, search = "") {
+    //     let url = '/photos/json?';
+    //     if (search !== "") {
+    //         url = url + `category=${category}&sort=${sort}&skip=${skip}&search=${search}`
+    //     } else {
+    //         url = url + `category=${category}&sort=${sort}&skip=${skip}`
+    //     }
+    //     return url;
+    // }
+
     const loadCategory = getUrlParameter('category')
     selectCat.val(loadCategory)
     selectedCat = loadCategory
@@ -107,11 +118,16 @@ $('document').ready(function () {
     if (searchTerm) {
         generatedUrl = `/photos/json?category=${selectedCat}&sort=${selectedSort}&skip=${0}&search=${searchTerm}`
         //console.log(generatedUrl)
+        
         loadImages()
     } else {
         generatedUrl = `/photos/json?category=${selectedCat}&sort=${selectedSort}&skip=${0}`
         loadImages()
     }
+
+
+
+
 
     const loadMoreButton = $('#load-more-button')
     loadMoreButton.click(function () {
@@ -127,20 +143,22 @@ $('document').ready(function () {
 
     function loadImages() {
         $.get(generatedUrl, function (data) {
-            console.log(data)
+            console.log(data.images.length)
+            if (data.images.length < 24) {
+                loadMoreButton.hide()
+            } else {
+                loadMoreButton.show()
+            }
+
+
             if (data.images) {
                 loadMoreButton.html('Load More')
-                console.log(`skip`, skip)
-                if (data.images.length === 0) {
-                    $('#photos-load-more').hide()
-                } else {
-                    $('#photos-load-more').show()
-                }
+
                 if (loaded === 0) {
                     photoContainer.html(' ')
                 }
                 loaded = loaded + 1
-                console.log(`num of times loaded ${loaded}`)
+                //console.log(`num of times loaded ${loaded}`)
                 addPhotos(photoContainer, data.images)
                 $('#photos-pagination').hide()
                 $('.gallery-100').LoadingOverlay("hide")
@@ -193,6 +211,9 @@ $('document').ready(function () {
         loaded = 0
         selectedSort = $(this).val()
         generatedUrl = `/photos/json?category=${selectedCat}&sort=${selectedSort}&skip=${skip}`
+        if (searchTerm) {
+            generatedUrl = `${generatedUrl}&search=${searchTerm}`
+        } 
         console.log(generatedUrl)
         $('.gallery-100').LoadingOverlay("show")
         loadImages()
@@ -203,6 +224,9 @@ $('document').ready(function () {
         loaded = 0
         selectedCat = $(this).val()
         generatedUrl = `/photos/json?category=${selectedCat}&sort=${selectedSort}&skip=${skip}`
+        if (searchTerm) {
+            generatedUrl = `${generatedUrl}&search=${searchTerm}`
+        }
         console.log(generatedUrl)
         $('.gallery-100').LoadingOverlay("show")
         loadImages()
