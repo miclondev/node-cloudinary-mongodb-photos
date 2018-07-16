@@ -35,7 +35,19 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <i class="fa fa-filter" id="mobile-filter"></i>
+
+                                    <form class="search-form" action="">
+                                        <div class="input-group">
+                                            <input type="hidden" name="category" value="All">
+                                            <input type="hidden" name="type" value="image">
+                                            <input name="q" type="text" class="form-control image-search" placeholder="Search for...">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-info" type="submit">
+                                                    <i class="fa fa-search"> </i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
 
@@ -51,12 +63,19 @@
                                     <i class="fa fa-search"></i>
                                 </a>
                                 <div id="mobile-search-location" style="display: none; width: 100%">
-                                  <div class="mobile-search-bar"> 
-                                        <i class="fa fa-times dismiss-button" ></i>
-                                    <input type="text" placeholder="search images here..">
-                                </div>
-                                <i class="fa fa-search"></i>
-                                    
+                                    <form class="search-form" action="">
+                                        <div class="mobile-search-bar">
+                                            <i class="fa fa-times dismiss-button"></i>
+
+                                            <input type="hidden" name="category" value="All">
+                                            <input type="hidden" name="type" value="image">
+                                            <input name="q" class="image-search" type="text" placeholder="search images here..">
+
+                                        </div>
+                                        <button type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </form>
                                 </div>
 
 

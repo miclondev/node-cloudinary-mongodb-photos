@@ -1,15 +1,26 @@
 <% include ../partials/header %>
     <% include ../partials/navbar %>
-        <div class="container">
-            <div class="row">
+        <div class="wrapper">
+            <div class="container-fluid">
 
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <img src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_600/c_scale,l_logo1,r_0,w_400/v1530007907/photos/<%= photo.image.name %>" alt="title">
-                </div>
-                <div class="col-6">
 
+                <div class="row single-image-container">
+                    <div class="col-md-6">
+                        <div class="single-image">
+                            <img class="img-responsive" src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_600/c_scale,l_logo1,r_0,w_400/v1530007907/photos/<%= photo.image.name %>"
+                                alt="title">
+                            <i class="fa fa-search-plus zoom-icon"></i>
+                            <div class="action-buttons">
+                                <i class="fa fa-heart" data-id="<%= photo._id %>"></i>
+                                <i class="fa fa-shopping-basket" data-id="<%= photo._id %>"></i>
+                                <i class="fa fa-plus" data-id="<%= photo._id %>"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+
+                    </div>
                 </div>
             </div>
         </div>

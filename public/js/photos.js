@@ -46,7 +46,7 @@ $('document').ready(function () {
                                         </li>
                              
                                                 <li>
-                                                    <a class="btn default btn-outline" href="/photos/${image.slug}">
+                                                    <a class="btn default btn-outline" href="/photos/${image._id}">
                                                         <i class="icon-link"></i>
                                                     </a>
                                                 </li>
@@ -60,6 +60,7 @@ $('document').ready(function () {
 </div>
     `));
     }
+
     let loaded = 0
 
     var getUrlParameter = function getUrlParameter(sParam) {
@@ -77,11 +78,40 @@ $('document').ready(function () {
         }
     };
 
+    let searchTerm = getUrlParameter('q')
+
+    $('.image-search').each(function () { $(this).val(searchTerm) })
+
+    $('.search-form').each(function () {
+        let currentForm = $(this)
+        currentForm.submit(function (e) {
+            e.preventDefault()
+            skip = 0
+            loaded = 0
+            // console.log(currentForm.find('.image-search').val())
+            searchTerm = currentForm.find('.image-search').val()
+            $('.gallery-100').LoadingOverlay("show")
+            generatedUrl = `/photos/json?category=${selectedCat}&sort=${selectedSort}&skip=${0}&search=${searchTerm}`
+            loadImages()
+        })
+    })
+
+
+
+    //console.log(searchTerm)
+
     const loadCategory = getUrlParameter('category')
     selectCat.val(loadCategory)
     selectedCat = loadCategory
-    generatedUrl = `/photos/json?category=${selectedCat}&sort=${selectedSort}&skip=${0}`
-    loadImages()
+
+    if (searchTerm) {
+        generatedUrl = `/photos/json?category=${selectedCat}&sort=${selectedSort}&skip=${0}&search=${searchTerm}`
+        //console.log(generatedUrl)
+        loadImages()
+    } else {
+        generatedUrl = `/photos/json?category=${selectedCat}&sort=${selectedSort}&skip=${0}`
+        loadImages()
+    }
 
     const loadMoreButton = $('#load-more-button')
     loadMoreButton.click(function () {
@@ -181,15 +211,15 @@ $('document').ready(function () {
     const mobileSearch = $('#mobile-search')
     const mobileOptions = $('.mobile-options')
 
-    mobileSearch.click(function () { 
+    mobileSearch.click(function () {
         //mobileSearch.hide()
         mobileOptions.hide()
-       $('#mobile-search-location').show()
+        $('#mobile-search-location').show()
 
-       $('.dismiss-button').click(function() {
-           mobileOptions.show()
-           $('#mobile-search-location').hide()
-       })
+        $('.dismiss-button').click(function () {
+            mobileOptions.show()
+            $('#mobile-search-location').hide()
+        })
     })
 
 })

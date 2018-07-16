@@ -7,6 +7,13 @@ const { isLoggedIn } = require('../middleware')
 const { upload, cloudinary } = require('../funcs/uploadMainImage')
 
 //json photos
+
+router.get('/json/search', async (req, res) => {
+    console.log(req.query)
+    res.redirect('back')
+})
+
+
 router.get('/json', async (req, res) => {
     console.log(req.query)
 
@@ -23,7 +30,11 @@ router.get('/json', async (req, res) => {
     if (req.query.category !== 'All') {
         filter.category = req.query.category
     }
-    console.log(req.query.category !== 'All')
+
+    if (req.query.search) {
+        filter.$text = { $search: req.query.search }
+    }
+    //console.log(req.query.category !== 'All')
 
     Photo.find(filter)
         .sort(sort)
@@ -42,6 +53,8 @@ router.get('/json', async (req, res) => {
             }
         })
 })
+
+
 
 //get recent photos
 // router.get('/p/:page', async (req, res) => {
@@ -184,9 +197,9 @@ router.post('/', upload, async (req, res) => {
 })
 
 //single photo route
-router.get('/:title', (req, res) => {
+router.get('/:id', (req, res) => {
     console.log(req.params.title)
-    Photo.findOne({ slug: req.params.title })
+    Photo.findById(req.params.id)
         .populate('user')
         .exec((err, photo) => {
             if (err) {

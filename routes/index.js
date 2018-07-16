@@ -73,9 +73,11 @@ router.get("/search", async (req, res) => {
     console.log(req.query)
     const { type } = req.query;
     if (type === 'image') {
-        const photos = await Photo.find({ $text: { $search: req.query.q } })
-        console.log(photos)
-        res.render('search', { photos })
+        // const photos = await Photo.find(){ $text: { $search: req.query.q } }
+        // console.log(photos)
+        // res.render('search', { photos })
+        const categories = await Category.find({})
+        res.render('photos/index', { categories })
     } else {
         res.render('search')
     }
