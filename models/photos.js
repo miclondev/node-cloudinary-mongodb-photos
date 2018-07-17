@@ -23,7 +23,8 @@ const photosSchema = new Schema({
         submitted: { type: Boolean, default: false }, 
         featured: { type: Boolean, default: false }
     },
-    likes: { type: Number, default: 0 }
+    likes: { type: Number, default: 0 },
+    views: { type: Number, default: 0 }
 })
 
 photosSchema.index({ title: 'text', description: 'text', tags: 'text' },{ sparse: true })
@@ -33,15 +34,15 @@ photosSchema.pre('save', function (next) {
     next()
 })
 
-photosSchema.pre('save', function (next) {
-    const category = mongoose.model('category');
-    return category.findById(this.category)
-        .then(Cat => {
-            ++Cat.count.photos;
-            Cat.save()
-        })
-    next()
-})
+// photosSchema.pre('save', function (next) {
+//     const category = mongoose.model('category');
+//     return category.findById(this.category)
+//         .then(Cat => {
+//             ++Cat.count.photos;
+//             Cat.save()
+//         })
+//     next()
+// })
 
 // photosSchema.pre('save', function (next) {
 //     const User = mongoose.model('user')

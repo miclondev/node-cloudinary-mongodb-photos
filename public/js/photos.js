@@ -7,6 +7,7 @@ $('document').ready(function () {
     let selectedCat = 'All'
     let selectedSort = 'recommended'
     const mainUrl = $(location).attr('href').split('?')[0]
+    console.log($(location).attr('href'), mainUrl)
     let skip = 0
     let generatedUrl = `/photos/json?category=${selectedCat}&sort=${selectedSort}&skip=${skip}`
     // let navUrl = `${mainUrl}/?category=${selectedCat}&sort=${selectedSort}`
@@ -26,8 +27,11 @@ $('document').ready(function () {
                 </a> 
                 <div class="el-overlay">
                     <div class="photo-user">
+                    <div class="row">
                     <p><i class="fa fa-heart"> </i> ${image.likes}</p>
-                        <p> By:
+                    <p><i class="fa fa-eye"> </i> ${image.views}</p>
+                    </div>    
+                    <p> By:
                             ${image.user.username}
                         </p>
                     </div>
@@ -118,16 +122,11 @@ $('document').ready(function () {
     if (searchTerm) {
         generatedUrl = `/photos/json?category=${selectedCat}&sort=${selectedSort}&skip=${0}&search=${searchTerm}`
         //console.log(generatedUrl)
-        
         loadImages()
     } else {
         generatedUrl = `/photos/json?category=${selectedCat}&sort=${selectedSort}&skip=${0}`
         loadImages()
     }
-
-
-
-
 
     const loadMoreButton = $('#load-more-button')
     loadMoreButton.click(function () {

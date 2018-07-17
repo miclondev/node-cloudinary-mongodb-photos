@@ -18,9 +18,10 @@
                     <label for="example-text-input" class="col-md-2 col-form-label">Category</label>
                     <div class="col-md-10">
                         <select class="custom-select col-12" id="inlineFormCustomSelect" name="<%= photo._id %>[category]">
-
+                            <option value="<%= photo.category._id %>"> <%= photo.category.name %></option>
                             <% categories.forEach(cat => { %>
-
+                                <% if(cat._id.toString() === photo.category._id.toString()) { return } %>
+                                
                                 <option value="<%= cat._id %>">
                                     <%= cat.name %>
                                 </option>

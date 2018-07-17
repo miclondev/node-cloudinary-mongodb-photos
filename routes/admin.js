@@ -72,6 +72,15 @@ router.get('/category', (req, res) => {
     })
 })
 
+
+router.get('/collections', (req, res) => {
+    Collection.find({})
+        .populate('content.images')
+        .exec((err, collections) => {
+            console.log(collections)
+            res.render('admin/collection', { collections })
+        })
+})
 //admin index
 router.get('/', (req, res) => {
     res.render('admin/index')
@@ -93,14 +102,14 @@ router.get('/home', async (req, res) => {
 //get users
 router.get('/users', (req, res) => {
     User.find({})
-    .sort({ joined_on: -1})
-    .exec((err, users) => {
-        if (err) {
-            console.log(err)
-            return res.send(err)
-        }
-        res.render('admin/users', { users })
-    })
+        .sort({ joined_on: -1 })
+        .exec((err, users) => {
+            if (err) {
+                console.log(err)
+                return res.send(err)
+            }
+            res.render('admin/users', { users })
+        })
 })
 
 //get photos
@@ -125,7 +134,7 @@ router.put('/photos/approve/:id', (req, res) => {
     Photo.findById(id).then((found) => {
         found.status.approved = !found.status.approved
         found.save((err, saved) => {
-            if (err) { 
+            if (err) {
                 return res.send(err)
             }
             console.log('update', saved)
@@ -139,7 +148,7 @@ router.put('/photos/featured/:id', (req, res) => {
     Photo.findById(id).then((found) => {
         found.status.featured = !found.status.featured
         found.save((err, saved) => {
-            if (err) { 
+            if (err) {
                 return res.send(err)
             }
             console.log('update', saved)
@@ -270,6 +279,29 @@ router.get('/photos/fetch', (req, res) => {
         })
 })
 
+router.get('/generate-related', async (req, res) => {
+    const initialPhotos = await Photo.find({}).limit(1).sort({ created_on: -1 })
+
+    initialPhotos.forEach(async (photo, number) => {
+        let relatedIds = []
+        const photoTags = photo.tags.split(',')
+
+        photoTags.forEach(async (tag, num) => {
+            console.log(num)
+            relatedIds.push([])
+            const images = await Photo.find({ $text: { $search: tag } })
+            images.forEach(image => {
+                console.log(image._id)
+                relatedIds[num].push(image._id)
+            })
+            console.log(relatedIds)
+        })
+
+
+        res.send('complete')
+
+    })
+})
 
 
 module.exports = router

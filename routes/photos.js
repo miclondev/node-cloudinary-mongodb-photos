@@ -22,6 +22,8 @@ router.get('/json', async (req, res) => {
 
     if (req.query.sort === 'likes') {
         sort = { likes: -1 }
+    } else if (req.query.sort === 'views') {
+        sort = { views: -1 }
     }
     else {
         sort = { created_on: -1 }
@@ -198,20 +200,26 @@ router.post('/', upload, async (req, res) => {
 
 //single photo route
 router.get('/:id', (req, res) => {
-    console.log(req.params.title)
     Photo.findById(req.params.id)
         .populate('user')
-        .exec((err, photo) => {
+        .exec(async (err, photo) => {
             if (err) {
                 console.log(err)
             } else {
-                console.log(photo)
-                res.render("photos/show", { photo })
+
+                photo.views = photo.views + 1
+                photo.save()
+                const userPhotos = await Photo.find({ user: photo.user._id, _id: { $ne: req.params.id } }).limit(4).sort({ likes: -1 })
+                const relatedPhotos = await Photo.find({ user: {$ne : photo.user._id }}).limit(4).sort({ views: -1 })
+
+                console.log('user photo', userPhotos)
+                const photoTags = photo.tags.split(',')
+                console.log(photoTags)
+                //console.log(photo)
+                res.render("photos/show", { photo, photoTags, userPhotos, relatedPhotos })
             }
         })
 })
-
-
 
 //delete image
 router.delete('/:id', (req, res) => {

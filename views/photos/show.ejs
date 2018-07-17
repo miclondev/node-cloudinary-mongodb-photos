@@ -63,30 +63,47 @@
                     </div>
                 </div>
                 <div>
-                    <div>
                     <p>
-                        Ad gallery Photo Id :
-                        <%= photo._id %>
+                        <%= photo.description %>
                     </p>
+
                 </div>
-                    <br/>
-                    <div>
-                        <p>
-                            <%= photo.description %>
-                        </p>
+
+                <div class="container">
+                    <div class="row photo-tags">
+                        <% photoTags.forEach(tag => { %>
+                            <a href="/search?q=<%= tag %>&category=All&type=image" class="btn btn-outline-info">
+                                <%= tag %>
+                            </a>
+                            <% })%>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div>
-                        <p>other images by
-                            <%= photo.user.username %>
-                        </p>
+             
+
+
+                    <div class="container">
+                        <h3>  Same artist
+                        </h3>
+                        <div class="row">
+                            <% userPhotos.forEach(photo => { %>
+                                <% include ./partials/single-image-related %>
+                                    <% }) %>
+                        </div>
                     </div>
-                    <div>
-                        <p>related</p>
+
+
+
+
+                    <div class="container">
+                        <h3>Related Images</h3>
+                        <div class="row">
+                            <% relatedPhotos.forEach(photo => { %>
+                                <% include ./partials/single-image-related %>
+                                    <% }) %>
+                        </div>
                     </div>
-                </div>
+
 
             </div>
         </div>
