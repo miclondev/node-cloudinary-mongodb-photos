@@ -8,7 +8,7 @@ const Category = mongoose.model('category')
 const { isLoggedIn } = require('../middleware')
 
 router.get('/', (req, res) => {
-    Collection.find({})
+    Collection.find({ 'status.approved' : true })
         .sort({ created_on: -1 })
         .populate('content.images')
         .exec((err, collections) => {

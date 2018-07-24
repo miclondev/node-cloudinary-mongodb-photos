@@ -72,9 +72,9 @@ router.get('/category', (req, res) => {
     })
 })
 
-
-router.get('/collections', (req, res) => {
+router.get('/collections/:page', (req, res) => {
     Collection.find({})
+        .sort({ created_on: -1 })
         .populate('content.images')
         .exec((err, collections) => {
             console.log(collections)

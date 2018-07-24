@@ -20,8 +20,53 @@
                         </div>
 
                     </div>
+                    <div class="container">
+                        <div class="row">
+                            <% collections.forEach(col => {%>
 
+                                <div class="card admin-collection-card">
+
+                                    <a href="/collection/<%= col._id %>">
+                                        <% if(col.content.images.length > 0){ %>
+                                            <img style="width: 250px;" class="card-img-top img-responsive" src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_thumb,h_150,w_250/photos/<%= col.content.images[0].image.name %>"
+                                                alt="">
+                                            <% }else{ %>
+                                                <img style="width: 250px;" class="card-img-top img-responsive" src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_500/c_thumb,h_150,w_250/addimage.jpg"
+                                                    alt="">
+
+                                                <% } %>
+                                    </a>
+
+                                    <div class="card-body">
+                                        <h4 class="card-title">
+                                            <%= col.title %>
+                                        </h4>
+                                        <p class="card-text">
+                                            <%= col.description %>
+                                        </p>
+                                        <p class="card-text">
+                                            <small class="text-muted">
+                                                <%= col.created_on.toDateString() %>
+                                            </small>
+                                        </p>
+                                        <p>
+                                            <% if(col.status.featured){ %>
+                                                <span class="label label-success">Featured</span>
+                                                <% }  %>
+
+                                                    <% if(col.status.approved){ %>
+                                                        <span class="label label-info">Confirmed</span>
+                                                        <% } else { %>
+                                                            <span class="label label-warning">Pending</span>
+                                                            <% } %>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <% }) %>
+                        </div>
                     </div>
+                </div>
         </div>
 
-                    <% include ./partials/footer %>
+        <% include ./partials/footer %>
