@@ -57,8 +57,32 @@
                                                     <% if(col.status.approved){ %>
                                                         <span class="label label-info">Confirmed</span>
                                                         <% } else { %>
-                                                            <span class="label label-warning">Pending</span>
+                                                            <span class="label label-warning"> Pending </span>
                                                             <% } %>
+                                        </p>
+                                        <p>
+                                            <form action="" class="edit-collection ">
+                                                <div>
+                                                    Action
+                                                    <i style="display: none;" class="fa fa-spin fa-spinner col-spinner-action"></i>
+                                                </div>
+                                                <div class="form-group">
+                                                <select name="" class="action-collection custom-select col-12" data-id="<%= col._id %>">
+                                                    <option selected="">Choose...</option>
+                                                    <% if(col.status.featured){ %>
+                                                        <option value="feature"> UnFeature </option>
+                                                        <% }else{  %>
+                                                            <option value="feature"> Make Featured </option>
+                                                            <% }  %>
+
+                                                                <% if(col.status.approved){ %>
+                                                                    <option value="approve"> UnApprove </option>
+                                                                    <% } else { %>
+                                                                        <option value="approve"> Approve </option>
+                                                                        <% } %>
+                                                </select>
+                                            </div>
+                                            </form>
                                         </p>
                                     </div>
                                 </div>

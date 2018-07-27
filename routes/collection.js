@@ -8,7 +8,7 @@ const Category = mongoose.model('category')
 const { isLoggedIn } = require('../middleware')
 
 router.get('/', (req, res) => {
-    Collection.find({ 'status.approved' : true })
+    Collection.find({ 'status.approved': true })
         .sort({ created_on: -1 })
         .populate('content.images')
         .exec((err, collections) => {
@@ -61,7 +61,20 @@ router.put('/', isLoggedIn, (req, res) => {
         col.save()
         res.redirect('back')
     })
+})
 
+router.get('/:id', async (req, res) => {
+    
+    const PhotoIds = await Collection.findById(req.params.id).then(found => found.content.images)
+    const title = await Collection.findById(req.params.id).then(found => found.title)
+
+    Photos.find({
+        '_id': { $in: PhotoIds }
+    })
+    .populate('user', 'username')
+    .exec((err, photos) => {
+        res.render('collection/view', { photos, title })
+    })
 })
 
 

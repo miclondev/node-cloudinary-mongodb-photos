@@ -1,0 +1,99 @@
+
+
+
+<% include ../partials/header %>
+<% include ../partials/navbar %>
+    <div class="wrapper"> 
+
+        <div id="gallery-content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light m-t-60">
+                <div class="container-fluid body-items">
+
+                    <div class="row el-element-overlay gallery-100">
+
+                        <div class="col-md-12 gallery-title">
+                                <h4> all photos by <%= fullname %></h4>
+                        </div>
+
+                      
+
+                        <div id="photos-container">
+                            <% photos.forEach(photo => { %>
+
+                                <div class="col-lg-3 col-md-6">
+                                    <div class="card">
+                                        <div class="el-card-item">
+                                            <div class="el-card-avatar el-overlay-1">
+                                                
+                                                <img style="min-height: 170px" src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_400/c_crop,g_face:auto,h_264,w_396/v1528874042/photos/<%= photo.image.name %>"
+                                                    alt="adgallery">
+                                           
+                                                <div class="el-overlay">
+                                                    <div class="photo-user">
+                                                        <p>
+                                                            <i class="fa fa-heart"> </i>
+                                                            <%= photo.likes %>
+                                                        </p>
+                                                        <p> By:
+                                                            <%= photo.user.username %>
+                                                        </p>
+                                                    </div>
+                                                    <ul class="el-info">
+                                                        <li>
+                                                        <a class="btn default btn-outline image-popup-vertical-fit" href="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_600/c_scale,l_logo1,w_300/v1528874042/photos/<%= photo.image.name %>">
+                                                            <i class="icon-magnifier"></i>
+                                                        </a>
+                                                    </li>
+
+                                                        <% if(currentUser){ %>
+
+
+                                                            <% if(currentUser.like.photos.indexOf(photo._id) === -1) { %>
+                                                                <li>
+                                                                    <a class="btn default btn-outline like-photo" data-id="<%= photo._id %>">
+                                                                        <i class="fa fa-heart"></i>
+                                                                    </a>
+                                                                </li>
+                                                                <% }  %>
+
+
+                                                                    <% if(!currentUser.cart.photos.indexOf(photo._id) === -1) { %>
+                                                                        <li>
+
+                                                                            <a class="btn default btn-outline cart-button" data-id="<%= photo._id %>">
+                                                                                <i class="fa fa fa-shopping-basket"></i>
+                                                                            </a>
+                                                                        </li>
+                                                                        <% } %>
+
+
+                                                                            <% } %>
+
+                                                                                <li>
+                                                                                    <a class="btn default btn-outline" href="/photos/<%= photo._id %>">
+                                                                                        <i class="icon-link"></i>
+                                                                                    </a>
+                                                                                </li>
+
+                                                    </ul>
+
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <% }) %>
+                        </div>
+
+                    </div>
+ 
+
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <% include ../partials/footer %>

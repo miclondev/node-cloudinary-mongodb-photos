@@ -20,7 +20,7 @@ $(document).ready(function () {
     const photoId = $('.photo-id')
     const toggleSpan = $('#toggle-span')
 
-    console.log(photoId.first().val())
+    //console.log(photoId.first().val())
     const editvalues = $('#multi-edit input')
 
     photoId.on('change', function () {
@@ -45,7 +45,7 @@ $(document).ready(function () {
     const unfeatureForm = $('#multi-unfeatured')
 
 
-    function handleSubmit(form, link){
+    function handleSubmit(form, link) {
         form.submit(function (e) {
             e.preventDefault()
             $.post(link, { ids: selected }, function (data) {
@@ -80,7 +80,7 @@ $(document).ready(function () {
         })
     })
 
-    handleSubmit(unfeatureForm,'/admin/multi/unfeatured')
+    handleSubmit(unfeatureForm, '/admin/multi/unfeatured')
 
     // unfeatureForm.submit(function (e) {
     //     e.preventDefault()
@@ -187,4 +187,28 @@ $(document).ready(function () {
         fetchImages(`/admin/photos/fetch?skip=${skip}`, handleChangeFeatured)
     })
 
+    //admin collection options
+    const editForm = $('.edit-collection')
+    editForm.each(function () {
+        let currentForm = $(this)
+        const select = currentForm.find('.action-collection')
+        const colSpinner = currentForm.find('.col-spinner-action')
+       
+
+        select.change(function () {
+            colSpinner.show()
+            console.log(select.val(), select.attr('data-id'))
+            $.post('/admin/collection/edit', {
+                action: select.val(),
+                id: select.attr('data-id')
+            }, function (data) {
+                console.log(data)
+                if(data.status === 'success'){
+                    colSpinner.hide()
+                    location.reload()
+                }
+                
+            })
+        })
+    })
 })

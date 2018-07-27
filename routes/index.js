@@ -8,6 +8,7 @@ const User = mongoose.model('user')
 const Info = require('../data/info')
 const Category = mongoose.model('category')
 const Photo = mongoose.model('photo')
+const Collection = mongoose.model('collection')
 const Setting = mongoose.model('setting')
 
 const { doneLogged } = require('../middleware')
@@ -19,8 +20,10 @@ router.get('/', async (req, res) => {
     try {
         const setting = await Setting.findById(SETTINGSID).populate('homeImage')
         const photos = await Photo.find({ 'status.featured': true }).populate('user').limit(8).sort({ created_on: -1 })
+        const collections = await Collection.find({ 'status.featured': true }).populate('content.images').limit(6).sort({ created_on: -1 })
         // const categories = await Category.find({}).limit(4)
-        res.render('landing', { photos, setting })
+        //console.log(collections)
+        res.render('landing', { photos, setting, collections })
     } catch (err) {
         console.log(err)
         res.send(err)
@@ -97,19 +100,28 @@ router.get('/user-profile/:id', async (req, res) => {
 })
 
 router.get('/user-profiles', (req, res) => {
-    User.find({ 'confirmed' : true })
-    .sort({ joined_on : -1})
-    .exec((err, users) => {
-        if(err){
-            console.log(err)
-            return res.send(err)
-        }
-        res.render('public/users', {users})
+    User.find({ 'confirmed': true })
+        .sort({ joined_on: -1 })
+        .exec((err, users) => {
+            if (err) {
+                console.log(err)
+                return res.send(err)
+            }
+            res.render('public/users', { users })
+        })
+})
+
+router.get('/user-profile/photos/:id', async (req, res) => {
+    const fullname = await User.findById(req.params.id).then(user => user.fullname)
+    Photo.find({ user: req.params.id })
+        .exec((err, photos) => {
+            res.render('public/user-photos', {photos, fullname})
     })
 })
 
+ 
 router.get('/cart', (req, res) => {
-    res.send('cart')    
+    res.send('cart')
 })
 
 router.get('/apply', (req, res) => {

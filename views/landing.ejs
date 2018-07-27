@@ -2,9 +2,13 @@
     <% include ./partials/navbar %>
 
         <div class="landingHeader <%= setting.image.position %>" style="background-image: url('http://res.cloudinary.com/adgallerytz/image/upload/c_scale,e_auto_contrast,q_52,w_1500/v1530026830/photos/<%= setting.homeImage.image.name %>')">
-               
-            <h3> <%= setting.homeTitle %></h3>
-            <p><%= setting.homeSubtitle %></p>
+
+            <h3>
+                <%= setting.homeTitle %>
+            </h3>
+            <p>
+                <%= setting.homeSubtitle %>
+            </p>
 
             <div class="landingSearch d-none d-md-block">
                 <form action="/search" method="GET">
@@ -19,23 +23,48 @@
                     </button>
                 </form>
             </div>
-           
+
         </div>
 
 
 
-        <h6 class="home-chosen">Stunning content, straightforward prices <a href=""> Choose Your Plan > </a></h6>
+        <h6 class="home-chosen">Stunning content, straightforward prices
+            <a href=""> Choose Your Plan > </a>
+        </h6>
 
         <div class="container">
             <div class="homeBody">
-                
 
-                <div class="homeCategories">
 
-                    <div class="row el-element-overlay">
-                        <div class="col-md-12">
+                <div class="homeCategories m-b-40">
+                    <div class="row">
+                        <div class="col-md-12 m-b-20">
+                            <h4 class="card-title">
+                                Find amazing content for your next project
+                            </h4>
+                        </div>
+
+                        <% collections.forEach(col => {%>
+                            <div class="col-lg-4 col-md-6">
+                                <a href="/collection/<%= col._id %>">
+                                    <img style="width: 350px;" class="card-img-top img-responsive" src="https://res.cloudinary.com/adgallerytz/image/upload/c_scale,w_700/c_thumb,h_400,w_600/photos/<%= col.content.images[0].image.name %>"
+                                        alt="">
+                                </a>
+                                <h4>
+                                    <%= col.title %>
+
+                                </h4>
+                                <p>
+                                    <%= col.description %>
+                                </p>
+                            </div>
+                            <% }) %>
+                    </div>
+
+                    <div class="row el-element-overlay m-t-40">
+                        <div class="col-md-12 m-b-20">
                             <h4 class="card-title">Featured Images</h4>
-                            
+
                         </div>
 
                         <% photos.forEach(photo => { %>
@@ -63,7 +92,7 @@
                                             </div>
                                         </div>
                                         <div class="el-card-content">
-                                             
+
                                             <small> by:
                                                 <a href="/user-profile/<%= photo.user._id %>">
                                                     <strong>

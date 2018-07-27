@@ -13,7 +13,8 @@ const collectionSchema = new Schema({
     content: {
         images: [
             { type: mongoose.Schema.Types.ObjectId, ref: "photo" }
-        ]
+        ],
+        featured: { type: mongoose.Schema.Types.ObjectId, ref: "photo" }
     },
     likes: { type: Number, default: 0 },
     status: { 

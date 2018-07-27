@@ -13,7 +13,6 @@ router.get('/json/search', async (req, res) => {
     res.redirect('back')
 })
 
-
 router.get('/json', async (req, res) => {
     console.log(req.query)
 
@@ -209,6 +208,7 @@ router.get('/:id', (req, res) => {
 
                 photo.views = photo.views + 1
                 photo.save()
+                
                 const userPhotos = await Photo.find({ user: photo.user._id, _id: { $ne: req.params.id } }).limit(4).sort({ likes: -1 })
                 const relatedPhotos = await Photo.find({ user: {$ne : photo.user._id }}).limit(4).sort({ views: -1 })
 
@@ -225,8 +225,7 @@ router.get('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
     console.log(req.params.id)
     Photo.findByIdAndRemove(req.params.id, (err) => {
-        if (err) {
-            console.log(err)
+        if (err) { 
             return res.send(err)
         }
         res.redirect('back')

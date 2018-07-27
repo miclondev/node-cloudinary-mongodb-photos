@@ -72,15 +72,17 @@ router.get('/category', (req, res) => {
     })
 })
 
+//
 router.get('/collections/:page', (req, res) => {
     Collection.find({})
         .sort({ created_on: -1 })
         .populate('content.images')
         .exec((err, collections) => {
-            console.log(collections)
+            // console.log(collections)
             res.render('admin/collection', { collections })
         })
 })
+
 //admin index
 router.get('/', (req, res) => {
     res.render('admin/index')
@@ -300,6 +302,30 @@ router.get('/generate-related', async (req, res) => {
 
         res.send('complete')
 
+    })
+})
+
+router.post('/collection/edit', (req, res) => {
+    const { action, id } = req.body
+    console.log(id)
+ 
+    
+    Collection.findById(id).then(collection => {
+        console.log(action === 'approve')
+        if (action === 'approve') {
+            collection.status.approved = !collection.status.approved
+        }
+        if(action === 'feature'){
+            collection.status.featured = !collection.status.featured
+        }
+        
+        collection.save((err, saved) => {
+            if (err) {
+                console.log(err)
+                return res.send(err)
+            }
+            res.json({ status: 'success', response: collection.status})
+        })
     })
 })
 
